@@ -1,5 +1,10 @@
 import { useState, useCallback } from "react";
-import { ReactFlow, applyNodeChanges, Background } from "@xyflow/react";
+import {
+  ReactFlow,
+  applyNodeChanges,
+  Background,
+  useNodesState,
+} from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 
 const initialNodes = [
@@ -9,14 +14,8 @@ const initialNodes = [
 const initialEdges = [{ id: "n1-n2", source: "n1", target: "n2" }];
 
 function App() {
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
-
-  const onNodesChange = useCallback(
-    (changes) =>
-      setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
-    [],
-  );
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges] = useState(initialEdges);
 
   return (
     <>
@@ -25,7 +24,6 @@ function App() {
           nodes={nodes}
           edges={edges}
           onNodesChange={onNodesChange}
-          // onEdgesChange={onEdgesChange}
           colorMode="dark"
           fitView
         >
