@@ -13,6 +13,7 @@ export function GraphView({
   setNodes,
   onNodesChange,
   setEdges,
+  onNodeClick,
 }) {
   useEffect(() => {
     const rawNodes = initialCourses.map((course) => ({
@@ -44,13 +45,18 @@ export function GraphView({
     setEdges(styledEdges);
   }, []);
 
+  const handleNodeClick = (event, node) => {
+    onNodeClick(node.data);
+  };
+
   return (
     <>
-      <div style={{ width: "100vw", height: "100vh" }}>
+      <div style={{ width: "100%", height: "100%" }}>
         <ReactFlow
           nodes={nodes}
           edges={edges}
           onNodesChange={onNodesChange}
+          onNodeClick={handleNodeClick}
           colorMode="dark"
           fitView
         >
