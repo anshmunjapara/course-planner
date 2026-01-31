@@ -18,7 +18,7 @@ export function GraphView({
   useEffect(() => {
     const rawNodes = initialCourses.map((course) => ({
       id: course.id,
-      data: { label: course.label, prereqLogic: course.prereqs },
+      data: { label: course.label, prereqLogic: course.prereqs, description: course.description },
       position: { x: 0, y: 0 },
     }));
 

@@ -15,6 +15,13 @@ export function Sidebar({ selectedNode }) {
     <div className="sidebar">
       <div className="sidebar-content">
         <h2 className="sidebar-title">{selectedNode.label}</h2>
+
+        {selectedNode.description && (
+          <div className="sidebar-section">
+            <h3>Description</h3>
+            <p>{selectedNode.description}</p>
+          </div>
+        )}
       </div>
     </div>
   );
