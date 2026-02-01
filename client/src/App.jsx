@@ -9,14 +9,23 @@ function App() {
   const [edges, setEdges] = useEdgesState([]);
   const [selectedNode, setSelectedNode] = useState(null);
 
-  const [userGrades] = useState({
+  const [userGrades, setUserGrades] = useState({
     CS110: 85,
     MATH103: 60,
-    CS115: 90,
-    MATH110: 85,
-    CS210: 85,
-    STAT160: 90,
+    // CS115: 90,
+    // MATH110: 85,
+    // CS210: 85,
+    // STAT160: 90,
   });
+
+  const onChangeGrade = (newGrade) => {
+    setUserGrades((prevGrades) => {
+      return {
+        ...prevGrades,
+        [selectedNode.id]: parseFloat(newGrade),
+      };
+    });
+  };
 
   return (
     <div style={{ display: "flex", width: "100%", height: "100vh" }}>
@@ -31,7 +40,7 @@ function App() {
           onNodeClick={setSelectedNode}
         />
       </div>
-      <Sidebar selectedNode={selectedNode} />
+      <Sidebar selectedNode={selectedNode} onChangeGrade={onChangeGrade} />
     </div>
   );
 }

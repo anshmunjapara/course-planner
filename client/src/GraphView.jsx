@@ -18,7 +18,11 @@ export function GraphView({
   useEffect(() => {
     const rawNodes = initialCourses.map((course) => ({
       id: course.id,
-      data: { label: course.label, prereqLogic: course.prereqs, description: course.description },
+      data: {
+        label: course.label,
+        prereqLogic: course.prereqs,
+        description: course.description,
+      },
       position: { x: 0, y: 0 },
     }));
 
@@ -45,8 +49,22 @@ export function GraphView({
     setEdges(styledEdges);
   }, []);
 
+  useEffect(() => {
+    if (nodes.length > 0 && edges.length > 0) {
+      const { styledNodes, styledEdges } = applyStyles(
+        nodes,
+        edges,
+        userGrades,
+        initialCourses,
+      );
+
+      setNodes(styledNodes);
+      setEdges(styledEdges);
+    }
+  }, [userGrades]);
+
   const handleNodeClick = (event, node) => {
-    onNodeClick(node.data);
+    onNodeClick(node);
   };
 
   return (
