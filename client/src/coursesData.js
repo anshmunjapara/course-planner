@@ -38,7 +38,7 @@ export const initialCourses = [
     prereqs: {
       type: "course",
       courseId: "CS110",
-      minGrade: 50,
+      minGrade: 65,
     },
   },
   {

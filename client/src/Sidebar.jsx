@@ -1,8 +1,10 @@
 import { useState } from "react";
 import "./Sidebar.css";
 
-export function Sidebar({ selectedNode, onChangeGrade }) {
-  const [grade, setGrade] = useState("");
+export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
+  const [grade, setGrade] = useState(
+    selectedNode ? userGrades[selectedNode.id] || "" : "",
+  );
 
   const handleGradeChange = (e) => {
     const value = e.target.value;
