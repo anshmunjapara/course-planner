@@ -6,7 +6,7 @@ export function CoursePlanner() {
   const [selectedNode, setSelectedNode] = useState(null);
 
   const [userGrades, setUserGrades] = useState({
-    CS110: 85,
+    // CS110: ,
     MATH103: 60,
     // CS115: 90,
     // MATH110: 85,

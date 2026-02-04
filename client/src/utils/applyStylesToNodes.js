@@ -1,5 +1,7 @@
 import { getCourseStatus } from "./calculateCourseStatus";
 import { STATUS_COLORS, BORDER_COLORS } from "./constants";
+import { getEdgeStatus } from "./getEdgeStatus";
+
 export const applyStyles = (nodes, edges, grades, courses) => {
   const statusMap = {};
 
@@ -27,16 +29,34 @@ export const applyStyles = (nodes, edges, grades, courses) => {
   // Style Edges
   const styledEdges = edges.map((edge) => {
     const targetStatus = statusMap[edge.target];
-    const isAnimated = targetStatus === "available";
+    const sourceStatus = statusMap[edge.source];
+    let edgeStatus = "locked";
+
+    if (sourceStatus === "locked") {
+      edgeStatus = "locked";
+    } else if (sourceStatus === targetStatus && sourceStatus === "completed") {
+      edgeStatus = "completed";
+    } else {
+      const targetCourseNode = nodes.find((n) => n.id === edge.target);
+      console.log("Evaluating edge from", edge.source, "to", edge.target);
+      edgeStatus = getEdgeStatus(
+        targetCourseNode.data.prereqLogic,
+        edge.source,
+        grades[edge.source],
+      );
+      console.log("Edge status:", edgeStatus);
+    }
+
+    const isAnimated = edgeStatus === "available";
 
     return {
       ...edge,
       animated: isAnimated,
       zIndex: isAnimated ? 10 : 0,
       style: {
-        stroke: BORDER_COLORS[targetStatus],
-        strokeWidth: isAnimated ? 2.5 : 2,
-        opacity: isAnimated ? 1 : 0.7,
+        stroke: BORDER_COLORS[edgeStatus],
+        strokeWidth: 2.5,
+        opacity:  1 ,
       },
     };
   });

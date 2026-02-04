@@ -4,7 +4,7 @@ import { initialCourses } from "./coursesData";
 import { useEffect } from "react";
 import { applyStyles } from "./utils/applyStylesToNodes";
 import { getLayoutedNodes } from "./utils/layoutCalculator";
-import { getPrereqIds } from "./utils/dataHelpers";
+import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
 import "@xyflow/react/dist/style.css";
 
 export function GraphView({ onNodeClick, userGrades }) {
