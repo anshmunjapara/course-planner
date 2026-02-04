@@ -28,13 +28,15 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
           </div>
         )}
 
-        <div className="sidebar-section grade-section">
-          <GradeInput
-            selectedNode={selectedNode}
-            onChangeGrade={handleGradeSubmit}
-            userGrades={userGrades}
-          />
-        </div>
+        {selectedNode.data.status !== "locked" && (
+          <div className="sidebar-section grade-section">
+            <GradeInput
+              selectedNode={selectedNode}
+              onChangeGrade={handleGradeSubmit}
+              userGrades={userGrades}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
