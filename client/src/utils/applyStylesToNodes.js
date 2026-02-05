@@ -1,4 +1,4 @@
-import { getCourseStatus } from "./calculateCourseStatus";
+import { getCourseStatus } from "./getCourseStatus";
 import { STATUS_COLORS, BORDER_COLORS } from "./constants";
 import { getEdgeStatus } from "./getEdgeStatus";
 

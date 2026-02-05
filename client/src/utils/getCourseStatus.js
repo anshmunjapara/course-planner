@@ -48,6 +48,9 @@ export function getCourseStatus(course, userGrades) {
     return "completed";
   }
 
+  if (grade !== undefined && grade < 50) {
+    return "failed";
+  }
   // If user hasn't passed, check if they are ALLOWED to take it
   const isUnlocked = evaluatePrereq(course.prereqs, userGrades);
 
