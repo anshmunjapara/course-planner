@@ -56,7 +56,7 @@ export const applyStyles = (nodes, edges, grades, courses) => {
       style: {
         stroke: BORDER_COLORS[edgeStatus],
         strokeWidth: 2.5,
-        opacity:  1 ,
+        opacity: 1,
       },
     };
   });

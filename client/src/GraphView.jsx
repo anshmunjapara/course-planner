@@ -1,9 +1,10 @@
-import { ReactFlow, Background } from "@xyflow/react";
+import { ReactFlow, Background, MiniMap } from "@xyflow/react";
 import { useNodesState, useEdgesState } from "@xyflow/react";
 import { initialCourses } from "./coursesData";
 import { useEffect } from "react";
 import { applyStyles } from "./utils/applyStylesToNodes";
-import { getLayoutedNodes } from "./utils/layoutCalculator";
+// import { getLayoutedNodes } from "./utils/layoutCalculator";
+import { getLayoutedNodes } from "./utils/cytoscapeLayoutCalculator";
 import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
 import "@xyflow/react/dist/style.css";
 
@@ -32,7 +33,20 @@ export function GraphView({ onNodeClick, userGrades }) {
       }));
     });
 
-    const layoutedNodes = getLayoutedNodes(rawNodes, rawEdges);
+    const layoutedNodes = getLayoutedNodes(rawNodes, rawEdges, {
+      name: "klay",
+      nodeDimensionsIncludeLabels: true,
+      fit: true,
+      padding: 30,
+      animate: false,
+      klay: {
+        direction: "DOWN", // 'DOWN', 'RIGHT', 'UP', 'LEFT'
+        edgeRouting: "SPLINES",
+        routeSelfLoopInside: true,
+        thoroughness: 10, // 1-10 (higher is better but slower)
+        spacing: 50, // General spacing
+      },
+    });
 
     const { styledNodes, styledEdges } = applyStyles(
       layoutedNodes,
@@ -71,9 +85,21 @@ export function GraphView({ onNodeClick, userGrades }) {
           edges={edges}
           onNodesChange={onNodesChange}
           onNodeClick={handleNodeClick}
-          colorMode="dark"
+          colorMode="system"
           fitView
+          minZoom={0.1} // Allow zooming out significantly
+          maxZoom={1.5} // Prevent zooming in too far
         >
+          <MiniMap
+            nodeStrokeWidth={3}
+            zoomable
+            pannable
+            style={{ height: 170, width: 270 }} 
+            nodeColor={(node) => {
+              // Optional: Match the minimap colors to your node styles
+              return node.style?.background || "#ccc";
+            }}
+          />
           <Background variant="dots" gap={25} size={1} />
         </ReactFlow>
       </div>
