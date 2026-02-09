@@ -22,6 +22,7 @@ export const applyStyles = (nodes, edges, grades, courses) => {
         fontSize: "18px",
         padding: "10px",
         textAlign: "center",
+        opacity: status !== "locked" ? 1 : 0.4,
       },
     };
   });
@@ -56,7 +57,7 @@ export const applyStyles = (nodes, edges, grades, courses) => {
       style: {
         stroke: BORDER_COLORS[edgeStatus],
         strokeWidth: 2.5,
-        opacity: 1,
+        opacity: edgeStatus !== "locked" ? 1 : 0.3,
       },
     };
   });
