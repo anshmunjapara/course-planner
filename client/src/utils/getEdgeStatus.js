@@ -12,7 +12,9 @@ export function getEdgeStatus(
     return "available";
   }
 
-  const requiredGrade = prereqCondition.minGrade;
+  const requiredGrade = prereqCondition.minGrade
+    ? prereqCondition.minGrade
+    : 50;
   if (userGradeSource >= requiredGrade) {
     return "completed";
   } else if (userGradeSource >= 50 && userGradeSource < requiredGrade) {
