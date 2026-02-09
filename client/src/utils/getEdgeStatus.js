@@ -16,9 +16,9 @@ export function getEdgeStatus(
     ? prereqCondition.minGrade
     : 50;
   if (userGradeSource >= requiredGrade) {
-    return "completed";
-  } else if (userGradeSource >= 50 && userGradeSource < requiredGrade) {
     return "available";
+  } else if (userGradeSource >= 50 && userGradeSource < requiredGrade) {
+    return "failed";
   } else {
     return "locked";
   }
