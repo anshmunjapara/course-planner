@@ -40,8 +40,8 @@ export function evaluatePrereq(node, userGrades) {
 /**
  * Determines the visual status of a course.
  */
-export function getCourseStatus(course, userGrades) {
-  const grade = userGrades[course.id];
+export function getCourseStatus(courseNode, userGrades) {
+  const grade = userGrades[courseNode.id];
 
   // If user already passed it -> COMPLETED
   if (grade !== undefined && grade >= 50) {
@@ -52,7 +52,7 @@ export function getCourseStatus(course, userGrades) {
     return "failed";
   }
   // If user hasn't passed, check if they are ALLOWED to take it
-  const isUnlocked = evaluatePrereq(course.prereqs, userGrades);
+  const isUnlocked = evaluatePrereq(courseNode.data.prereqs, userGrades);
 
   if (isUnlocked) {
     return "available";

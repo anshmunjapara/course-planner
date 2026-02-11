@@ -1,10 +1,10 @@
 export function getEdgeStatus(
-  targetCoursePrereqLogic,
+  targetCourseprereqs,
   sourceCourseId,
   userGradeSource,
 ) {
   const prereqCondition = getPrereqCondition(
-    targetCoursePrereqLogic,
+    targetCourseprereqs,
     sourceCourseId,
   );
 

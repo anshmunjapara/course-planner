@@ -2,13 +2,12 @@ import { getCourseStatus } from "./getCourseStatus";
 import { STATUS_COLORS, BORDER_COLORS } from "./constants";
 import { getEdgeStatus } from "./getEdgeStatus";
 
-export const applyStyles = (nodes, edges, grades, courses) => {
+export const applyStyles = (nodes, edges, grades) => {
   const statusMap = {};
 
   // Style Nodes
   const styledNodes = nodes.map((node) => {
-    const course = courses.find((c) => c.id === node.id);
-    const status = getCourseStatus(course, grades);
+    const status = getCourseStatus(node, grades);
     statusMap[node.id] = status;
 
     return {
@@ -39,13 +38,11 @@ export const applyStyles = (nodes, edges, grades, courses) => {
       edgeStatus = "completed";
     } else {
       const targetCourseNode = nodes.find((n) => n.id === edge.target);
-      console.log("Evaluating edge from", edge.source, "to", edge.target);
       edgeStatus = getEdgeStatus(
-        targetCourseNode.data.prereqLogic,
+        targetCourseNode.data.prereqs,
         edge.source,
         grades[edge.source],
       );
-      console.log("Edge status:", edgeStatus);
     }
 
     const isAnimated = edgeStatus === "available";

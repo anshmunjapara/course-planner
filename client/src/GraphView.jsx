@@ -17,7 +17,7 @@ export function GraphView({ onNodeClick, userGrades }) {
       id: course.id,
       data: {
         label: course.label,
-        prereqLogic: course.prereqs,
+        prereqs: course.prereqs,
         description: course.description,
       },
       position: { x: 0, y: 0 },
@@ -52,7 +52,6 @@ export function GraphView({ onNodeClick, userGrades }) {
       layoutedNodes,
       rawEdges,
       userGrades,
-      initialCourses,
     );
 
     setNodes(styledNodes);
@@ -65,7 +64,6 @@ export function GraphView({ onNodeClick, userGrades }) {
         nodes,
         edges,
         userGrades,
-        initialCourses,
       );
 
       setNodes(styledNodes);
@@ -94,7 +92,7 @@ export function GraphView({ onNodeClick, userGrades }) {
             nodeStrokeWidth={3}
             zoomable
             pannable
-            style={{ height: 170, width: 270 }} 
+            style={{ height: 170, width: 270 }}
             nodeColor={(node) => {
               // Optional: Match the minimap colors to your node styles
               return node.style?.background || "#ccc";
