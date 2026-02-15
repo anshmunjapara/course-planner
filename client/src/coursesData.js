@@ -7,6 +7,7 @@ export const initialCourses = [
     prereqs: null,
     notes:
       "This class may not be taken for credit if credit has been received for any course numbered above CS 100",
+    required: false,
   },
   {
     id: "CS110",
@@ -14,6 +15,7 @@ export const initialCourses = [
     description:
       "An introduction to problem-solving techniques, the fundamental concepts of programming, and the software design process. Topics will include: data types, control structures, scope rules, functions, files, and the mechanics of running, testing and debugging. Problems will be drawn from various science disciplines.",
     prereqs: null,
+    required: true,
   },
   {
     id: "CS115",
@@ -34,6 +36,7 @@ export const initialCourses = [
         },
       ],
     },
+    required: true,
   },
   {
     id: "CS165",
@@ -41,6 +44,7 @@ export const initialCourses = [
     description:
       "An introduction to problem-solving techniques using Python. This course will introduce fundamental programming principles and topics: data types, expressions, control structures, elementary data structures, functions, files, and the mechanics of running, testing and debugging. These concepts will be applied to problem solving and applications in data analysis.",
     prereqs: null,
+    required: false,
   },
   {
     id: "CS180",
@@ -51,16 +55,18 @@ export const initialCourses = [
       type: "course",
       courseId: "CS110",
     },
+    required: true,
   },
   {
     id: "CS201",
     label: "CS 201 - Introduction to Digital Systems",
     description:
-      "Hardware paradigms, logic minimization, sequential and combinational circuits, register transfer notation. Numerical data representation, number bases, floating-point and two’s-complement representation, representation of non-numeric data, records and arrays. Von Neumann architecture, control units, instruction sets, assembly language programming, addressing modes, subroutines, basic building blocks, computer components.",
+      "Hardware paradigms, logic minimization, sequential and combinational circuits, register transfer notation. Numerical data representation, number bases, floating-point and two's-complement representation, representation of non-numeric data, records and arrays. Von Neumann architecture, control units, instruction sets, assembly language programming, addressing modes, subroutines, basic building blocks, computer components.",
     prereqs: {
       type: "course",
       courseId: "CS110",
     },
+    required: true,
   },
   {
     id: "CS203",
@@ -71,6 +77,7 @@ export const initialCourses = [
       type: "course",
       courseId: "CS115",
     },
+    required: false,
   },
   {
     id: "CS205",
@@ -81,6 +88,7 @@ export const initialCourses = [
       type: "course",
       courseId: "CS110",
     },
+    required: false,
   },
   {
     id: "CS207",
@@ -96,6 +104,7 @@ export const initialCourses = [
         { type: "credit_hours", value: 30 },
       ],
     },
+    required: false,
   },
   {
     id: "CS210",
@@ -110,6 +119,7 @@ export const initialCourses = [
         { type: "course", courseId: "MATH110", minGrade: 50 },
       ],
     },
+    required: true,
   },
   {
     id: "CS220",
@@ -132,6 +142,7 @@ export const initialCourses = [
         },
       ],
     },
+    required: true,
   },
   {
     id: "CS261",
@@ -155,6 +166,7 @@ export const initialCourses = [
         },
       ],
     },
+    required: false,
   },
   {
     id: "CS265",
@@ -169,6 +181,7 @@ export const initialCourses = [
         { type: "course", courseId: "STAT160" },
       ],
     },
+    required: false,
   },
   {
     id: "CS280",
@@ -183,6 +196,7 @@ export const initialCourses = [
         { type: "course", courseId: "ENGL100" },
       ],
     },
+    required: true,
   },
   {
     id: "CS285",
@@ -197,6 +211,639 @@ export const initialCourses = [
         { type: "course", courseId: "CS280" },
       ],
     },
+    required: true,
+  },
+  // Commented-out courses remain unchanged...
+  {
+    id: "MATH110",
+    label: "MATH 110 - Calculus I",
+    description:
+      "An introduction to differential calculus. Topics include: functions, limits, continuity, differentiation, and applications of the derivative. Problems will be drawn from various disciplines.",
+    prereqs: null,
+    required: true,
+  },
+  {
+    id: "MATH221",
+    label: "MATH 221 - Proofs",
+    description:
+      "An introductory course intended to familiarize students with mathematical reasoning and proof techniques, including direct reasoning, indirect reasoning, and mathematical induction. Topics include elementary number theory, logic, sets, functions, and relations.",
+    prereqs: null,
+    required: true,
+  },
+  {
+    id: "MATH111",
+    label: "MATH 111 - Calculus II",
+    description:
+      "Differentiation and integration of exponential and logarithmic functions; methods of integration and applications; indeterminate forms, L'Hospital's rule and improper integrals; sequences, series, power series and Taylor series.",
+    prereqs: { type: "course", courseId: "MATH110" },
+    required: true,
+  },
+  {
+    id: "MATH112",
+    label: "MATH 112 - Applied Calculus II",
+    description:
+      "An introduction to calculus in two and three variables, first-order differential equations, infinite series, and calculus of trigonometric functions.",
+    prereqs: { type: "course", courseId: "MATH110" },
+    required: false,
+  },
+  {
+    id: "MATH213",
+    label: "MATH 231 - Euclidean Geometry",
+    description:
+      "This course is intended to familiarize the student with Euclidean geometry. Topics include the postulates and theorems of both classical and modern Euclidean geometry.",
+    prereqs: { type: "course", courseId: "MATH221" },
+    required: false,
+  },
+  {
+    id: "MATH122",
+    label: "MATH 122 - Linear Algebra I",
+    description:
+      "A course intended to introduce students to elementary linear algebra, particularly at a computational and applied level. Topics include matrices and systems of equations, inversion, determinants, vectors, inner products, eigenvectors and eigenvalues.",
+    prereqs: null,
+    required: true,
+  },
+  {
+    id: "MATH261",
+    label: "MATH 261 - Methods of Numerical Analysis",
+    description:
+      "Topics will include number systems and errors, solutions of polynomial and other nonlinear equations, interpolation, numerical differentiation and integration, and the cubic spline.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "MATH111" },
+        { type: "course", courseId: "MATH122" },
+        {
+          type: "logic",
+          operator: "OR",
+          operands: [
+            { type: "course", courseId: "CS110" },
+            { type: "course", courseId: "CS165" },
+            { type: "course", courseId: "STAT165" },
+          ],
+        },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "MATH361",
+    label: "MATH 361 - Numerical Analysis I",
+    description:
+      "Least squares and other approximations. Difference equations. Solutions of algebraic systems. Symbol manipulators.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "MATH213" },
+        {
+          type: "logic",
+          operator: "OR",
+          operands: [
+            { type: "course", courseId: "CS261" },
+            { type: "course", courseId: "MATH261" },
+          ],
+        },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "STAT160",
+    label: "STAT160 - Introductory Statistics",
+    description:
+      "A comprehensive introduction to probability, probability distributions, sampling distributions, basic techniques of statistical inference, analysis of variance, linear regression, inference for categorical variables, and nonparametric statistics.",
+    prereqs: null,
+    required: true,
+  },
+  {
+    id: "STAT300",
+    label: "STAT 300 - Statistical Learning and Predictive Modeling",
+    description:
+      "Selected topics and techniques in statistical learning and predictive modeling, including linear models, logistic regression models, regression trees, classification models and statistical software.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "MATH122" },
+        { type: "course", courseId: "STAT252" },
+        {
+          type: "logic",
+          operator: "OR",
+          operands: [
+            { type: "course", courseId: "CS110" },
+            { type: "course", courseId: "CS165" },
+            { type: "course", courseId: "STAT165" },
+          ],
+        },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "STAT301",
+    label: "STAT 301 - Introduction to Statistical Computing",
+    description:
+      "Selected topics and techniques in statistical learning and predictive modeling, including linear models, logistic regression models, regression trees, classification models and statistical software.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "MATH122" },
+        { type: "course", courseId: "STAT252" },
+        { type: "course", courseId: "CS265" },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "STAT252",
+    label: "STAT 252 - Introduction to Statistical Inference",
+    description:
+      "Sampling distribution theory and the Central Limit Theorem; large sample theory; methods of estimation and hypothesis testing including maximum likelihood estimation, likelihood ratio testing, and confidence interval construction.",
+    prereqs: null,
+    required: false,
+  },
+  {
+    id: "STAT165",
+    label: "STAT 165 - Introduction to Programming with Python",
+    description:
+      "An introduction to problem-solving techniques using Python. This course will introduce fundamental programming principles and topics: data types, expressions, control structures, elementary data structures, functions, files, and the mechanics of running, testing and debugging. These concepts will be applied to problem solving and applications in data analysis.",
+    prereqs: null,
+    required: false,
+  },
+  {
+    id: "STAT200",
+    label: "STAT 200 - Introductory Statistics",
+    description:
+      "A comprehensive introduction to probability, probability distributions, sampling distributions, basic techniques of statistical inference, analysis of variance, linear regression, inference for categorical variables, and nonparametric statistics.",
+    prereqs: null,
+    required: false,
+  },
+  {
+    id: "ENGL100",
+    label: "ENGL 100 - Introductory Statistics",
+    description:
+      "A comprehensive introduction to probability, probability distributions, sampling distributions, basic techniques of statistical inference, analysis of variance, linear regression, inference for categorical variables, and nonparametric statistics.",
+    prereqs: null,
+    required: true,
+  },
+  {
+    id: "CS301",
+    label: "CS 301 - Digital Systems Architecture",
+    description:
+      "Latency and bandwidth, cache memory, virtual memory, data compression, fault handling. Fundamentals of I/O, interrupts, external storage, buses, networks, multimedia support. Multiprocessor and parallel architectures, parallel decomposition, pipelining, shared memory systems, interconnection networks, cache consistency, memory consistency. Computational paradigms, performance evaluation, and effect of proximity.",
+    prereqs: {
+      type: "course",
+      courseId: "CS201",
+    },
+    required: true,
+  },
+  {
+    id: "CS315",
+    label: "CS 315 - Introduction to Computer Graphics",
+    description:
+      "Introduction to graphics hardware and software. Two-dimensional graphics rendering algorithms. Basic three-dimensional modeling, transformations, viewing geometry, lighting and shading, hidden surface removal, and texture mapping.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "CS210" },
+        { type: "course", courseId: "MATH122" },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "CS320",
+    label: "CS 320 - Artificial Intelligence",
+    description:
+      "Foundations and main methods of Artificial Intelligence. Problem characteristics and spaces. Search and optimization techniques with a focus on uninformed and heuristic algorithms. Two player games and constraint satisfaction. Modelling and simulation. Comparison of logic-based, fuzzy, and probabilistic reasoning and knowledge representation methodologies.",
+    prereqs: {
+      type: "course",
+      courseId: "CS220",
+    },
+    notes:
+      "Students may only receive credit for one of CS 320 or ENSE 411 (ENSE 496AC).",
+    required: true,
+  },
+  {
+    id: "CS321",
+    label: "CS 321 - Machine Learning",
+    description:
+      "Understand, develop, and apply mechanisms for supervised, unsupervised, and reinforcement learning. Selection of a proper machine learning algorithm for a problem, data preprocessing, evaluation techniques, interpretation of the resulting models, explaining model shortcomings. Biased data sets and other sources of error. Ethical and societal implications of machine learning to practical problems.",
+    prereqs: {
+      type: "course",
+      courseId: "CS320",
+    },
+    required: false,
+  },
+  {
+    id: "CS330",
+    label: "CS 330 - Introduction to Operating Systems",
+    description:
+      "Overview of operating systems: functionality, and design issues. Operating system principles: structures, abstractions, APIs, resource allocation, proximity, virtualization. Concurrency: process state, context switches, process communication, synchronization. Scheduling: preemption, schedulers, processes, and threads. Memory management. Security and protection. File systems. User interface. Distributed algorithms: consensus, termination, and fault tolerance.",
+    prereqs: {
+      type: "course",
+      courseId: "CS210",
+    },
+    required: true,
+  },
+  {
+    id: "CS335",
+    label: "CS 335 - Computer Networks",
+    description:
+      "Network architectures and protocols, networked applications, reliable data delivery, routing and forwarding, local area networks, resource allocation, mobility, reliability through redundancy. Security: secure design, defensive programming, threats and attacks, network security, cryptography.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "CS210", concurrentOk: true },
+        {
+          type: "logic",
+          operator: "OR",
+          operands: [
+            { type: "course", courseId: "STAT160", concurrentOk: true },
+            { type: "course", courseId: "STAT200", concurrentOk: true },
+          ],
+        },
+      ],
+    },
+    required: true,
+  },
+  {
+    id: "CS340",
+    label: "CS 340 - Advanced Data Structures and Algorithm Design",
+    description:
+      "Fundamental algorithms: depth- and breadth-first traversals, pattern matching, and graph algorithms. Algorithmic strategies: brute-force, greedy, divide-and-conquer, backtracking, branch-and-bound, dynamic programming, and randomized. Algorithm analysis, complexity theory, performance evaluation. Parallelism: fundamentals, algorithms, communication.",
+    prereqs: {
+      type: "course",
+      courseId: "CS220",
+    },
+    required: true,
+  },
+  {
+    id: "CS350",
+    label: "CS 350 - Programming Language Concepts",
+    description:
+      "Introduction to the theory and implementation of programming languages. Functional programming: immutable data, algebraic datatypes, recursion, and higher-order functions. Type-directed development and equational reasoning. Implementation of programming languages: grammars, syntax trees, program translation, and interpreters. Semantic models of languages: substitution, environments, and mutable state, along with alternate models such as lazy evaluation or dynamic scope.",
+    prereqs: {
+      type: "course",
+      courseId: "CS220",
+    },
+    required: true,
+  },
+  {
+    id: "CS361",
+    label: "CS 361 - Numerical and Symbolic Computing",
+    description:
+      "Least squares and other approximations. Difference equations. Solutions of algebraic systems. Symbol manipulators.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        {
+          type: "logic",
+          operator: "OR",
+          operands: [
+            { type: "course", courseId: "CS261", minGrade: 60 },
+            { type: "course", courseId: "MATH261", minGrade: 60 },
+          ],
+        },
+        { type: "course", courseId: "MATH213", minGrade: 60 },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "CS365",
+    label: "CS 365 - Data Wrangling",
+    description:
+      "Introduction to the fundamentals of data wrangling including processes of data acquisition, integration, transformation, and cleaning throughout the data life cycle. Emphasis on the importance of data quality with topics in data integrity, security, and social responsibility. Techniques for effective visualization and communication through project work.",
+    prereqs: {
+      type: "course",
+      courseId: "CS265",
+    },
+    required: false,
+  },
+  {
+    id: "CS372",
+    label: "CS 372 - Software Engineering Methodology",
+    description:
+      "Fundamental principles of designing programs and developing large software systems that meet specifications and that are safe, secure, reliable and maintainable. Software process models, software project management, requirements engineering, software design, software construction, software verification and validation, software tools and environments, software evolution, software reliability.",
+    prereqs: {
+      type: "logic",
+      operator: "OR",
+      operands: [{ type: "course", courseId: "CS285" }],
+    },
+    required: true,
+  },
+  {
+    id: "CS375",
+    label: "CS 375 - Database Systems",
+    description:
+      "Database systems concepts, data modelling, the role of data in applications, the data lifecycle, approaches to managing large volumes of data, relational databases, NoSQL databases, query languages and construction, query processing and database management system internals, data security and privacy.",
+    prereqs: {
+      type: "course",
+      courseId: "CS210",
+    },
+    required: false,
+  },
+  // ... all the commented-out courses remain unchanged ...
+  {
+    id: "CS401",
+    label: "CS 401 - Advanced Digital Systems Architecture",
+    description:
+      "Advances in computer architecture. Topics will be selected from performance enhancements, digital signal processing architectures, architectures for networks and distributed systems, architectures for mobile devices, and recently proposed architectures.",
+    prereqs: {
+      type: "course",
+      courseId: "CS301",
+    },
+    required: false,
+  },
+  {
+    id: "CS405",
+    label: "CS 405 - Computer Graphics",
+    description:
+      "Advanced topics in computer graphics, including special modeling techniques for natural phenomenon, advanced illumination models and rendering algorithms.",
+    prereqs: {
+      type: "course",
+      courseId: "CS315",
+    },
+    required: false,
+  },
+  {
+    id: "CS408",
+    label: "CS 408 - Animation Software Design",
+    description:
+      "This course teaches the design and implementation of software for creating animations. Topics include history of animation, technical background, motion control, keyframe-based animation, kinematics, physically based animation, fluid animation, modelling and animating human figures, facial animation, modelling behavior, and special models for animation.",
+    prereqs: {
+      type: "logic",
+      operator: "OR",
+      operands: [
+        { type: "course", courseId: "CS315" },
+        { type: "course", courseId: "CS320" },
+        { type: "course", courseId: "CS330" },
+        { type: "course", courseId: "CS340" },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "CS409",
+    label: "CS 409 - Interactive Entertainment Software",
+    description:
+      "This course teaches the design and implementation of interactive entertainment software, including computer games. Topics include history of interactive software, social factors, principles of interactive entertainment, hardware platforms, current software development tools, game design, game architecture, game physics, collision detection, game graphics, artificial intelligence for games, audio, game production and business aspects.",
+    prereqs: {
+      type: "logic",
+      operator: "OR",
+      operands: [
+        { type: "course", courseId: "CS315" },
+        { type: "course", courseId: "CS320" },
+        { type: "course", courseId: "CS330" },
+        { type: "course", courseId: "CS340" },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "CS410",
+    label: "CS 410 - Introduction to Compiler Design",
+    description:
+      "High-level programming language specification. Lexical and syntactic structure, regular expression, finite automata, and lexical analyzer. Context-free grammars and parsing. LR parsers. Symbol tables. Storage allocation. Code optimization and generation.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [{ type: "course", courseId: "CS340" }],
+    },
+    required: false,
+  },
+  {
+    id: "CS411",
+    label: "CS 411 - Computability and Formal Languages",
+    description:
+      "The notion of effective procedure and Turing machine. The universal Turing machine. Nondeterministic Turing machine. Recursive functions and other computable functions. The halting problem and unsolvability. Grammar and formal language. Finite automata and regular grammars. Context-free grammars and push-down automata. Post correspondence problem. The Chomsky hierarchy of languages and context-sensitive language.",
+    prereqs: null,
+    required: false,
+  },
+  {
+    id: "CS412",
+    label: "CS 412 - Algorithm Analysis",
+    description:
+      "A formal algorithmic language. Measures of complexity for time and space. Worst-case, average-case, and best-case analysis. Lower and upper bounds of algorithms (techniques include comparison trees, adversary arguments, and reduction). P and NP classes. NP-hardness and NP- completeness. Introduction to parallel computational models and algorithms.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [{ type: "course", courseId: "CS340" }],
+    },
+    required: false,
+  },
+  {
+    id: "CS421",
+    label: "CS 421 - Advanced Artificial Intelligence",
+    description:
+      "Advanced Artificial Intelligence approaches to approximate reasoning and machine learning. Decision trees and other selected data-based knowledge models. Topics may include logic programming and PROLOG, LISP, Artificial Intelligence in games, data mining, natural language processing, pattern recognition, and planning.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "CS320" },
+        { type: "course", courseId: "CS340" },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "CS425",
+    label: "CS 425 - Computer Vision",
+    description:
+      "Theory and practice of digital image processing. Topics include fundamentals of visual perception, image formation, representation, and encoding, compression, morphological processing, harmonic analysis, neural networks, feature detection, segmentation, and pattern classification.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "CS340" },
+        { type: "course", courseId: "MATH110" },
+        { type: "course", courseId: "MATH122" },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "CS427",
+    label: "CS 427 - Introduction to Computer Audio",
+    description:
+      "The purpose of this course is to provide a broad overview of many areas of computer audio, including: Digital representation and compression; Psychoacoustics; Surround Sound; Speech recognition and Music Information Retrieval; MIDI and New interfaces for music; and video game sound.",
+    prereqs: {
+      type: "logic",
+      operator: "OR",
+      operands: [
+        { type: "course", courseId: "CS315" },
+        { type: "course", courseId: "CS320" },
+        { type: "course", courseId: "CS340" },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "CS428",
+    label: "CS 428 - Human Computer Communications",
+    description:
+      "This course stresses the importance of good interfaces and the relationship of user interface design to human-computer interaction. Other topics include: interface quality and methods of evaluation; interface design examples; dialogue genre; user-centered design and task analysis; prototyping and the iterative design cycle.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        {
+          type: "logic",
+          operator: "OR",
+          operands: [{ type: "course", courseId: "CS285" }],
+        },
+        { type: "course", courseId: "CS280" },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "CS430",
+    label: "CS 430 - Advanced Topics in Operating Systems",
+    description:
+      "Advanced operating system concepts. Topics include one or more of the following: distributed systems, real-time operating systems, intelligent networks, communications protocols, and database process control within a client-server framework.",
+    prereqs: {
+      type: "course",
+      courseId: "CS330",
+    },
+    required: false,
+  },
+  {
+    id: "CS435",
+    label: "CS 435 - Cybersecurity",
+    description:
+      "Foundations of cybersecurity, including a survey of different types of threats. Privacy, including individual and societal impacts. Secure coding and attack prevention techniques. Cryptography, including classical and current approaches to data encryption. Security analysis, design, and engineering.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "CS330" },
+        { type: "course", courseId: "CS335" },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "CS437",
+    label: "CS 437 - Information Visualization",
+    description:
+      "Focuses on design, development, and study of interactive visualization techniques for the analysis, exploration, and explanation of abstract information.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        {
+          type: "logic",
+          operator: "OR",
+          operands: [{ type: "course", courseId: "CS285" }],
+        },
+        {
+          type: "logic",
+          operator: "OR",
+          operands: [
+            { type: "course", courseId: "CS205" },
+            { type: "course", courseId: "CS315" },
+          ],
+        },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "CS455",
+    label: "CS 455 - Mobile Computing",
+    description:
+      "Mobile Computing focuses on the design and implementation of software in a networked mobile environment. Primary topics include software development practices, network computing, graphics programming, and human-computer interaction for modern mobile devices.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "CS340" },
+        {
+          type: "logic",
+          operator: "OR",
+          operands: [
+            { type: "course", courseId: "CS205" },
+            { type: "course", courseId: "CS315" },
+            { type: "course", courseId: "CS335" },
+          ],
+        },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "CS461",
+    label: "CS 461 - Advanced Topics in Numerical Analysis",
+    description:
+      "Numerical solutions of ordinary differential equations. Numerical solutions of partial differential equations. Linear and non-linear problems.",
+    prereqs: {
+      type: "logic",
+      operator: "OR",
+      operands: [
+        { type: "course", courseId: "CS361", minGrade: 60 },
+        { type: "course", courseId: "MATH361", minGrade: 60 },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "CS465",
+    label: "CS 465 - Data Mining",
+    description:
+      "Knowledge Discovery from Data (KDD). Topics include knowledge discovery, data preparation, data warehousing, pattern mining, classification and regression, cluster analysis, outlier detection, mining complex data types.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "CS340" },
+        { type: "course", courseId: "CS365" },
+        { type: "course", courseId: "CS375" },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "CS476",
+    label: "CS 476 - Software Development Project",
+    description:
+      "Software development projects following all the phases of the software process. Project planning and scheduling. Semester-long group projects with real-world applications.",
+    prereqs: {
+      type: "course",
+      courseId: "CS372",
+    },
+    required: true,
+  },
+  {
+    id: "CS496",
+    label: "CS 496 - Data Science Capstone",
+    description:
+      "Capstone course for data science majors. Applying data scientific methodologies to real data challenges and effectively communicating findings. Covers ethical issues and responsible practices.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "STAT300" },
+        { type: "course", courseId: "STAT301" },
+        { type: "course", courseId: "CS280" },
+        {
+          type: "logic",
+          operator: "OR",
+          operands: [
+            { type: "course", courseId: "CS412" },
+            { type: "course", courseId: "CS465" },
+          ],
+        },
+      ],
+    },
+    required: false,
   },
   // {
   //   id: "CS290AE",
@@ -286,315 +933,6 @@ export const initialCourses = [
   //     description: "Permission of the Instructor is required",
   //   },
   // },
-  {
-    id: "MATH110",
-    label: "MATH 110 - Calculus I",
-    description:
-      "An introduction to differential calculus. Topics include: functions, limits, continuity, differentiation, and applications of the derivative. Problems will be drawn from various disciplines.",
-    prereqs: null,
-  },
-  {
-    id: "MATH221",
-    label: "MATH 221 - Proofs",
-    description:
-      "An introductory course intended to familiarize students with mathematical reasoning and proof techniques, including direct reasoning, indirect reasoning, and mathematical induction. Topics include elementary number theory, logic, sets, functions, and relations.",
-    prereqs: null,
-  },
-  {
-    id: "MATH111",
-    label: "MATH 111 - Calculus II",
-    description:
-      "Differentiation and integration of exponential and logarithmic functions; methods of integration and applications; indeterminate forms, L'Hospital's rule and improper integrals; sequences, series, power series and Taylor series.",
-    prereqs: { type: "course", courseId: "MATH110" },
-  },
-  {
-    id: "MATH112",
-    label: "MATH 112 - Applied Calculus II",
-    description:
-      "An introduction to calculus in two and three variables, first-order differential equations, infinite series, and calculus of trigonometric functions.",
-    prereqs: { type: "course", courseId: "MATH110" },
-  },
-  {
-    id: "MATH213",
-    label: "MATH 231 - Euclidean Geometry",
-    description:
-      "This course is intended to familiarize the student with Euclidean geometry. Topics include the postulates and theorems of both classical and modern Euclidean geometry.",
-    prereqs: { type: "course", courseId: "MATH221" },
-  },
-  {
-    id: "MATH122",
-    label: "MATH 122 - Linear Algebra I",
-    description:
-      "A course intended to introduce students to elementary linear algebra, particularly at a computational and applied level. Topics include matrices and systems of equations, inversion, determinants, vectors, inner products, eigenvectors and eigenvalues.",
-    prereqs: null,
-  },
-  {
-    id: "MATH261",
-    label: "MATH 261 - Methods of Numerical Analysis",
-    description:
-      "Topics will include number systems and errors, solutions of polynomial and other nonlinear equations, interpolation, numerical differentiation and integration, and the cubic spline.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "MATH111" },
-        { type: "course", courseId: "MATH122" },
-        {
-          type: "logic",
-          operator: "OR",
-          operands: [
-            { type: "course", courseId: "CS110" },
-            { type: "course", courseId: "CS165" },
-            { type: "course", courseId: "STAT165" },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: "MATH361",
-    label: "MATH 361 - Numerical Analysis I",
-    description:
-      "Least squares and other approximations. Difference equations. Solutions of algebraic systems. Symbol manipulators.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "MATH213" },
-        {
-          type: "logic",
-          operator: "OR",
-          operands: [
-            { type: "course", courseId: "CS261" },
-            { type: "course", courseId: "MATH261" },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: "STAT160",
-    label: "STAT160 - Introductory Statistics",
-    description:
-      "A comprehensive introduction to probability, probability distributions, sampling distributions, basic techniques of statistical inference, analysis of variance, linear regression, inference for categorical variables, and nonparametric statistics.",
-    prereqs: null,
-  },
-  {
-    id: "STAT300",
-    label: "STAT 300 - Statistical Learning and Predictive Modeling",
-    description:
-      "Selected topics and techniques in statistical learning and predictive modeling, including linear models, logistic regression models, regression trees, classification models and statistical software.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "MATH122" },
-        { type: "course", courseId: "STAT252" },
-        {
-          type: "logic",
-          operator: "OR",
-          operands: [
-            { type: "course", courseId: "CS110" },
-            { type: "course", courseId: "CS165" },
-            { type: "course", courseId: "STAT165" },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: "STAT301",
-    label: "STAT 301 - Introduction to Statistical Computing",
-    description:
-      "Selected topics and techniques in statistical learning and predictive modeling, including linear models, logistic regression models, regression trees, classification models and statistical software.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "MATH122" },
-        { type: "course", courseId: "STAT252" },
-        { type: "course", courseId: "CS265" },
-      ],
-    },
-  },
-  {
-    id: "STAT252",
-    label: "STAT 252 - Introduction to Statistical Inference",
-    description:
-      "Sampling distribution theory and the Central Limit Theorem; large sample theory; methods of estimation and hypothesis testing including maximum likelihood estimation, likelihood ratio testing, and confidence interval construction.",
-    prereqs: null,
-  },
-  {
-    id: "STAT165",
-    label: "STAT 165 - Introduction to Programming with Python",
-    description:
-      "An introduction to problem-solving techniques using Python. This course will introduce fundamental programming principles and topics: data types, expressions, control structures, elementary data structures, functions, files, and the mechanics of running, testing and debugging. These concepts will be applied to problem solving and applications in data analysis.",
-    prereqs: null,
-  },
-  {
-    id: "STAT200",
-    label: "STAT200 - Introductory Statistics",
-    description:
-      "A comprehensive introduction to probability, probability distributions, sampling distributions, basic techniques of statistical inference, analysis of variance, linear regression, inference for categorical variables, and nonparametric statistics.",
-    prereqs: null,
-  },
-  {
-    id: "ENGL100",
-    label: "STAT200 - Introductory Statistics",
-    description:
-      "A comprehensive introduction to probability, probability distributions, sampling distributions, basic techniques of statistical inference, analysis of variance, linear regression, inference for categorical variables, and nonparametric statistics.",
-    prereqs: null,
-  },
-
-  {
-    id: "CS301",
-    label: "CS 301 - Digital Systems Architecture",
-    description:
-      "Latency and bandwidth, cache memory, virtual memory, data compression, fault handling. Fundamentals of I/O, interrupts, external storage, buses, networks, multimedia support. Multiprocessor and parallel architectures, parallel decomposition, pipelining, shared memory systems, interconnection networks, cache consistency, memory consistency. Computational paradigms, performance evaluation, and effect of proximity.",
-    prereqs: {
-      type: "course",
-      courseId: "CS201",
-    },
-  },
-  {
-    id: "CS315",
-    label: "CS 315 - Introduction to Computer Graphics",
-    description:
-      "Introduction to graphics hardware and software. Two-dimensional graphics rendering algorithms. Basic three-dimensional modeling, transformations, viewing geometry, lighting and shading, hidden surface removal, and texture mapping.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "CS210" },
-        { type: "course", courseId: "MATH122" },
-      ],
-    },
-  },
-  {
-    id: "CS320",
-    label: "CS 320 - Artificial Intelligence",
-    description:
-      "Foundations and main methods of Artificial Intelligence. Problem characteristics and spaces. Search and optimization techniques with a focus on uninformed and heuristic algorithms. Two player games and constraint satisfaction. Modelling and simulation. Comparison of logic-based, fuzzy, and probabilistic reasoning and knowledge representation methodologies.",
-    prereqs: {
-      type: "course",
-      courseId: "CS220",
-    },
-    notes:
-      "Students may only receive credit for one of CS 320 or ENSE 411 (ENSE 496AC).",
-  },
-  {
-    id: "CS321",
-    label: "CS 321 - Machine Learning",
-    description:
-      "Understand, develop, and apply mechanisms for supervised, unsupervised, and reinforcement learning. Selection of a proper machine learning algorithm for a problem, data preprocessing, evaluation techniques, interpretation of the resulting models, explaining model shortcomings. Biased data sets and other sources of error. Ethical and societal implications of machine learning to practical problems.",
-    prereqs: {
-      type: "course",
-      courseId: "CS320",
-    },
-  },
-  {
-    id: "CS330",
-    label: "CS 330 - Introduction to Operating Systems",
-    description:
-      "Overview of operating systems: functionality, and design issues. Operating system principles: structures, abstractions, APIs, resource allocation, proximity, virtualization. Concurrency: process state, context switches, process communication, synchronization. Scheduling: preemption, schedulers, processes, and threads. Memory management. Security and protection. File systems. User interface. Distributed algorithms: consensus, termination, and fault tolerance.",
-    prereqs: {
-      type: "course",
-      courseId: "CS210",
-    },
-  },
-  {
-    id: "CS335",
-    label: "CS 335 - Computer Networks",
-    description:
-      "Network architectures and protocols, networked applications, reliable data delivery, routing and forwarding, local area networks, resource allocation, mobility, reliability through redundancy. Security: secure design, defensive programming, threats and attacks, network security, cryptography.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "CS210", concurrentOk: true },
-        {
-          type: "logic",
-          operator: "OR",
-          operands: [
-            { type: "course", courseId: "STAT160", concurrentOk: true },
-            { type: "course", courseId: "STAT200", concurrentOk: true },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: "CS340",
-    label: "CS 340 - Advanced Data Structures and Algorithm Design",
-    description:
-      "Fundamental algorithms: depth- and breadth-first traversals, pattern matching, and graph algorithms. Algorithmic strategies: brute-force, greedy, divide-and-conquer, backtracking, branch-and-bound, dynamic programming, and randomized. Algorithm analysis, complexity theory, performance evaluation. Parallelism: fundamentals, algorithms, communication.",
-    prereqs: {
-      type: "course",
-      courseId: "CS220",
-    },
-  },
-  {
-    id: "CS350",
-    label: "CS 350 - Programming Language Concepts",
-    description:
-      "Introduction to the theory and implementation of programming languages. Functional programming: immutable data, algebraic datatypes, recursion, and higher-order functions. Type-directed development and equational reasoning. Implementation of programming languages: grammars, syntax trees, program translation, and interpreters. Semantic models of languages: substitution, environments, and mutable state, along with alternate models such as lazy evaluation or dynamic scope.",
-    prereqs: {
-      type: "course",
-      courseId: "CS220",
-    },
-  },
-  {
-    id: "CS361",
-    label: "CS 361 - Numerical and Symbolic Computing",
-    description:
-      "Least squares and other approximations. Difference equations. Solutions of algebraic systems. Symbol manipulators.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        {
-          type: "logic",
-          operator: "OR",
-          operands: [
-            { type: "course", courseId: "CS261", minGrade: 60 },
-            { type: "course", courseId: "MATH261", minGrade: 60 },
-          ],
-        },
-        { type: "course", courseId: "MATH213", minGrade: 60 },
-      ],
-    },
-  },
-  {
-    id: "CS365",
-    label: "CS 365 - Data Wrangling",
-    description:
-      "Introduction to the fundamentals of data wrangling including processes of data acquisition, integration, transformation, and cleaning throughout the data life cycle. Emphasis on the importance of data quality with topics in data integrity, security, and social responsibility. Techniques for effective visualization and communication through project work.",
-    prereqs: {
-      type: "course",
-      courseId: "CS265",
-    },
-  },
-  {
-    id: "CS372",
-    label: "CS 372 - Software Engineering Methodology",
-    description:
-      "Fundamental principles of designing programs and developing large software systems that meet specifications and that are safe, secure, reliable and maintainable. Software process models, software project management, requirements engineering, software design, software construction, software verification and validation, software tools and environments, software evolution, software reliability.",
-    prereqs: {
-      type: "logic",
-      operator: "OR",
-      operands: [{ type: "course", courseId: "CS285" }],
-    },
-  },
-  {
-    id: "CS375",
-    label: "CS 375 - Database Systems",
-    description:
-      "Database systems concepts, data modelling, the role of data in applications, the data lifecycle, approaches to managing large volumes of data, relational databases, NoSQL databases, query languages and construction, query processing and database management system internals, data security and privacy.",
-    prereqs: {
-      type: "course",
-      courseId: "CS210",
-    },
-  },
   // {
   //   id: "CS390AK",
   //   label: "CS 390AK - Web Content Development and Production",
@@ -647,259 +985,6 @@ export const initialCourses = [
   //   },
   // },
 
-  {
-    id: "CS401",
-    label: "CS 401 - Advanced Digital Systems Architecture",
-    description:
-      "Advances in computer architecture. Topics will be selected from performance enhancements, digital signal processing architectures, architectures for networks and distributed systems, architectures for mobile devices, and recently proposed architectures.",
-    prereqs: {
-      type: "course",
-      courseId: "CS301",
-    },
-  },
-  {
-    id: "CS405",
-    label: "CS 405 - Computer Graphics",
-    description:
-      "Advanced topics in computer graphics, including special modeling techniques for natural phenomenon, advanced illumination models and rendering algorithms.",
-    prereqs: {
-      type: "course",
-      courseId: "CS315",
-    },
-  },
-  {
-    id: "CS408",
-    label: "CS 408 - Animation Software Design",
-    description:
-      "This course teaches the design and implementation of software for creating animations. Topics include history of animation, technical background, motion control, keyframe-based animation, kinematics, physically based animation, fluid animation, modelling and animating human figures, facial animation, modelling behavior, and special models for animation.",
-    prereqs: {
-      type: "logic",
-      operator: "OR",
-      operands: [
-        { type: "course", courseId: "CS315" },
-        { type: "course", courseId: "CS320" },
-        { type: "course", courseId: "CS330" },
-        { type: "course", courseId: "CS340" },
-      ],
-    },
-  },
-  {
-    id: "CS409",
-    label: "CS 409 - Interactive Entertainment Software",
-    description:
-      "This course teaches the design and implementation of interactive entertainment software, including computer games. Topics include history of interactive software, social factors, principles of interactive entertainment, hardware platforms, current software development tools, game design, game architecture, game physics, collision detection, game graphics, artificial intelligence for games, audio, game production and business aspects.",
-    prereqs: {
-      type: "logic",
-      operator: "OR",
-      operands: [
-        { type: "course", courseId: "CS315" },
-        { type: "course", courseId: "CS320" },
-        { type: "course", courseId: "CS330" },
-        { type: "course", courseId: "CS340" },
-      ],
-    },
-  },
-  {
-    id: "CS410",
-    label: "CS 410 - Introduction to Compiler Design",
-    description:
-      "High-level programming language specification. Lexical and syntactic structure, regular expression, finite automata, and lexical analyzer. Context-free grammars and parsing. LR parsers. Symbol tables. Storage allocation. Code optimization and generation.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [{ type: "course", courseId: "CS340" }],
-    },
-  },
-  {
-    id: "CS411",
-    label: "CS 411 - Computability and Formal Languages",
-    description:
-      "The notion of effective procedure and Turing machine. The universal Turing machine. Nondeterministic Turing machine. Recursive functions and other computable functions. The halting problem and unsolvability. Grammar and formal language. Finite automata and regular grammars. Context-free grammars and push-down automata. Post correspondence problem. The Chomsky hierarchy of languages and context-sensitive language.",
-    prereqs: null,
-  },
-  {
-    id: "CS412",
-    label: "CS 412 - Algorithm Analysis",
-    description:
-      "A formal algorithmic language. Measures of complexity for time and space. Worst-case, average-case, and best-case analysis. Lower and upper bounds of algorithms (techniques include comparison trees, adversary arguments, and reduction). P and NP classes. NP-hardness and NP- completeness. Introduction to parallel computational models and algorithms.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [{ type: "course", courseId: "CS340" }],
-    },
-  },
-  {
-    id: "CS421",
-    label: "CS 421 - Advanced Artificial Intelligence",
-    description:
-      "Advanced Artificial Intelligence approaches to approximate reasoning and machine learning. Decision trees and other selected data-based knowledge models. Topics may include logic programming and PROLOG, LISP, Artificial Intelligence in games, data mining, natural language processing, pattern recognition, and planning.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "CS320" },
-        { type: "course", courseId: "CS340" },
-      ],
-    },
-  },
-  {
-    id: "CS425",
-    label: "CS 425 - Computer Vision",
-    description:
-      "Theory and practice of digital image processing. Topics include fundamentals of visual perception, image formation, representation, and encoding, compression, morphological processing, harmonic analysis, neural networks, feature detection, segmentation, and pattern classification.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "CS340" },
-        { type: "course", courseId: "MATH110" },
-        { type: "course", courseId: "MATH122" },
-      ],
-    },
-  },
-  {
-    id: "CS427",
-    label: "CS 427 - Introduction to Computer Audio",
-    description:
-      "The purpose of this course is to provide a broad overview of many areas of computer audio, including: Digital representation and compression; Psychoacoustics; Surround Sound; Speech recognition and Music Information Retrieval; MIDI and New interfaces for music; and video game sound.",
-    prereqs: {
-      type: "logic",
-      operator: "OR",
-      operands: [
-        { type: "course", courseId: "CS315" },
-        { type: "course", courseId: "CS320" },
-        { type: "course", courseId: "CS340" },
-      ],
-    },
-  },
-  {
-    id: "CS428",
-    label: "CS 428 - Human Computer Communications",
-    description:
-      "This course stresses the importance of good interfaces and the relationship of user interface design to human-computer interaction. Other topics include: interface quality and methods of evaluation; interface design examples; dialogue genre; user-centered design and task analysis; prototyping and the iterative design cycle.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        {
-          type: "logic",
-          operator: "OR",
-          operands: [{ type: "course", courseId: "CS285" }],
-        },
-        { type: "course", courseId: "CS280" },
-      ],
-    },
-  },
-  {
-    id: "CS430",
-    label: "CS 430 - Advanced Topics in Operating Systems",
-    description:
-      "Advanced operating system concepts. Topics include one or more of the following: distributed systems, real-time operating systems, intelligent networks, communications protocols, and database process control within a client-server framework.",
-    prereqs: {
-      type: "course",
-      courseId: "CS330",
-    },
-  },
-  {
-    id: "CS435",
-    label: "CS 435 - Cybersecurity",
-    description:
-      "Foundations of cybersecurity, including a survey of different types of threats. Privacy, including individual and societal impacts. Secure coding and attack prevention techniques. Cryptography, including classical and current approaches to data encryption. Security analysis, design, and engineering.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "CS330" },
-        { type: "course", courseId: "CS335" },
-      ],
-    },
-  },
-  {
-    id: "CS437",
-    label: "CS 437 - Information Visualization",
-    description:
-      "Focuses on design, development, and study of interactive visualization techniques for the analysis, exploration, and explanation of abstract information.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        {
-          type: "logic",
-          operator: "OR",
-          operands: [{ type: "course", courseId: "CS285" }],
-        },
-        {
-          type: "logic",
-          operator: "OR",
-          operands: [
-            { type: "course", courseId: "CS205" },
-            { type: "course", courseId: "CS315" },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: "CS455",
-    label: "CS 455 - Mobile Computing",
-    description:
-      "Mobile Computing focuses on the design and implementation of software in a networked mobile environment. Primary topics include software development practices, network computing, graphics programming, and human-computer interaction for modern mobile devices.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "CS340" },
-        {
-          type: "logic",
-          operator: "OR",
-          operands: [
-            { type: "course", courseId: "CS205" },
-            { type: "course", courseId: "CS315" },
-            { type: "course", courseId: "CS335" },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    id: "CS461",
-    label: "CS 461 - Advanced Topics in Numerical Analysis",
-    description:
-      "Numerical solutions of ordinary differential equations. Numerical solutions of partial differential equations. Linear and non-linear problems.",
-    prereqs: {
-      type: "logic",
-      operator: "OR",
-      operands: [
-        { type: "course", courseId: "CS361", minGrade: 60 },
-        { type: "course", courseId: "MATH361", minGrade: 60 },
-      ],
-    },
-  },
-  {
-    id: "CS465",
-    label: "CS 465 - Data Mining",
-    description:
-      "Knowledge Discovery from Data (KDD). Topics include knowledge discovery, data preparation, data warehousing, pattern mining, classification and regression, cluster analysis, outlier detection, mining complex data types.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "CS340" },
-        { type: "course", courseId: "CS365" },
-        { type: "course", courseId: "CS375" },
-      ],
-    },
-  },
-  {
-    id: "CS476",
-    label: "CS 476 - Software Development Project",
-    description:
-      "Software development projects following all the phases of the software process. Project planning and scheduling. Semester-long group projects with real-world applications.",
-    prereqs: {
-      type: "course",
-      courseId: "CS372",
-    },
-  },
   // {
   //   id: "CS490CA",
   //   label: "CS 490CA - Constraint Processing",
@@ -911,29 +996,6 @@ export const initialCourses = [
   //     minGrade: 70,
   //   },
   // },
-  {
-    id: "CS496",
-    label: "CS 496 - Data Science Capstone",
-    description:
-      "Capstone course for data science majors. Applying data scientific methodologies to real data challenges and effectively communicating findings. Covers ethical issues and responsible practices.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "STAT300" },
-        { type: "course", courseId: "STAT301" },
-        { type: "course", courseId: "CS280" },
-        {
-          type: "logic",
-          operator: "OR",
-          operands: [
-            { type: "course", courseId: "CS412" },
-            { type: "course", courseId: "CS465" },
-          ],
-        },
-      ],
-    },
-  },
 
   // {
   //   id: "CS490AB",

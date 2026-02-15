@@ -1,6 +1,5 @@
 import { ReactFlow, Background, MiniMap } from "@xyflow/react";
 import { useNodesState, useEdgesState } from "@xyflow/react";
-import { initialCourses } from "./coursesData";
 import { useCallback, useEffect, useMemo } from "react";
 import { applyStyles } from "./utils/applyStylesToNodes";
 import { getLayoutedNodes } from "./utils/cytoscapeLayoutCalculator";
@@ -10,24 +9,34 @@ import "@xyflow/react/dist/style.css";
 const containerStyle = { width: "100%", height: "100%" };
 const miniMapStyle = { height: 170, width: 270 };
 
-export function GraphView({ onNodeClick, userGrades }) {
+export function GraphView({ onNodeClick, userGrades, courses }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges] = useEdgesState([]);
 
+  const activeCourseIds = useMemo(
+    () => new Set(courses.map((c) => c.id)),
+    [courses],
+  );
+
   const { layoutedNodes, rawEdges } = useMemo(() => {
-    const rawNodes = initialCourses.map((course) => ({
+    console.log("--------------I was Called---------------");
+    const rawNodes = courses.map((course) => ({
       id: course.id,
       data: {
         label: course.label,
         prereqs: course.prereqs,
         description: course.description,
+        required: course.required,
       },
       position: { x: 0, y: 0 },
     }));
 
-    const rawEdges = initialCourses.flatMap((course) => {
+    const rawEdges = courses.flatMap((course) => {
       const prereqIds = getPrereqIds(course.prereqs);
-      return prereqIds.map((prereqId) => ({
+      const filteredPrereqIds = prereqIds.filter((prereqId) =>
+        activeCourseIds.has(prereqId),
+      );
+      return filteredPrereqIds.map((prereqId) => ({
         id: `${prereqId}-${course.id}`,
         source: prereqId,
         target: course.id,
@@ -51,7 +60,7 @@ export function GraphView({ onNodeClick, userGrades }) {
     });
 
     return { layoutedNodes, rawEdges };
-  }, []);
+  }, [courses, activeCourseIds]);
 
   useEffect(() => {
     const { styledNodes, styledEdges } = applyStyles(
