@@ -1,18 +1,21 @@
 import { ReactFlow, Background, MiniMap } from "@xyflow/react";
 import { useNodesState, useEdgesState } from "@xyflow/react";
 import { initialCourses } from "./coursesData";
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { applyStyles } from "./utils/applyStylesToNodes";
 // import { getLayoutedNodes } from "./utils/layoutCalculator";
 import { getLayoutedNodes } from "./utils/cytoscapeLayoutCalculator";
 import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
 import "@xyflow/react/dist/style.css";
 
+const containerStyle = { width: "100%", height: "100%" };
+const miniMapStyle = { height: 170, width: 270 };
+
 export function GraphView({ onNodeClick, userGrades }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges] = useEdgesState([]);
 
-  useEffect(() => {
+  const { layoutedNodes, rawEdges } = useMemo(() => {
     const rawNodes = initialCourses.map((course) => ({
       id: course.id,
       data: {
@@ -48,6 +51,10 @@ export function GraphView({ onNodeClick, userGrades }) {
       },
     });
 
+    return { layoutedNodes, rawEdges };
+  }, []);
+
+  useEffect(() => {
     const { styledNodes, styledEdges } = applyStyles(
       layoutedNodes,
       rawEdges,
@@ -56,28 +63,18 @@ export function GraphView({ onNodeClick, userGrades }) {
 
     setNodes(styledNodes);
     setEdges(styledEdges);
-  }, []);
+  }, [userGrades, layoutedNodes, rawEdges, setNodes, setEdges]);
 
-  useEffect(() => {
-    if (nodes.length > 0 && edges.length > 0) {
-      const { styledNodes, styledEdges } = applyStyles(
-        nodes,
-        edges,
-        userGrades,
-      );
-
-      setNodes(styledNodes);
-      setEdges(styledEdges);
-    }
-  }, [userGrades]);
-
-  const handleNodeClick = (event, node) => {
-    onNodeClick(node);
-  };
+  const handleNodeClick = useCallback(
+    (event, node) => {
+      onNodeClick(node);
+    },
+    [onNodeClick],
+  );
 
   return (
     <>
-      <div style={{ width: "100%", height: "100%" }}>
+      <div style={containerStyle}>
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -88,16 +85,7 @@ export function GraphView({ onNodeClick, userGrades }) {
           minZoom={0.1} // Allow zooming out significantly
           maxZoom={1.5} // Prevent zooming in too far
         >
-          <MiniMap
-            nodeStrokeWidth={3}
-            zoomable
-            pannable
-            style={{ height: 170, width: 270 }}
-            nodeColor={(node) => {
-              // Optional: Match the minimap colors to your node styles
-              return node.style?.background || "#ccc";
-            }}
-          />
+          <MiniMap nodeStrokeWidth={3} zoomable pannable style={miniMapStyle} />
           <Background variant="dots" gap={25} size={1} />
         </ReactFlow>
       </div>
