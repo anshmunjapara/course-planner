@@ -3,7 +3,6 @@ import { useNodesState, useEdgesState } from "@xyflow/react";
 import { initialCourses } from "./coursesData";
 import { useCallback, useEffect, useMemo } from "react";
 import { applyStyles } from "./utils/applyStylesToNodes";
-// import { getLayoutedNodes } from "./utils/layoutCalculator";
 import { getLayoutedNodes } from "./utils/cytoscapeLayoutCalculator";
 import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
 import "@xyflow/react/dist/style.css";

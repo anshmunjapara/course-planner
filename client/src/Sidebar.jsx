@@ -1,4 +1,6 @@
 import { GradeInput } from "./GradeInput";
+import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
+import { getEdgeStatus } from "./utils/getEdgeStatus";
 import "./Sidebar.css";
 
 export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
@@ -15,6 +17,17 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
       </div>
     );
   }
+
+  const prereqList = getPrereqIds(selectedNode.data.prereqs);
+  const prereqListWithStatus = prereqList.map((prereqId) => {
+    const status = getEdgeStatus(
+      selectedNode.data.prereqs,
+      prereqId,
+      userGrades[prereqId],
+    );
+
+    return { prereqId, status };
+  });
 
   return (
     <div className="sidebar">
@@ -35,6 +48,27 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
               onChangeGrade={handleGradeSubmit}
               userGrades={userGrades}
             />
+          </div>
+        )}
+
+        {selectedNode.data.prereqs && (
+          <div className="sidebar-section">
+            <h3>Prerequisites</h3>
+            <div className="prereq-list">
+              {prereqListWithStatus.length === 0 ? (
+                <p className="prereq-empty">No prerequisites</p>
+              ) : (
+                prereqListWithStatus.map(({ prereqId, status }) => (
+                  <div
+                    key={prereqId}
+                    className={`prereq-item prereq-${status}`}
+                  >
+                    <span className="prereq-id">{prereqId}</span>
+                    <span className="prereq-status">{status}</span>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         )}
       </div>

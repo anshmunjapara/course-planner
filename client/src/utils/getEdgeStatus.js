@@ -9,18 +9,18 @@ export function getEdgeStatus(
   );
 
   if (!prereqCondition) {
-    return "available";
+    return "clear";
   }
 
   const requiredGrade = prereqCondition.minGrade
     ? prereqCondition.minGrade
     : 50;
   if (userGradeSource >= requiredGrade) {
-    return "available";
+    return "clear";
   } else if (userGradeSource >= 50 && userGradeSource < requiredGrade) {
-    return "failed";
+    return "notClear";
   } else {
-    return "locked";
+    return "incomplete";
   }
 }
 

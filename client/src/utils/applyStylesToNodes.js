@@ -45,12 +45,12 @@ export const applyStyles = (nodes, edges, grades) => {
       );
     }
 
-    const isAnimated = edgeStatus === "available";
+    const isAnimated = edgeStatus === "clear";
 
     return {
       ...edge,
       animated: isAnimated,
-      zIndex: isAnimated ? 10 : 0,
+      zIndex: -10,
       style: {
         stroke: BORDER_COLORS[edgeStatus],
         strokeWidth: 2.5,

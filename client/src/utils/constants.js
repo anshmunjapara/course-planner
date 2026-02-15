@@ -1,9 +1,9 @@
 // Define colors for your statuses
 export const STATUS_COLORS = {
-  completed: "#d4edda74", // Light Green
-  available: "#fff3cd7b", // Light Yellow
-  locked: "#e2e3e56e", // Grey
-  failed: "#f8d7da7b", // Light Red
+  completed: "#d4edda8d", // Light Green
+  available: "#fff3cd88", // Light Yellow
+  locked: "#e2e3e57b", // Grey
+  failed: "#f8d7da85", // Light Red
 };
 
 // Define border colors for emphasis
@@ -12,4 +12,7 @@ export const BORDER_COLORS = {
   available: "#ffc107",
   locked: "#6c757d",
   failed: "#dc3545",
+  clear: "#ffc107",
+  notClear: "#dc3545",
+  incomplete: "#6c757d",
 };
