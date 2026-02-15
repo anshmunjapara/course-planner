@@ -1,0 +1,127 @@
+/* Course Picker Sidebar */
+.course-picker-sidebar {
+  width: 340px;
+  height: 100vh;
+  background: linear-gradient(135deg, #0d0d1a 0%, #1a1a2e 100%);
+  border-left: 1px solid rgba(99, 102, 241, 0.15);
+  overflow-y: auto;
+  box-sizing: border-box;
+  color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Scrollbar styling */
+.course-picker-sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.course-picker-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.course-picker-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.2);
+  border-radius: 4px;
+}
+
+.course-picker-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.35);
+}
+
+/* Header */
+.course-picker-header {
+  padding: 28px 24px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.course-picker-header h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.course-picker-subtitle {
+  font-size: 13px;
+  color: #8b8fa3;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* List */
+.course-picker-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 14px;
+}
+
+/* Individual item */
+.course-picker-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.course-picker-item:hover {
+  background: rgba(99, 102, 241, 0.08);
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+.course-picker-item.selected {
+  background: rgba(99, 102, 241, 0.12);
+  border-color: rgba(99, 102, 241, 0.35);
+}
+
+/* Checkbox */
+.course-picker-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #6366f1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Info block */
+.course-picker-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.course-picker-id {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #8b8fa3;
+}
+
+.course-picker-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #d8d8d8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.course-picker-item.selected .course-picker-id {
+  color: #a5b4fc;
+}
+
+.course-picker-item.selected .course-picker-label {
+  color: #e0e7ff;
+}
