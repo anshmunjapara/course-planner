@@ -1,4 +1,5 @@
-import "./CoursePickerSidebar.css";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Field, FieldLabel, FieldTitle } from "@/components/ui/field";
 
 export function CoursePickerSidebar({
   optionalCourses,
@@ -6,32 +7,32 @@ export function CoursePickerSidebar({
   onToggleCourse,
 }) {
   return (
-    <div className="course-picker-sidebar">
-      <div className="course-picker-header">
-        <h2>Elective Courses</h2>
-        <p className="course-picker-subtitle">
-          {selectedOptionalCoursesIds.length} selected
+    <div className="w-100 h-screen shrink-0 overflow-y-auto border-l border-zinc-00 bg-zinc-950 text-zinc-100 shadow-xl">
+      <div className="px-6 py-8">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">
+          Elective Courses
+        </h2>
+        <p className="mt-1 text-sm font-medium text-zinc-400">
+          {selectedOptionalCoursesIds.size} selected
         </p>
       </div>
-      <div className="course-picker-list">
+      <div className="flex flex-col gap-2 px-4 pb-6">
         {optionalCourses.map((course) => {
           const isSelected = selectedOptionalCoursesIds.has(course.id);
           return (
-            <label
+            <FieldLabel
               key={course.id}
-              className={`course-picker-item ${isSelected ? "selected" : ""}`}
+              className="cursor-pointer transition ease-in-out py-1"
             >
-              <input
-                type="checkbox"
-                checked={isSelected}
-                onChange={() => onToggleCourse(course.id)}
-                className="course-picker-checkbox"
-              />
-              <div className="course-picker-info">
-                <span className="course-picker-id">{course.id}</span>
-                <span className="course-picker-label">{course.label}</span>
-              </div>
-            </label>
+              <Field orientation="horizontal">
+                <Checkbox
+                  checked={isSelected}
+                  onCheckedChange={() => onToggleCourse(course.id)}
+                />
+
+                <FieldTitle>{course.label}</FieldTitle>
+              </Field>
+            </FieldLabel>
           );
         })}
       </div>

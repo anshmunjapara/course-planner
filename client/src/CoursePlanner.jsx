@@ -85,12 +85,14 @@ export function CoursePlanner() {
           onToggleCourse={handleToggleOptionalCourse}
         />
       )}
-      <Sidebar
-        key={selectedNode?.id || "empty"}
-        selectedNode={selectedNode}
-        onChangeGrade={handleChangeGrade}
-        userGrades={userGrades}
-      />
+      {!showCoursePicker && (
+        <Sidebar
+          key={selectedNode?.id || "empty"}
+          selectedNode={selectedNode}
+          onChangeGrade={handleChangeGrade}
+          userGrades={userGrades}
+        />
+      )}
     </div>
   );
 }
