@@ -1,6 +1,7 @@
-import { ReactFlow, Background, MiniMap } from "@xyflow/react";
+import { ReactFlow, Background, MiniMap, Panel } from "@xyflow/react";
 import { useNodesState, useEdgesState } from "@xyflow/react";
 import { useCallback, useEffect, useMemo } from "react";
+import { Legend } from "./Legend";
 import { applyStyles } from "./utils/applyStylesToNodes";
 import { getLayoutedNodes } from "./utils/cytoscapeLayoutCalculator";
 import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
@@ -15,7 +16,7 @@ const layoutOptions = {
   padding: 30,
   animate: false,
   klay: {
-    direction: "DOWN", 
+    direction: "DOWN",
     edgeRouting: "SPLINES",
     routeSelfLoopInside: true,
     thoroughness: 10, // 1-10 (higher is better but slower)
@@ -96,6 +97,9 @@ export function GraphView({ onNodeClick, userGrades, courses }) {
         >
           <MiniMap nodeStrokeWidth={3} zoomable pannable style={miniMapStyle} />
           <Background variant="dots" gap={25} size={1} />
+          <Panel position="bottom-left">
+            <Legend />
+          </Panel>
         </ReactFlow>
       </div>
     </>
