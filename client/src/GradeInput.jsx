@@ -1,3 +1,12 @@
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardDescription,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 export function GradeInput({ selectedNode, onChangeGrade, userGrades }) {
@@ -7,7 +16,13 @@ export function GradeInput({ selectedNode, onChangeGrade, userGrades }) {
 
   const handleGradeChange = (e) => {
     const value = e.target.value;
-    setGrade(value);
+    if (value === "") {
+      setGrade("");
+      return;
+    }
+
+    const num = Number(value);
+    if (Number.isInteger(num) && num >= 0 && num <= 100) setGrade(value);
   };
 
   const handleGradeSubmit = () => {
@@ -15,22 +30,21 @@ export function GradeInput({ selectedNode, onChangeGrade, userGrades }) {
   };
 
   return (
-    <>
-      <h3>Add Grade</h3>
-      <div className="grade-input-container">
-        <input
-          type="number"
-          min="0"
-          max="100"
-          placeholder="Enter grade (0-100)"
+    <Card className="border-zinc-800/80 bg-zinc-900/40 shadow-none px-6">
+      <h3 className="text-lg font-semibold uppercase text-zinc-400 ">
+        Add Grade
+      </h3>
+      <div className="flex items-center gap-3">
+        <Input
+          type="text"
           value={grade}
           onChange={handleGradeChange}
-          className="grade-input"
+          placeholder="Enter grade (0-100)"
         />
-        <button onClick={handleGradeSubmit} className="grade-button">
+        <Button className="cursor-pointer" onClick={handleGradeSubmit}>
           Set
-        </button>
+        </Button>
       </div>
-    </>
+    </Card>
   );
 }
