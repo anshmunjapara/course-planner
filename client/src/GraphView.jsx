@@ -8,6 +8,20 @@ import "@xyflow/react/dist/style.css";
 
 const containerStyle = { width: "100%", height: "100%" };
 const miniMapStyle = { height: 170, width: 270 };
+const layoutOptions = {
+  name: "klay",
+  nodeDimensionsIncludeLabels: true,
+  fit: true,
+  padding: 30,
+  animate: false,
+  klay: {
+    direction: "DOWN", 
+    edgeRouting: "SPLINES",
+    routeSelfLoopInside: true,
+    thoroughness: 10, // 1-10 (higher is better but slower)
+    spacing: 50, // General spacing
+  },
+};
 
 export function GraphView({ onNodeClick, userGrades, courses }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -44,20 +58,7 @@ export function GraphView({ onNodeClick, userGrades, courses }) {
       }));
     });
 
-    const layoutedNodes = getLayoutedNodes(rawNodes, rawEdges, {
-      name: "klay",
-      nodeDimensionsIncludeLabels: true,
-      fit: true,
-      padding: 30,
-      animate: false,
-      klay: {
-        direction: "DOWN", // 'DOWN', 'RIGHT', 'UP', 'LEFT'
-        edgeRouting: "SPLINES",
-        routeSelfLoopInside: true,
-        thoroughness: 10, // 1-10 (higher is better but slower)
-        spacing: 50, // General spacing
-      },
-    });
+    const layoutedNodes = getLayoutedNodes(rawNodes, rawEdges, layoutOptions);
 
     return { layoutedNodes, rawEdges };
   }, [courses, activeCourseIds]);

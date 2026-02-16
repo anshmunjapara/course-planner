@@ -3,6 +3,7 @@ import { GraphView } from "./GraphView";
 import { Sidebar } from "./Sidebar";
 import { CoursePickerSidebar } from "./CoursePickerSidebar";
 import { initialCourses } from "./coursesData";
+import { Button } from "@/components/ui/button";
 
 const requiredCourses = initialCourses.filter((c) => c.required);
 const optionalCourses = initialCourses.filter((c) => !c.required);
@@ -26,7 +27,9 @@ export function CoursePlanner() {
       };
     });
   };
-
+  const handleShowCoursePicker = () => {
+    setShowCoursePicker((prev) => !prev);
+  };
   const handleToggleOptionalCourse = useCallback((courseId) => {
     setSelectedOptionalCoursesIds((prev) => {
       const next = new Set(prev);
@@ -49,48 +52,36 @@ export function CoursePlanner() {
   return (
     <div style={{ display: "flex", width: "100%", height: "100vh" }}>
       <div style={{ flex: 1, position: "relative" }}>
-        <button
-          onClick={() => setShowCoursePicker((prev) => !prev)}
-          style={{
-            position: "absolute",
-            top: 16,
-            left: 16,
-            zIndex: 10,
-            padding: "10px 18px",
-            background: showCoursePicker
-              ? "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)"
-              : "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)",
-            color: "#fff",
-            border: "1px solid rgba(99, 102, 241, 0.4)",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "14px",
-            fontWeight: 600,
-            boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-            transition: "all 0.2s ease",
-          }}
+        <Button
+          onClick={handleShowCoursePicker}
+          className="absolute right-4 top-4 z-10 ont-semibold shadow-md shadow-black/30 cursor-pointer"
+          variant={showCoursePicker ? "secondary" : ""}
         >
           {showCoursePicker ? "Close Course Picker" : "+ Add More Courses"}
-        </button>
+        </Button>
+
         <GraphView
           userGrades={userGrades}
           onNodeClick={setSelectedNode}
           courses={activeCourses}
         />
       </div>
-      {showCoursePicker && (
-        <CoursePickerSidebar
-          optionalCourses={optionalCourses}
-          selectedOptionalCoursesIds={selectedOptionalCoursesIds}
-          onToggleCourse={handleToggleOptionalCourse}
-        />
-      )}
+
       {!showCoursePicker && (
         <Sidebar
           key={selectedNode?.id || "empty"}
           selectedNode={selectedNode}
           onChangeGrade={handleChangeGrade}
           userGrades={userGrades}
+        />
+      )}
+
+      {showCoursePicker && (
+        <CoursePickerSidebar
+          handleShowCoursePicker={handleShowCoursePicker}
+          optionalCourses={optionalCourses}
+          selectedOptionalCoursesIds={selectedOptionalCoursesIds}
+          onToggleCourse={handleToggleOptionalCourse}
         />
       )}
     </div>

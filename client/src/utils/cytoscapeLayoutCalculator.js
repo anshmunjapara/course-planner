@@ -1,7 +1,6 @@
 import cytoscape from "cytoscape";
-import klay from "cytoscape-klay"; // 1. Import the extension
+import klay from "cytoscape-klay";
 
-// 2. Register the extension
 cytoscape.use(klay);
 
 const nodeWidth = 150;
