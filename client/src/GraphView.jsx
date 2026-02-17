@@ -1,3 +1,4 @@
+import { NodeSearch } from "./components/node-search";
 import { ReactFlow, Background, MiniMap, Panel } from "@xyflow/react";
 import { useNodesState, useEdgesState } from "@xyflow/react";
 import { useCallback, useEffect, useMemo } from "react";
@@ -98,6 +99,9 @@ export function GraphView({ onNodeClick, userGrades, courses }) {
           <Background variant="dots" gap={25} size={1} />
           <Panel position="bottom-left">
             <Legend />
+          </Panel>
+          <Panel position="top-center">
+            <NodeSearch />
           </Panel>
         </ReactFlow>
       </div>
