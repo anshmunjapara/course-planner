@@ -34,7 +34,6 @@ export function GraphView({ onNodeClick, userGrades, courses }) {
   );
 
   const { layoutedNodes, rawEdges } = useMemo(() => {
-    console.log("--------------I was Called---------------");
     const rawNodes = courses.map((course) => ({
       id: course.id,
       data: {

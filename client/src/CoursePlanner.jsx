@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 
 const requiredCourses = initialCourses.filter((c) => c.required);
 const optionalCourses = initialCourses.filter((c) => !c.required);
+const storedUserGrades = JSON.parse(
+  localStorage.getItem("userGrades") || '{"MATH103": 60}',
+);
 
 export function CoursePlanner() {
   const [selectedNode, setSelectedNode] = useState(null);
@@ -15,16 +18,16 @@ export function CoursePlanner() {
     new Set(),
   );
 
-  const [userGrades, setUserGrades] = useState({
-    MATH103: 60,
-  });
+  const [userGrades, setUserGrades] = useState(storedUserGrades);
 
   const handleChangeGrade = (newGrade) => {
     setUserGrades((prevGrades) => {
-      return {
+      const newGrades = {
         ...prevGrades,
         [selectedNode.id]: parseFloat(newGrade),
       };
+      localStorage.setItem("userGrades", JSON.stringify(newGrades));
+      return newGrades;
     });
   };
   const handleShowCoursePicker = () => {
