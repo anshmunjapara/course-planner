@@ -10,12 +10,15 @@ const optionalCourses = initialCourses.filter((c) => !c.required);
 const storedUserGrades = JSON.parse(
   localStorage.getItem("userGrades") || '{"MATH103": 60}',
 );
+const storedOptionalCourses = JSON.parse(
+  localStorage.getItem("selectedOptionalCourses") || "[]",
+);
 
 export function CoursePlanner() {
   const [selectedNode, setSelectedNode] = useState(null);
   const [showCoursePicker, setShowCoursePicker] = useState(false);
   const [selectedOptionalCoursesIds, setSelectedOptionalCoursesIds] = useState(
-    new Set(),
+    new Set(storedOptionalCourses),
   );
 
   const [userGrades, setUserGrades] = useState(storedUserGrades);
@@ -35,13 +38,17 @@ export function CoursePlanner() {
   };
   const handleToggleOptionalCourse = useCallback((courseId) => {
     setSelectedOptionalCoursesIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(courseId)) {
-        next.delete(courseId);
+      const newSelectedCourses = new Set(prev);
+      if (newSelectedCourses.has(courseId)) {
+        newSelectedCourses.delete(courseId);
       } else {
-        next.add(courseId);
+        newSelectedCourses.add(courseId);
       }
-      return next;
+      localStorage.setItem(
+        "selectedOptionalCourses",
+        JSON.stringify([...newSelectedCourses]),
+      );
+      return newSelectedCourses;
     });
   }, []);
 
