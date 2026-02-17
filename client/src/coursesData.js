@@ -115,7 +115,7 @@ export const initialCourses = [
       type: "logic",
       operator: "AND",
       operands: [
-        { type: "course", courseId: "CS115", minGrade: 65 },
+        { type: "course", courseId: "CS115", minGrade: 50 },
         { type: "course", courseId: "MATH110", minGrade: 50 },
       ],
     },

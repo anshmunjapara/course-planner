@@ -1,7 +1,7 @@
 import { ReactFlow, Background, MiniMap, Panel } from "@xyflow/react";
 import { useNodesState, useEdgesState } from "@xyflow/react";
 import { useCallback, useEffect, useMemo } from "react";
-import { Legend } from "./Legend";
+import { Legend } from "./components/Legend";
 import { applyStyles } from "./utils/applyStylesToNodes";
 import { getLayoutedNodes } from "./utils/cytoscapeLayoutCalculator";
 import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";

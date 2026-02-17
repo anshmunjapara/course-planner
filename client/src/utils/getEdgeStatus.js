@@ -9,19 +9,23 @@ export function getEdgeStatus(
   );
 
   if (!prereqCondition) {
-    return "clear";
+    return { status: "clear", msg: "" };
   }
 
   const requiredGrade = prereqCondition.minGrade
     ? prereqCondition.minGrade
     : 50;
+
+  let result = "clear";
   if (userGradeSource >= requiredGrade) {
-    return "clear";
+    result = "clear";
   } else if (userGradeSource >= 50 && userGradeSource < requiredGrade) {
-    return "notClear";
+    result = "notClear";
   } else {
-    return "incomplete";
+    result = "incomplete";
   }
+
+  return { status: result, msg: `Requires minimum grade of ${requiredGrade}` };
 }
 
 function getPrereqCondition(prereqNode, sourceCourseId) {

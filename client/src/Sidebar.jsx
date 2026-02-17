@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { GradeInput } from "./GradeInput";
+import { GradeInput } from "./components/GradeInput";
 import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
 import { getEdgeStatus } from "./utils/getEdgeStatus";
 
@@ -32,13 +32,13 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
 
   const prereqList = getPrereqIds(selectedNode.data.prereqs);
   const prereqListWithStatus = prereqList.map((prereqId) => {
-    const status = getEdgeStatus(
+    const { status, msg } = getEdgeStatus(
       selectedNode.data.prereqs,
       prereqId,
       userGrades[prereqId],
     );
 
-    return { prereqId, status };
+    return { prereqId, status, msg };
   });
 
   return (
@@ -81,22 +81,25 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
             {prereqListWithStatus.length === 0 ? (
               <p className="text-sm text-zinc-400">No prerequisites</p>
             ) : (
-              prereqListWithStatus.map(({ prereqId, status }) => (
+              prereqListWithStatus.map(({ prereqId, status, msg }) => (
                 <div
                   key={prereqId}
-                  className="flex items-center justify-between rounded-lg border border-zinc-800/80 bg-zinc-950/40 px-3 py-2"
+                  className=" rounded-lg border border-zinc-800/80 bg-zinc-950/40 px-3 py-2"
                 >
-                  <span className="text-sm font-semibold text-zinc-100">
-                    {prereqId}
-                  </span>
-                  <span
-                    className={`rounded-full border px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${
-                      statusPillClasses[status] ??
-                      "text-zinc-200 border-zinc-700/70 bg-zinc-700/20"
-                    }`}
-                  >
-                    {status}
-                  </span>
+                  <p className="text-xs text-zinc-400 pb-2">{msg}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold text-zinc-100">
+                      {prereqId}
+                    </span>
+                    <span
+                      className={`rounded-full border px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${
+                        statusPillClasses[status] ??
+                        "text-zinc-200 border-zinc-700/70 bg-zinc-700/20"
+                      }`}
+                    >
+                      {status}
+                    </span>
+                  </div>
                 </div>
               ))
             )}
