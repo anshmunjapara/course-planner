@@ -33,9 +33,15 @@ export function CoursePlanner() {
       return newGrades;
     });
   };
+  
   const handleShowCoursePicker = () => {
     setShowCoursePicker((prev) => !prev);
   };
+
+  const handleCloseCoursePicker = () => {
+    setShowCoursePicker(false);
+  }
+
   const handleToggleOptionalCourse = useCallback((courseId) => {
     setSelectedOptionalCoursesIds((prev) => {
       const newSelectedCourses = new Set(prev);
@@ -74,6 +80,7 @@ export function CoursePlanner() {
           userGrades={userGrades}
           onNodeClick={setSelectedNode}
           courses={activeCourses}
+          handleCloseCoursePicker={handleCloseCoursePicker}
         />
       </div>
 

@@ -25,7 +25,12 @@ const layoutOptions = {
   },
 };
 
-export function GraphView({ onNodeClick, userGrades, courses }) {
+export function GraphView({
+  onNodeClick,
+  userGrades,
+  courses,
+  handleCloseCoursePicker,
+}) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges] = useEdgesState([]);
 
@@ -77,9 +82,10 @@ export function GraphView({ onNodeClick, userGrades, courses }) {
 
   const handleNodeClick = useCallback(
     (event, node) => {
+      handleCloseCoursePicker();
       onNodeClick(node);
     },
-    [onNodeClick],
+    [onNodeClick, handleCloseCoursePicker],
   );
 
   return (
