@@ -9,7 +9,7 @@ export function CoursePickerSidebar({
   handleShowCoursePicker,
 }) {
   return (
-    <div className="w-100 h-screen shrink-0 overflow-y-auto border-l border-zinc-00 bg-zinc-950 text-zinc-100 shadow-xl">
+    <div className="flex flex-col w-100 h-screen shrink-0 border-l border-zinc-00 bg-zinc-950 text-zinc-100 shadow-xl">
       <div className="px-6 py-8">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-semibold tracking-tight text-white">
@@ -27,7 +27,7 @@ export function CoursePickerSidebar({
           {selectedOptionalCoursesIds.size} selected
         </p>
       </div>
-      <div className="flex flex-col gap-2 px-4 pb-6">
+      <div className="flex flex-col flex-1 overflow-y-auto gap-2 px-4 pb-6">
         {optionalCourses.map((course) => {
           const isSelected = selectedOptionalCoursesIds.has(course.id);
           return (

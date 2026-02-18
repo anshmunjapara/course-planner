@@ -6,7 +6,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { GradeInput } from "./components/GradeInput";
-import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
 import { getEdgeStatus } from "./utils/getEdgeStatus";
 import { categorizePrereqs } from "./utils/categorizePrereqs";
 
