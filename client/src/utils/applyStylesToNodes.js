@@ -38,11 +38,12 @@ export const applyStyles = (nodes, edges, grades) => {
       edgeStatus = "completed";
     } else {
       const targetCourseNode = nodes.find((n) => n.id === edge.target);
-      edgeStatus = getEdgeStatus(
+      const edgeStatusResult = getEdgeStatus(
         targetCourseNode.data.prereqs,
         edge.source,
         grades[edge.source],
       );
+      edgeStatus = edgeStatusResult.status;
     }
 
     const isAnimated = edgeStatus === "clear";
