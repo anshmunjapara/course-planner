@@ -9,7 +9,7 @@ export function getEdgeStatus(
   );
 
   if (!prereqCondition) {
-    return { status: "clear", msg: "" };
+    return { status: "error", msg: "" };
   }
 
   const requiredGrade = prereqCondition.minGrade
