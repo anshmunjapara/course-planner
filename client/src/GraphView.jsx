@@ -1,6 +1,6 @@
 import { ReactFlow, Background, MiniMap } from "@xyflow/react";
 import { useNodesState, useEdgesState } from "@xyflow/react";
-import { useCallback, useEffect, useMemo, useState, memo } from "react";
+import { useCallback, useEffect, useMemo, memo } from "react";
 import { Legend } from "./components/Legend";
 import { SearchComponent } from "./components/SearchComponent";
 import { applyStylesToGraph } from "./utils/applyStylesToGraph";
@@ -33,10 +33,11 @@ export function GraphView({
   userGrades,
   courses,
   handleCloseCoursePicker,
+  selectedNodeId,
+  setSelectedNodeId,
 }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges] = useEdgesState([]);
-  const [selectedNodeId, setSelectedNodeId] = useState(null);
 
   const activeCourseIds = useMemo(
     () => new Set(courses.map((c) => c.id)),
@@ -109,12 +110,12 @@ export function GraphView({
       onNodeClick(node);
       setSelectedNodeId((prev) => (prev === node.id ? null : node.id));
     },
-    [onNodeClick, handleCloseCoursePicker],
+    [onNodeClick, handleCloseCoursePicker, setSelectedNodeId],
   );
 
   const handlePaneClick = useCallback(() => {
     setSelectedNodeId(null);
-  }, []);
+  }, [setSelectedNodeId]);
 
   return (
     <>

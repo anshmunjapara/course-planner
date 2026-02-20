@@ -16,6 +16,7 @@ const storedOptionalCourses = JSON.parse(
 
 export function CoursePlanner() {
   const [selectedNode, setSelectedNode] = useState(null);
+  const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [showCoursePicker, setShowCoursePicker] = useState(false);
   const [selectedOptionalCoursesIds, setSelectedOptionalCoursesIds] = useState(
     new Set(storedOptionalCourses),
@@ -23,16 +24,20 @@ export function CoursePlanner() {
 
   const [userGrades, setUserGrades] = useState(storedUserGrades);
 
-  const handleChangeGrade = (newGrade) => {
-    setUserGrades((prevGrades) => {
-      const newGrades = {
-        ...prevGrades,
-        [selectedNode.id]: parseFloat(newGrade),
-      };
-      localStorage.setItem("userGrades", JSON.stringify(newGrades));
-      return newGrades;
-    });
-  };
+  const handleChangeGrade = useCallback(
+    (newGrade) => {
+      setUserGrades((prevGrades) => {
+        const newGrades = {
+          ...prevGrades,
+          [selectedNode.id]: parseFloat(newGrade),
+        };
+        localStorage.setItem("userGrades", JSON.stringify(newGrades));
+        return newGrades;
+      });
+      setSelectedNodeId(null);
+    },
+    [selectedNode],
+  );
 
   const handleShowCoursePicker = () => {
     setShowCoursePicker((prev) => !prev);
@@ -81,6 +86,8 @@ export function CoursePlanner() {
           onNodeClick={setSelectedNode}
           courses={activeCourses}
           handleCloseCoursePicker={handleCloseCoursePicker}
+          selectedNodeId={selectedNodeId}
+          setSelectedNodeId={setSelectedNodeId}
         />
       </div>
 
