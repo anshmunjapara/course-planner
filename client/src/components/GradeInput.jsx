@@ -29,6 +29,12 @@ export function GradeInput({ selectedNode, onChangeGrade, userGrades }) {
     onChangeGrade(grade);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleGradeSubmit();
+    }
+  };
+
   return (
     <Card className="border-zinc-800/80 bg-zinc-900/40 shadow-none px-6">
       <h3 className="text-lg font-semibold uppercase text-zinc-400 ">
@@ -39,6 +45,7 @@ export function GradeInput({ selectedNode, onChangeGrade, userGrades }) {
           type="text"
           value={grade}
           onChange={handleGradeChange}
+          onKeyDown={handleKeyDown}
           placeholder="Enter grade (0-100)"
         />
         <Button className="cursor-pointer" onClick={handleGradeSubmit}>
