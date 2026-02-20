@@ -16,3 +16,11 @@ export const BORDER_COLORS = {
   notClear: "#dc3545",
   incomplete: "#6c757d",
 };
+
+export const OPACITY = {
+  NORMAL: 1,
+  LOCKED: 0.4,
+  DIMMED_NODE: 0.12,
+  DIMMED_EDGE: 0.08,
+  LOCKED_EDGE: 0.3,
+};

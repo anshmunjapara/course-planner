@@ -33,14 +33,14 @@ export function CoursePlanner() {
       return newGrades;
     });
   };
-  
+
   const handleShowCoursePicker = () => {
     setShowCoursePicker((prev) => !prev);
   };
 
   const handleCloseCoursePicker = () => {
     setShowCoursePicker(false);
-  }
+  };
 
   const handleToggleOptionalCourse = useCallback((courseId) => {
     setSelectedOptionalCoursesIds((prev) => {

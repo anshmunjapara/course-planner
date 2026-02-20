@@ -3,7 +3,7 @@ import { useNodesState, useEdgesState } from "@xyflow/react";
 import { useCallback, useEffect, useMemo, useState, memo } from "react";
 import { Legend } from "./components/Legend";
 import { SearchComponent } from "./components/SearchComponent";
-import { applyStyles } from "./utils/applyStylesToNodes";
+import { applyStylesToGraph } from "./utils/applyStylesToGraph";
 import { getLayoutedNodes } from "./utils/cytoscapeLayoutCalculator";
 import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
 import "@xyflow/react/dist/style.css";
@@ -36,6 +36,7 @@ export function GraphView({
 }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges] = useEdgesState([]);
+  const [selectedNodeId, setSelectedNodeId] = useState(null);
 
   const activeCourseIds = useMemo(
     () => new Set(courses.map((c) => c.id)),
@@ -73,7 +74,9 @@ export function GraphView({
   }, [courses, activeCourseIds]);
 
   useEffect(() => {
-    const { styledNodes, styledEdges } = applyStyles(
+    if (!layoutedNodes.length) return;
+
+    const { styledNodes, styledEdges } = applyStylesToGraph(
       layoutedNodes,
       rawEdges,
       userGrades,
@@ -81,15 +84,37 @@ export function GraphView({
 
     setNodes(styledNodes);
     setEdges(styledEdges);
-  }, [userGrades, layoutedNodes, rawEdges, setNodes, setEdges]); // ← add selectedNodeId
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [layoutedNodes, rawEdges]); // ← only run on layout changes
+
+  useEffect(() => {
+    setNodes((currentNodes) => {
+      if (!currentNodes.length) return currentNodes;
+
+      const { styledNodes, styledEdges } = applyStylesToGraph(
+        currentNodes, // ← use current positions, not layoutedNodes
+        rawEdges,
+        userGrades,
+        selectedNodeId,
+      );
+
+      setEdges(styledEdges);
+      return styledNodes;
+    });
+  }, [userGrades, selectedNodeId, rawEdges, setNodes, setEdges]);
 
   const handleNodeClick = useCallback(
     (event, node) => {
       handleCloseCoursePicker();
       onNodeClick(node);
+      setSelectedNodeId((prev) => (prev === node.id ? null : node.id));
     },
     [onNodeClick, handleCloseCoursePicker],
   );
+
+  const handlePaneClick = useCallback(() => {
+    setSelectedNodeId(null);
+  }, []);
 
   return (
     <>
@@ -99,6 +124,7 @@ export function GraphView({
           edges={edges}
           onNodesChange={onNodesChange}
           onNodeClick={handleNodeClick}
+          onPaneClick={handlePaneClick}
           colorMode="system"
           fitView
           minZoom={0.1} // Allow zooming out significantly

@@ -1,14 +1,25 @@
-import { getCourseStatus } from "./getCourseStatus";
-import { STATUS_COLORS, BORDER_COLORS } from "./constants";
-import { getEdgeStatus } from "./getEdgeStatus";
+import { STATUS_COLORS, BORDER_COLORS, OPACITY } from "./constants";
 
-export const applyStyles = (nodes, edges, grades) => {
-  const statusMap = {};
+/**
+ * Applies visual styles to nodes based on their status and highlight state.
+ *
+ * @param {Array} nodes - React Flow node objects
+ * @param {Object} statusMap - Map of nodeId → status string
+ * @param {Set|null} highlightedNodeIds - Set of node ids to highlight, or null for no highlighting
+ * @returns {Array} Styled node objects
+ */
+export function applyStylesToNodes(nodes, statusMap, highlightedNodeIds) {
+  const isHighlighting = highlightedNodeIds !== null;
 
-  // Style Nodes
-  const styledNodes = nodes.map((node) => {
-    const status = getCourseStatus(node, grades);
-    statusMap[node.id] = status;
+  return nodes.map((node) => {
+    const status = statusMap[node.id] || "locked";
+
+    let opacity;
+    if (isHighlighting) {
+      opacity = highlightedNodeIds.has(node.id) ? OPACITY.NORMAL : OPACITY.DIMMED_NODE;
+    } else {
+      opacity = status !== "locked" ? OPACITY.NORMAL : OPACITY.LOCKED;
+    }
 
     return {
       ...node,
@@ -21,44 +32,9 @@ export const applyStyles = (nodes, edges, grades) => {
         fontSize: "18px",
         padding: "10px",
         textAlign: "center",
-        opacity: status !== "locked" ? 1 : 0.4,
+        opacity,
+        transition: "opacity 300ms ease-in-out",
       },
     };
   });
-
-  // Style Edges
-  const styledEdges = edges.map((edge) => {
-    const targetStatus = statusMap[edge.target];
-    const sourceStatus = statusMap[edge.source];
-    let edgeStatus = "locked";
-
-    if (sourceStatus === "locked") {
-      edgeStatus = "locked";
-    } else if (sourceStatus === targetStatus && sourceStatus === "completed") {
-      edgeStatus = "completed";
-    } else {
-      const targetCourseNode = nodes.find((n) => n.id === edge.target);
-      const edgeStatusResult = getEdgeStatus(
-        targetCourseNode.data.prereqs,
-        edge.source,
-        grades[edge.source],
-      );
-      edgeStatus = edgeStatusResult.status;
-    }
-
-    const isAnimated = edgeStatus === "clear";
-
-    return {
-      ...edge,
-      animated: isAnimated,
-      zIndex: -10,
-      style: {
-        stroke: BORDER_COLORS[edgeStatus],
-        strokeWidth: 2.5,
-        opacity: edgeStatus !== "locked" ? 1 : 0.3,
-      },
-    };
-  });
-
-  return { styledNodes, styledEdges };
-};
+}
