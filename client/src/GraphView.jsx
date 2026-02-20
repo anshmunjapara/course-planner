@@ -1,8 +1,8 @@
-import { NodeSearch } from "./components/node-search";
-import { ReactFlow, Background, MiniMap, Panel } from "@xyflow/react";
+import { ReactFlow, Background, MiniMap } from "@xyflow/react";
 import { useNodesState, useEdgesState } from "@xyflow/react";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState, memo } from "react";
 import { Legend } from "./components/Legend";
+import { SearchComponent } from "./components/SearchComponent";
 import { applyStyles } from "./utils/applyStylesToNodes";
 import { getLayoutedNodes } from "./utils/cytoscapeLayoutCalculator";
 import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
@@ -24,6 +24,9 @@ const layoutOptions = {
     spacing: 50, // General spacing
   },
 };
+
+const MemoizedLegend = memo(Legend);
+const NodeSearch = memo(SearchComponent);
 
 export function GraphView({
   onNodeClick,
@@ -78,7 +81,7 @@ export function GraphView({
 
     setNodes(styledNodes);
     setEdges(styledEdges);
-  }, [userGrades, layoutedNodes, rawEdges, setNodes, setEdges]);
+  }, [userGrades, layoutedNodes, rawEdges, setNodes, setEdges]); // ← add selectedNodeId
 
   const handleNodeClick = useCallback(
     (event, node) => {
@@ -103,12 +106,8 @@ export function GraphView({
         >
           <MiniMap nodeStrokeWidth={3} zoomable pannable style={miniMapStyle} />
           <Background variant="dots" gap={25} size={1} />
-          <Panel position="bottom-left">
-            <Legend />
-          </Panel>
-          <Panel position="top-center">
-            <NodeSearch />
-          </Panel>
+          <MemoizedLegend />
+          <NodeSearch />
         </ReactFlow>
       </div>
     </>
