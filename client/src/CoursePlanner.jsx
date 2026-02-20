@@ -24,15 +24,6 @@ export function CoursePlanner() {
 
   const [userGrades, setUserGrades] = useState(storedUserGrades);
 
-  const handleNodeEnter = useCallback((node) => {
-    setSelectedNode((prev) => {
-      if (prev?.id === node?.id) {
-        return prev;
-      }
-      return node;
-    });
-  }, []);
-
   const handleChangeGrade = useCallback(
     (newGrade) => {
       setUserGrades((prevGrades) => {
@@ -92,7 +83,7 @@ export function CoursePlanner() {
 
         <GraphView
           userGrades={userGrades}
-          onNodeEnter={handleNodeEnter}
+          onNodeClick={setSelectedNode}
           courses={activeCourses}
           handleCloseCoursePicker={handleCloseCoursePicker}
           selectedNodeId={selectedNodeId}

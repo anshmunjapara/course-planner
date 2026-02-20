@@ -29,7 +29,7 @@ const MemoizedLegend = memo(Legend);
 const NodeSearch = memo(SearchComponent);
 
 export function GraphView({
-  onNodeEnter,
+  onNodeClick,
   userGrades,
   courses,
   handleCloseCoursePicker,
@@ -107,18 +107,10 @@ export function GraphView({
   const handleNodeClick = useCallback(
     (event, node) => {
       handleCloseCoursePicker();
+      onNodeClick(node);
       setSelectedNodeId((prev) => (prev === node.id ? null : node.id));
     },
-    [handleCloseCoursePicker, setSelectedNodeId],
-  );
-
-  const handleMouseEnter = useCallback(
-    (event, node) => {
-      console.log("Mouse entered node:", node.id);
-      handleCloseCoursePicker();
-      onNodeEnter(node);
-    },
-    [onNodeEnter, handleCloseCoursePicker],
+    [onNodeClick, handleCloseCoursePicker, setSelectedNodeId],
   );
 
   const handlePaneClick = useCallback(() => {
@@ -133,7 +125,6 @@ export function GraphView({
           edges={edges}
           onNodesChange={onNodesChange}
           onNodeClick={handleNodeClick}
-          onNodeMouseEnter={handleMouseEnter}
           onPaneClick={handlePaneClick}
           colorMode="system"
           fitView
