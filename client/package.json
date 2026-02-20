@@ -13,6 +13,7 @@
     "@dagrejs/dagre": "^2.0.3",
     "@dagrejs/graphlib": "^2.2.4",
     "@tailwindcss/vite": "^4.1.18",
+    "@vercel/analytics": "^1.6.1",
     "@xyflow/react": "^12.10.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
