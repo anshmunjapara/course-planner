@@ -6,6 +6,7 @@ import { SearchComponent } from "./components/SearchComponent";
 import { applyStylesToGraph } from "./utils/applyStylesToGraph";
 import { getLayoutedNodes } from "./utils/cytoscapeLayoutCalculator";
 import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
+import { ResetGraph } from "./components/ResetGraph";
 import "@xyflow/react/dist/style.css";
 
 const containerStyle = { width: "100%", height: "100%" };
@@ -35,6 +36,7 @@ export function GraphView({
   handleCloseCoursePicker,
   selectedNodeId,
   setSelectedNodeId,
+  onReset,
 }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges] = useEdgesState([]);
@@ -140,6 +142,7 @@ export function GraphView({
           <Background variant="dots" gap={25} size={1} />
           <MemoizedLegend />
           <NodeSearch />
+          <ResetGraph onReset={onReset} />
         </ReactFlow>
       </div>
     </>

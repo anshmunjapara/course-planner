@@ -24,6 +24,14 @@ export function CoursePlanner() {
 
   const [userGrades, setUserGrades] = useState(storedUserGrades);
 
+  const handleReset = useCallback(() => {
+    setUserGrades({ MATH103: 60 });
+    setSelectedOptionalCoursesIds(new Set());
+    setSelectedNode(null);
+    setSelectedNodeId(null);
+    setShowCoursePicker(false);
+  }, []);
+
   const handleChangeGrade = useCallback(
     (newGrade) => {
       setUserGrades((prevGrades) => {
@@ -72,7 +80,7 @@ export function CoursePlanner() {
 
   return (
     <div style={{ display: "flex", width: "100%", height: "100vh" }}>
-      <div style={{ flex: 1, position: "relative" }}>
+      <div style={{ flex: 3.5, position: "relative" }}>
         <Button
           onClick={handleShowCoursePicker}
           className="absolute right-4 top-4 z-10 ont-semibold shadow-md shadow-black/30 cursor-pointer"
@@ -88,6 +96,7 @@ export function CoursePlanner() {
           handleCloseCoursePicker={handleCloseCoursePicker}
           selectedNodeId={selectedNodeId}
           setSelectedNodeId={setSelectedNodeId}
+          onReset={handleReset}
         />
       </div>
 
