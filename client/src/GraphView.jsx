@@ -126,7 +126,7 @@ export function GraphView({
           onNodesChange={onNodesChange}
           onNodeClick={handleNodeClick}
           onPaneClick={handlePaneClick}
-          colorMode="system"
+          colorMode="dark"
           fitView
           minZoom={0.1} // Allow zooming out significantly
           maxZoom={1.5} // Prevent zooming in too far

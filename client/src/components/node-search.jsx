@@ -18,40 +18,53 @@ export function NodeSearchInternal({
   onSelectNode,
   open,
   onOpenChange,
+  onKeyDown,
   ...props
 }) {
   const [searchResults, setSearchResults] = useState([]);
   const [searchString, setSearchString] = useState("");
   const { getNodes, fitView, setNodes } = useReactFlow();
 
-  const defaultOnSearch = useCallback((searchString) => {
-    const nodes = getNodes();
-    return nodes.filter((node) =>
-      (node.data.label)
-        .toLowerCase()
-        .includes(searchString.toLowerCase()));
-  }, [getNodes]);
+  const defaultOnSearch = useCallback(
+    (searchString) => {
+      const nodes = getNodes();
+      return nodes.filter((node) =>
+        node.data.label.toLowerCase().includes(searchString.toLowerCase()),
+      );
+    },
+    [getNodes],
+  );
 
-  const onChange = useCallback((searchString) => {
-    setSearchString(searchString);
-    if (searchString.length > 0) {
-      onOpenChange?.(true);
-      const results = (onSearch || defaultOnSearch)(searchString);
-      setSearchResults(results);
-    }
-  }, [onSearch, onOpenChange]);
+  const onChange = useCallback(
+    (searchString) => {
+      setSearchString(searchString);
+      if (searchString.length > 0) {
+        onOpenChange?.(true);
+        const results = (onSearch || defaultOnSearch)(searchString);
+        setSearchResults(results);
+      }
+    },
+    [onSearch, onOpenChange],
+  );
 
-  const defaultOnSelectNode = useCallback((node) => {
-    setNodes((nodes) =>
-      nodes.map((n) => (n.id === node.id ? { ...n, selected: true } : n)));
-    fitView({ nodes: [node], duration: 500 });
-  }, [fitView, setNodes]);
+  const defaultOnSelectNode = useCallback(
+    (node) => {
+      setNodes((nodes) =>
+        nodes.map((n) => (n.id === node.id ? { ...n, selected: true } : n)),
+      );
+      fitView({ nodes: [node], duration: 500 });
+    },
+    [fitView, setNodes],
+  );
 
-  const onSelect = useCallback((node) => {
-    (onSelectNode || defaultOnSelectNode)?.(node);
-    setSearchString("");
-    onOpenChange?.(false);
-  }, [onSelectNode, defaultOnSelectNode, onOpenChange]);
+  const onSelect = useCallback(
+    (node) => {
+      (onSelectNode || defaultOnSelectNode)?.(node);
+      setSearchString("");
+      onOpenChange?.(false);
+    },
+    [onSelectNode, defaultOnSelectNode, onOpenChange],
+  );
 
   return (
     <>
@@ -59,7 +72,9 @@ export function NodeSearchInternal({
         placeholder="Search nodes..."
         onValueChange={onChange}
         value={searchString}
-        onFocus={() => onOpenChange?.(true)} />
+        onKeyDown={onKeyDown}
+        onFocus={() => onOpenChange?.(true)}
+      />
       {open && (
         <CommandList>
           {searchResults.length === 0 ? (
@@ -81,24 +96,29 @@ export function NodeSearchInternal({
   );
 }
 
-export function NodeSearch({
-  className,
-  onSearch,
-  onSelectNode,
-  ...props
-}) {
+export function NodeSearch({ className, onSearch, onSelectNode, ...props }) {
   const [open, setOpen] = useState(false);
+
+  const handOnKeyDown = (event) => {
+    if (event.key === "Escape") {
+      setOpen(false);
+    }
+  };
+
   return (
     <Command
       shouldFilter={false}
-      className="rounded-lg border shadow-md md:min-w-[450px]">
+      className="rounded-lg border shadow-md md:min-w-[450px]"
+    >
       <NodeSearchInternal
         className={className}
         onSearch={onSearch}
         onSelectNode={onSelectNode}
         open={open}
+        onKeyDown={handOnKeyDown}
         onOpenChange={setOpen}
-        {...props} />
+        {...props}
+      />
     </Command>
   );
 }
@@ -120,7 +140,8 @@ export function NodeSearchDialog({
         onSelectNode={onSelectNode}
         open={open}
         onOpenChange={onOpenChange}
-        {...props} />
+        {...props}
+      />
     </CommandDialog>
   );
 }
