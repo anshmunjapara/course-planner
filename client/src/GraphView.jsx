@@ -117,6 +117,10 @@ export function GraphView({
     setSelectedNodeId(null);
   }, [setSelectedNodeId]);
 
+  const handlePaneMove = useCallback(() => {
+    setSelectedNodeId(null);
+  }, [setSelectedNodeId]);
+
   return (
     <>
       <div style={containerStyle}>
@@ -126,6 +130,7 @@ export function GraphView({
           onNodesChange={onNodesChange}
           onNodeClick={handleNodeClick}
           onPaneClick={handlePaneClick}
+          onMove={handlePaneMove}
           colorMode="dark"
           fitView
           minZoom={0.1} // Allow zooming out significantly
