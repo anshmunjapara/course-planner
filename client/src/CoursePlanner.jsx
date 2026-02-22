@@ -7,6 +7,7 @@ import { getAncestorIds } from "./utils/getAncestorIds";
 import { Button } from "@/components/ui/button";
 
 const requiredCourses = initialCourses.filter((c) => c.required);
+const requiredCourseIds = new Set(requiredCourses.map((c) => c.id));
 const optionalCourses = initialCourses.filter((c) => !c.required);
 const storedUserGrades = JSON.parse(
   localStorage.getItem("userGrades") || '{"MATH103": 60}',
@@ -64,8 +65,9 @@ export function CoursePlanner() {
       } else {
         const allAncestors = getAncestorIds(initialCourses, courseId);
         newSelectedCourses.add(courseId);
+        console.log(requiredCourses);
         allAncestors.forEach((id) => {
-          if (!requiredCourses.includes(id)) {
+          if (!requiredCourseIds.has(id)) {
             newSelectedCourses.add(id);
           }
         });
@@ -74,6 +76,7 @@ export function CoursePlanner() {
         "selectedOptionalCourses",
         JSON.stringify([...newSelectedCourses]),
       );
+      console.log(newSelectedCourses);
       return newSelectedCourses;
     });
   }, []);
@@ -90,10 +93,10 @@ export function CoursePlanner() {
       <div style={{ flex: 3.5, position: "relative" }}>
         <Button
           onClick={handleShowCoursePicker}
-          className="absolute right-4 top-4 z-10 ont-semibold shadow-md shadow-black/30 cursor-pointer"
+          className="absolute right-4 top-4 z-10 ont-semibold shadow-md shadow-black/30 animate-pulse cursor-pointer"
           variant={showCoursePicker ? "secondary" : ""}
         >
-          {showCoursePicker ? "Close Course Picker" : "+ Add More Courses"}
+          {showCoursePicker ? "Close Course Picker" : "+ More CS Courses"}
         </Button>
 
         <GraphView
