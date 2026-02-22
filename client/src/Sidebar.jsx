@@ -50,7 +50,18 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
   console.log(requiredPrereqListWithStatus);
   choiceGroupPrereqs.forEach((group) => {
     const res = [];
-    group.forEach((prereqId) => {
+    group.forEach((item) => {
+      // Handle credit_hours and permission objects inside OR groups
+      if (typeof item === "object" && item.type === "credit_hours") {
+        res.push({ itemType: "credit_hours", value: item.value, status: "info" });
+        return;
+      }
+      if (typeof item === "object" && item.type === "permission") {
+        res.push({ itemType: "permission", description: item.description, status: "info" });
+        return;
+      }
+      // Handle regular course prereqs
+      const prereqId = item;
       const { status, msg } = getEdgeStatus(
         selectedNode.data.prereqs,
         prereqId,
@@ -58,6 +69,7 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
       );
       if (status !== "error") {
         res.push({
+          itemType: "course",
           prereqId,
           status,
           msg,
@@ -192,26 +204,68 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
                     <p className="text-xs text-zinc-400">
                       Satisfy at least one of the following:
                     </p>
-                    {group.map(({ prereqId, status, msg }) => (
-                      <div
-                        key={prereqId}
-                        className=" rounded-lg border border-zinc-800/80 bg-zinc-950/40 px-3 py-2"
-                      >
-                        <p className="text-xs text-zinc-400 pb-2">{msg}</p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-semibold text-zinc-100">
-                            {prereqId}
-                          </span>
-                          <span
-                            className={`rounded-full border px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${statusPillClasses[status] ??
-                              "text-zinc-200 border-zinc-700/70 bg-zinc-700/20"
-                              }`}
+                    {group.map((item, itemIndex) => {
+                      if (item.itemType === "credit_hours") {
+                        return (
+                          <div
+                            key={`ch-or-${itemIndex}`}
+                            className="rounded-lg border border-amber-500/30 bg-amber-500/5 px-3 py-2"
                           >
-                            {status}
-                          </span>
+                            <p className="text-xs text-amber-400/70 pb-1">
+                              Credit Hour Requirement
+                            </p>
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm font-semibold text-amber-200">
+                                Requires {item.value} credit hours
+                              </span>
+                              <span className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-400">
+                                info
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      }
+                      if (item.itemType === "permission") {
+                        return (
+                          <div
+                            key={`perm-or-${itemIndex}`}
+                            className="rounded-lg border border-purple-500/30 bg-purple-500/5 px-3 py-2"
+                          >
+                            <p className="text-xs text-purple-400/70 pb-1">
+                              Permission Required
+                            </p>
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm font-semibold text-purple-200">
+                                {item.description}
+                              </span>
+                              <span className="rounded-full border border-purple-400/40 bg-purple-400/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-purple-400">
+                                Info
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      }
+                      return (
+                        <div
+                          key={item.prereqId}
+                          className=" rounded-lg border border-zinc-800/80 bg-zinc-950/40 px-3 py-2"
+                        >
+                          <p className="text-xs text-zinc-400 pb-2">{item.msg}</p>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-semibold text-zinc-100">
+                              {item.prereqId}
+                            </span>
+                            <span
+                              className={`rounded-full border px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${statusPillClasses[item.status] ??
+                                "text-zinc-200 border-zinc-700/70 bg-zinc-700/20"
+                                }`}
+                            >
+                              {item.status}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 ))}
               </>

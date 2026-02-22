@@ -18,15 +18,19 @@ export function categorizePrereqs(prereqNode) {
     }
 
     if (node.type === "credit_hours") {
+      if (isInsideOr) {
+        return [{ type: "credit_hours", value: node.value }];
+      }
       result.creditHours.push({ value: node.value });
       return [];
     }
 
     if (node.type === "permission") {
-      result.permissions.push({
-        description:
-          node.description || node.detail || "Permission required",
-      });
+      const desc = node.description || node.detail || "Permission required";
+      if (isInsideOr) {
+        return [{ type: "permission", description: desc }];
+      }
+      result.permissions.push({ description: desc });
       return [];
     }
 
