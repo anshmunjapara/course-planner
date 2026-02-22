@@ -150,7 +150,7 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
                       {perm.description}
                     </span>
                     <span className="rounded-full border border-purple-400/40 bg-purple-400/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-purple-400">
-                      required
+                      Info
                     </span>
                   </div>
                 </div>
