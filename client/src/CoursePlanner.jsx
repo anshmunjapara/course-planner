@@ -3,15 +3,25 @@ import { GraphView } from "./GraphView";
 import { Sidebar } from "./Sidebar";
 import { CoursePickerSidebar } from "./CoursePickerSidebar";
 import { initialCourses } from "./coursesData";
+import { getMissingCourses } from "./utils/getMissingCourses";
 import { getAncestorIds } from "./utils/getAncestorIds";
 import { Button } from "@/components/ui/button";
 
 const requiredCourses = initialCourses.filter((c) => c.required);
 const requiredCourseIds = new Set(requiredCourses.map((c) => c.id));
+const allRequiredCourses = [
+  ...requiredCourses,
+  ...getMissingCourses(requiredCourses, requiredCourseIds),
+];
+console.log(allRequiredCourses);
 const optionalCourses = initialCourses.filter((c) => !c.required);
-const storedUserGrades = JSON.parse(
-  localStorage.getItem("userGrades") || '{"MATH103": 60}',
-);
+const optionalCourseIds = new Set(optionalCourses.map((c) => c.id));
+const alloptionalCourses = [
+  ...optionalCourses,
+  ...getMissingCourses(optionalCourses, optionalCourseIds),
+];
+
+const storedUserGrades = JSON.parse(localStorage.getItem("userGrades") || "{}");
 const storedOptionalCourses = JSON.parse(
   localStorage.getItem("selectedOptionalCourses") || "[]",
 );
@@ -27,7 +37,7 @@ export function CoursePlanner() {
   const [userGrades, setUserGrades] = useState(storedUserGrades);
 
   const handleReset = useCallback(() => {
-    setUserGrades({ MATH103: 60 });
+    setUserGrades({});
     setSelectedOptionalCoursesIds(new Set());
     setSelectedNode(null);
     setSelectedNodeId(null);
@@ -65,7 +75,6 @@ export function CoursePlanner() {
       } else {
         const allAncestors = getAncestorIds(initialCourses, courseId);
         newSelectedCourses.add(courseId);
-        console.log(requiredCourses);
         allAncestors.forEach((id) => {
           if (!requiredCourseIds.has(id)) {
             newSelectedCourses.add(id);
@@ -83,8 +92,8 @@ export function CoursePlanner() {
 
   const activeCourses = useMemo(() => {
     return [
-      ...requiredCourses,
-      ...optionalCourses.filter((c) => selectedOptionalCoursesIds.has(c.id)),
+      ...allRequiredCourses,
+      ...alloptionalCourses.filter((c) => selectedOptionalCoursesIds.has(c.id)),
     ];
   }, [selectedOptionalCoursesIds]);
 

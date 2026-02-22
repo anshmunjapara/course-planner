@@ -32,6 +32,7 @@ export const initialCourses = [
           operator: "OR",
           operands: [
             { type: "course", courseId: "MATH110", concurrentOk: true },
+            { type: "course", courseId: "MATH103", minGrade: 80 },
           ],
         },
       ],
@@ -211,181 +212,6 @@ export const initialCourses = [
         { type: "course", courseId: "CS280" },
       ],
     },
-    required: true,
-  },
-  // Commented-out courses remain unchanged...
-  {
-    id: "MATH110",
-    label: "MATH 110 - Calculus I",
-    description:
-      "An introduction to differential calculus. Topics include: functions, limits, continuity, differentiation, and applications of the derivative. Problems will be drawn from various disciplines.",
-    prereqs: null,
-    required: true,
-  },
-  {
-    id: "MATH221",
-    label: "MATH 221 - Proofs",
-    description:
-      "An introductory course intended to familiarize students with mathematical reasoning and proof techniques, including direct reasoning, indirect reasoning, and mathematical induction. Topics include elementary number theory, logic, sets, functions, and relations.",
-    prereqs: null,
-    required: true,
-  },
-  {
-    id: "MATH111",
-    label: "MATH 111 - Calculus II",
-    description:
-      "Differentiation and integration of exponential and logarithmic functions; methods of integration and applications; indeterminate forms, L'Hospital's rule and improper integrals; sequences, series, power series and Taylor series.",
-    prereqs: { type: "course", courseId: "MATH110" },
-    required: true,
-  },
-  {
-    id: "MATH112",
-    label: "MATH 112 - Applied Calculus II",
-    description:
-      "An introduction to calculus in two and three variables, first-order differential equations, infinite series, and calculus of trigonometric functions.",
-    prereqs: { type: "course", courseId: "MATH110" },
-    required: false,
-  },
-  {
-    id: "MATH213",
-    label: "MATH 231 - Euclidean Geometry",
-    description:
-      "This course is intended to familiarize the student with Euclidean geometry. Topics include the postulates and theorems of both classical and modern Euclidean geometry.",
-    prereqs: { type: "course", courseId: "MATH221" },
-    required: false,
-  },
-  {
-    id: "MATH122",
-    label: "MATH 122 - Linear Algebra I",
-    description:
-      "A course intended to introduce students to elementary linear algebra, particularly at a computational and applied level. Topics include matrices and systems of equations, inversion, determinants, vectors, inner products, eigenvectors and eigenvalues.",
-    prereqs: null,
-    required: true,
-  },
-  {
-    id: "MATH261",
-    label: "MATH 261 - Methods of Numerical Analysis",
-    description:
-      "Topics will include number systems and errors, solutions of polynomial and other nonlinear equations, interpolation, numerical differentiation and integration, and the cubic spline.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "MATH111" },
-        { type: "course", courseId: "MATH122" },
-        {
-          type: "logic",
-          operator: "OR",
-          operands: [
-            { type: "course", courseId: "CS110" },
-            { type: "course", courseId: "CS165" },
-            { type: "course", courseId: "STAT165" },
-          ],
-        },
-      ],
-    },
-    required: false,
-  },
-  {
-    id: "MATH361",
-    label: "MATH 361 - Numerical Analysis I",
-    description:
-      "Least squares and other approximations. Difference equations. Solutions of algebraic systems. Symbol manipulators.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "MATH213" },
-        {
-          type: "logic",
-          operator: "OR",
-          operands: [
-            { type: "course", courseId: "CS261" },
-            { type: "course", courseId: "MATH261" },
-          ],
-        },
-      ],
-    },
-    required: false,
-  },
-  {
-    id: "STAT160",
-    label: "STAT160 - Introductory Statistics",
-    description:
-      "A comprehensive introduction to probability, probability distributions, sampling distributions, basic techniques of statistical inference, analysis of variance, linear regression, inference for categorical variables, and nonparametric statistics.",
-    prereqs: null,
-    required: true,
-  },
-  {
-    id: "STAT300",
-    label: "STAT 300 - Statistical Learning and Predictive Modeling",
-    description:
-      "Selected topics and techniques in statistical learning and predictive modeling, including linear models, logistic regression models, regression trees, classification models and statistical software.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "MATH122" },
-        { type: "course", courseId: "STAT252" },
-        {
-          type: "logic",
-          operator: "OR",
-          operands: [
-            { type: "course", courseId: "CS110" },
-            { type: "course", courseId: "CS165" },
-            { type: "course", courseId: "STAT165" },
-          ],
-        },
-      ],
-    },
-    required: false,
-  },
-  {
-    id: "STAT301",
-    label: "STAT 301 - Introduction to Statistical Computing",
-    description:
-      "Selected topics and techniques in statistical learning and predictive modeling, including linear models, logistic regression models, regression trees, classification models and statistical software.",
-    prereqs: {
-      type: "logic",
-      operator: "AND",
-      operands: [
-        { type: "course", courseId: "MATH122" },
-        { type: "course", courseId: "STAT252" },
-        { type: "course", courseId: "CS265" },
-      ],
-    },
-    required: false,
-  },
-  {
-    id: "STAT252",
-    label: "STAT 252 - Introduction to Statistical Inference",
-    description:
-      "Sampling distribution theory and the Central Limit Theorem; large sample theory; methods of estimation and hypothesis testing including maximum likelihood estimation, likelihood ratio testing, and confidence interval construction.",
-    prereqs: null,
-    required: false,
-  },
-  {
-    id: "STAT165",
-    label: "STAT 165 - Introduction to Programming with Python",
-    description:
-      "An introduction to problem-solving techniques using Python. This course will introduce fundamental programming principles and topics: data types, expressions, control structures, elementary data structures, functions, files, and the mechanics of running, testing and debugging. These concepts will be applied to problem solving and applications in data analysis.",
-    prereqs: null,
-    required: false,
-  },
-  {
-    id: "STAT200",
-    label: "STAT 200 - Introductory Statistics",
-    description:
-      "A comprehensive introduction to probability, probability distributions, sampling distributions, basic techniques of statistical inference, analysis of variance, linear regression, inference for categorical variables, and nonparametric statistics.",
-    prereqs: null,
-    required: false,
-  },
-  {
-    id: "ENGL100",
-    label: "ENGL 100 - Introductory Statistics",
-    description:
-      "A comprehensive introduction to probability, probability distributions, sampling distributions, basic techniques of statistical inference, analysis of variance, linear regression, inference for categorical variables, and nonparametric statistics.",
-    prereqs: null,
     required: true,
   },
   {
@@ -845,362 +671,528 @@ export const initialCourses = [
     },
     required: false,
   },
-  // {
-  //   id: "CS290AE",
-  //   label: "CS 290AE - Intro to Digital Multimedia",
-  //   description:
-  //     "This course will focus on digital graphic and website design students will learn industry standard and motion graphic software packages: Adobe Photoshop & Premiere, Flash MX, Dreamweaver MX. Students will participate in problem-solving environment using timelines.",
-  //   prereqs: {
-  //     type: "course",
-  //     courseId: "CS100",
-  //   },
-  // },
-  // {
-  //   id: "CS290AF",
-  //   label: "CS 290AF - Java Programming Language",
-  //   description:
-  //     "Introduction to Java (based on an instructor-led Sun course offered in industry). The course covers topics such as arrays, exceptions, GUI interfaces, GUI event handling, Threads, I/O streams and Networking.",
-  //   prereqs: {
-  //     type: "course",
-  //     courseId: "CS210",
-  //     minGrade: 65,
-  //   },
-  // },
-  // {
-  //   id: "CS290AG",
-  //   label: "CS 290AG - Topics in Societal and Ethical Considerations",
-  //   description:
-  //     "This course will involve exploration of various considerations of computerized society and what it means to be a professional therein. The student will examine the history of computing, the history of the computing profession, Ethics of professional conduct, intellectual property, and computer crime.",
-  //   prereqs: {
-  //     type: "permission",
-  //     description: "Written permission from the Instructor is required",
-  //   },
-  // },
-  // {
-  //   id: "CS290AH",
-  //   label: "CS 290AH - Online Lab Design and Development",
-  //   description:
-  //     "The student will make an independent study of Web-based delivery of labs and tutorials. Project work will be required. The student and supervisor must present a detailed outline of the proposed study to the head of the department for approval.",
-  //   prereqs: {
-  //     type: "permission",
-  //     description: "Written permission of instructor required",
-  //   },
-  // },
-  // {
-  //   id: "CS290AI",
-  //   label: "CS 290AI - Computer Technology for Live Performance",
-  //   description:
-  //     "Exploration of the way computer technology can impact various aspects of the performing arts including lighting, sound, props and set design as well as projection mapping, virtual/augmented reality, and interactive performance.",
-  //   prereqs: null,
-  // },
-  // {
-  //   id: "CS290AJ",
-  //   label: "CS 290AJ - Interactive Simulation Methods",
-  //   description:
-  //     "In this course students will use the Blender 3D modelling suite to develop visually stimulating - yet physically accurate - models in domains such as classical mechanics, chaos theory, and complex systems and bring learning to life in interactive 3D simulations.",
-  //   prereqs: {
-  //     type: "logic",
-  //     operator: "OR",
-  //     operands: [
-  //       { type: "course", courseId: "CS100" },
-  //       { type: "course", courseId: "CS110" },
-  //       { type: "credit_hours", value: 30 },
-  //     ],
-  //   },
-  // },
-  // {
-  //   id: "CS290AK",
-  //   label: "CS 290AK - Topics in Data Acquisition and Analysis",
-  //   description:
-  //     "Introduced to data collection techniques by developing their own sensor modules, running experiments and verifying the results. Students will learn microcontroller programming for data collection as well as regression techniques and error analysis for calibration and verification.",
-  //   prereqs: {
-  //     type: "logic",
-  //     operator: "OR",
-  //     operands: [
-  //       { type: "course", courseId: "CS100" },
-  //       { type: "course", courseId: "CS110" },
-  //       { type: "credit_hours", value: 30 },
-  //     ],
-  //   },
-  // },
-  // {
-  //   id: "CS290AL",
-  //   label: "CS 290AL - Introductory Topics in Artificial Intelligence",
-  //   description:
-  //     "A course in special topics in which the student makes an independent study in Artificial Intelligence at the second-year level under the supervision of a faculty member in the department.",
-  //   prereqs: {
-  //     type: "permission",
-  //     description: "Permission of the Instructor is required",
-  //   },
-  // },
-  // {
-  //   id: "CS390AK",
-  //   label: "CS 390AK - Web Content Development and Production",
-  //   description:
-  //     "Explore various leading-edge technologies for digital multimedia content creation and production for web-based delivery. Examine issues for media conversion and compression, and their effect on communication. Students will demonstrate these ideas in a web-based project.",
-  //   prereqs: null,
-  // },
-  // {
-  //   id: "CS390AL",
-  //   label: "CS 390AL - Business Analyst for the Web",
-  //   description:
-  //     "It has become imperative for successful businesses and organizations to have presence on the World Wide Web. Students will take on a website concept or an existing underperforming website as the basis of a project. Students will study and employ techniques for requirements: planning and management, elicitation, analysis and documentation, communication, and implementation. Students will document their analysis and create a prototype of their designs.",
-  //   prereqs: null,
-  // },
-  // {
-  //   id: "CS390AM",
-  //   label: "CS 390AM - User Interface Implementation and Evaluation",
-  //   description:
-  //     "User Interfaces are an essential part of any interactive software application. Ideally, the interface will accommodate users from beginners to experts by providing a low threshold and a high ceiling to interactions with the software. Students will implement a user interface with existing tool kits and then evaluate their interface with users.",
-  //   prereqs: {
-  //     type: "permission",
-  //     description: "Written permission of instructor is required",
-  //   },
-  // },
-  // {
-  //   id: "CS390AO",
-  //   label: "CS 390AO - Mobile Computing",
-  //   description:
-  //     "Developing software applications (called apps) for mobile computing platforms such as smart phones, tablets and personal media devices. Topics may include touch-screen interfaces, power management, graphics optimization, communication, location, and mobile browsers. App marketplaces and network carrier policies will also be discussed.",
-  //   prereqs: {
-  //     type: "course",
-  //     courseId: "CS115",
-  //   },
-  // },
-  // {
-  //   id: "CS390AP",
-  //   label: "CS 390AP - Special Topics in Virtual Reality",
-  //   description:
-  //     "Introductory topics in virtual reality. Environments, Platforms, Locomotion, Physiology, Applications.",
-  //   prereqs: null,
-  // },
-  // {
-  //   id: "CS390AR",
-  //   label: "CS 390AR - Intermediate Topics in Artificial Intelligence",
-  //   description:
-  //     "A course in special topics in which the student makes an independent study in Artificial Intelligence at the third-year level under the supervision of a faculty member in the department.",
-  //   prereqs: {
-  //     type: "permission",
-  //     description: "Under the supervision of a faculty member",
-  //   },
-  // },
+  {
+    id: "MATH110",
+    label: "MATH 110 - Calculus I",
+    description:
+      "An introduction to differential calculus. Topics include: functions, limits, continuity, differentiation, and applications of the derivative. Problems will be drawn from various disciplines.",
+    prereqs: null,
+    required: true,
+  },
+  {
+    id: "MATH221",
+    label: "MATH 221 - Proofs",
+    description:
+      "An introductory course intended to familiarize students with mathematical reasoning and proof techniques, including direct reasoning, indirect reasoning, and mathematical induction. Topics include elementary number theory, logic, sets, functions, and relations.",
+    prereqs: null,
+    required: true,
+  },
+  {
+    id: "MATH111",
+    label: "MATH 111 - Calculus II",
+    description:
+      "Differentiation and integration of exponential and logarithmic functions; methods of integration and applications; indeterminate forms, L'Hospital's rule and improper integrals; sequences, series, power series and Taylor series.",
+    prereqs: { type: "course", courseId: "MATH110" },
+    required: true,
+  },
+  {
+    id: "MATH112",
+    label: "MATH 112 - Applied Calculus II",
+    description:
+      "An introduction to calculus in two and three variables, first-order differential equations, infinite series, and calculus of trigonometric functions.",
+    prereqs: { type: "course", courseId: "MATH110" },
+    required: false,
+  },
+  {
+    id: "MATH213",
+    label: "MATH 231 - Euclidean Geometry",
+    description:
+      "This course is intended to familiarize the student with Euclidean geometry. Topics include the postulates and theorems of both classical and modern Euclidean geometry.",
+    prereqs: { type: "course", courseId: "MATH221" },
+    required: false,
+  },
+  {
+    id: "MATH122",
+    label: "MATH 122 - Linear Algebra I",
+    description:
+      "A course intended to introduce students to elementary linear algebra, particularly at a computational and applied level. Topics include matrices and systems of equations, inversion, determinants, vectors, inner products, eigenvectors and eigenvalues.",
+    prereqs: null,
+    required: true,
+  },
+  {
+    id: "MATH261",
+    label: "MATH 261 - Methods of Numerical Analysis",
+    description:
+      "Topics will include number systems and errors, solutions of polynomial and other nonlinear equations, interpolation, numerical differentiation and integration, and the cubic spline.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "MATH111" },
+        { type: "course", courseId: "MATH122" },
+        {
+          type: "logic",
+          operator: "OR",
+          operands: [
+            { type: "course", courseId: "CS110" },
+            { type: "course", courseId: "CS165" },
+            { type: "course", courseId: "STAT165" },
+          ],
+        },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "MATH361",
+    label: "MATH 361 - Numerical Analysis I",
+    description:
+      "Least squares and other approximations. Difference equations. Solutions of algebraic systems. Symbol manipulators.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "MATH213" },
+        {
+          type: "logic",
+          operator: "OR",
+          operands: [
+            { type: "course", courseId: "CS261" },
+            { type: "course", courseId: "MATH261" },
+          ],
+        },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "STAT160",
+    label: "STAT160 - Introductory Statistics",
+    description:
+      "A comprehensive introduction to probability, probability distributions, sampling distributions, basic techniques of statistical inference, analysis of variance, linear regression, inference for categorical variables, and nonparametric statistics.",
+    prereqs: null,
+    required: true,
+  },
+  {
+    id: "STAT300",
+    label: "STAT 300 - Statistical Learning and Predictive Modeling",
+    description:
+      "Selected topics and techniques in statistical learning and predictive modeling, including linear models, logistic regression models, regression trees, classification models and statistical software.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "MATH122" },
+        { type: "course", courseId: "STAT252" },
+        {
+          type: "logic",
+          operator: "OR",
+          operands: [
+            { type: "course", courseId: "CS110" },
+            { type: "course", courseId: "CS165" },
+            { type: "course", courseId: "STAT165" },
+          ],
+        },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "STAT301",
+    label: "STAT 301 - Introduction to Statistical Computing",
+    description:
+      "Selected topics and techniques in statistical learning and predictive modeling, including linear models, logistic regression models, regression trees, classification models and statistical software.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "MATH122" },
+        { type: "course", courseId: "STAT252" },
+        { type: "course", courseId: "CS265" },
+      ],
+    },
+    required: false,
+  },
+  {
+    id: "STAT252",
+    label: "STAT 252 - Introduction to Statistical Inference",
+    description:
+      "Sampling distribution theory and the Central Limit Theorem; large sample theory; methods of estimation and hypothesis testing including maximum likelihood estimation, likelihood ratio testing, and confidence interval construction.",
+    prereqs: null,
+    required: false,
+  },
+  {
+    id: "STAT165",
+    label: "STAT 165 - Introduction to Programming with Python",
+    description:
+      "An introduction to problem-solving techniques using Python. This course will introduce fundamental programming principles and topics: data types, expressions, control structures, elementary data structures, functions, files, and the mechanics of running, testing and debugging. These concepts will be applied to problem solving and applications in data analysis.",
+    prereqs: null,
+    required: false,
+  },
+  {
+    id: "STAT200",
+    label: "STAT 200 - Introductory Statistics",
+    description:
+      "A comprehensive introduction to probability, probability distributions, sampling distributions, basic techniques of statistical inference, analysis of variance, linear regression, inference for categorical variables, and nonparametric statistics.",
+    prereqs: null,
+    required: false,
+  },
+  {
+    id: "ENGL100",
+    label: "ENGL 100 - Critical Reading and Writing I",
+    description:
+      "This course develops students' proficiency in critical reading and writing through the study of a wide range of non-literary and literary texts, and the study of composition, with emphasis on connections between modes of reading and writing. *Note: Students who are planning to repeat ENGL 100 should seek academic advising before doing so.*",
+    prereqs: null,
+    required: true,
+  },
+  {
+    id: "CS290AE",
+    label: "CS 290AE - Intro to Digital Multimedia",
+    description:
+      "This course will focus on digital graphic and website design students will learn industry standard and motion graphic software packages: Adobe Photoshop & Premiere, Flash MX, Dreamweaver MX. Students will participate in problem-solving environment using timelines.",
+    prereqs: {
+      type: "course",
+      courseId: "CS100",
+    },
+  },
+  {
+    id: "CS290AF",
+    label: "CS 290AF - Java Programming Language",
+    description:
+      "Introduction to Java (based on an instructor-led Sun course offered in industry). The course covers topics such as arrays, exceptions, GUI interfaces, GUI event handling, Threads, I/O streams and Networking.",
+    prereqs: {
+      type: "course",
+      courseId: "CS210",
+      minGrade: 65,
+    },
+  },
+  {
+    id: "CS290AG",
+    label: "CS 290AG - Topics in Societal and Ethical Considerations",
+    description:
+      "This course will involve exploration of various considerations of computerized society and what it means to be a professional therein. The student will examine the history of computing, the history of the computing profession, Ethics of professional conduct, intellectual property, and computer crime.",
+    prereqs: {
+      type: "permission",
+      description: "Written permission from the Instructor is required",
+    },
+  },
+  {
+    id: "CS290AH",
+    label: "CS 290AH - Online Lab Design and Development",
+    description:
+      "The student will make an independent study of Web-based delivery of labs and tutorials. Project work will be required. The student and supervisor must present a detailed outline of the proposed study to the head of the department for approval.",
+    prereqs: {
+      type: "permission",
+      description: "Written permission of instructor required",
+    },
+  },
+  {
+    id: "CS290AI",
+    label: "CS 290AI - Computer Technology for Live Performance",
+    description:
+      "Exploration of the way computer technology can impact various aspects of the performing arts including lighting, sound, props and set design as well as projection mapping, virtual/augmented reality, and interactive performance.",
+    prereqs: null,
+  },
+  {
+    id: "CS290AJ",
+    label: "CS 290AJ - Interactive Simulation Methods",
+    description:
+      "In this course students will use the Blender 3D modelling suite to develop visually stimulating - yet physically accurate - models in domains such as classical mechanics, chaos theory, and complex systems and bring learning to life in interactive 3D simulations.",
+    prereqs: {
+      type: "logic",
+      operator: "OR",
+      operands: [
+        { type: "course", courseId: "CS100" },
+        { type: "course", courseId: "CS110" },
+        { type: "credit_hours", value: 30 },
+      ],
+    },
+  },
+  {
+    id: "CS290AK",
+    label: "CS 290AK - Topics in Data Acquisition and Analysis",
+    description:
+      "Introduced to data collection techniques by developing their own sensor modules, running experiments and verifying the results. Students will learn microcontroller programming for data collection as well as regression techniques and error analysis for calibration and verification.",
+    prereqs: {
+      type: "logic",
+      operator: "OR",
+      operands: [
+        { type: "course", courseId: "CS100" },
+        { type: "course", courseId: "CS110" },
+        { type: "credit_hours", value: 30 },
+      ],
+    },
+  },
+  {
+    id: "CS290AL",
+    label: "CS 290AL - Introductory Topics in Artificial Intelligence",
+    description:
+      "A course in special topics in which the student makes an independent study in Artificial Intelligence at the second-year level under the supervision of a faculty member in the department.",
+    prereqs: {
+      type: "permission",
+      description: "Permission of the Instructor is required",
+    },
+  },
+  {
+    id: "CS390AK",
+    label: "CS 390AK - Web Content Development and Production",
+    description:
+      "Explore various leading-edge technologies for digital multimedia content creation and production for web-based delivery. Examine issues for media conversion and compression, and their effect on communication. Students will demonstrate these ideas in a web-based project.",
+    prereqs: null,
+  },
+  {
+    id: "CS390AL",
+    label: "CS 390AL - Business Analyst for the Web",
+    description:
+      "It has become imperative for successful businesses and organizations to have presence on the World Wide Web. Students will take on a website concept or an existing underperforming website as the basis of a project. Students will study and employ techniques for requirements: planning and management, elicitation, analysis and documentation, communication, and implementation. Students will document their analysis and create a prototype of their designs.",
+    prereqs: null,
+  },
+  {
+    id: "CS390AM",
+    label: "CS 390AM - User Interface Implementation and Evaluation",
+    description:
+      "User Interfaces are an essential part of any interactive software application. Ideally, the interface will accommodate users from beginners to experts by providing a low threshold and a high ceiling to interactions with the software. Students will implement a user interface with existing tool kits and then evaluate their interface with users.",
+    prereqs: {
+      type: "permission",
+      description: "Written permission of instructor is required",
+    },
+  },
+  {
+    id: "CS390AO",
+    label: "CS 390AO - Mobile Computing",
+    description:
+      "Developing software applications (called apps) for mobile computing platforms such as smart phones, tablets and personal media devices. Topics may include touch-screen interfaces, power management, graphics optimization, communication, location, and mobile browsers. App marketplaces and network carrier policies will also be discussed.",
+    prereqs: {
+      type: "course",
+      courseId: "CS115",
+    },
+  },
+  {
+    id: "CS390AP",
+    label: "CS 390AP - Special Topics in Virtual Reality",
+    description:
+      "Introductory topics in virtual reality. Environments, Platforms, Locomotion, Physiology, Applications.",
+    prereqs: null,
+  },
+  {
+    id: "CS390AR",
+    label: "CS 390AR - Intermediate Topics in Artificial Intelligence",
+    description:
+      "A course in special topics in which the student makes an independent study in Artificial Intelligence at the third-year level under the supervision of a faculty member in the department.",
+    prereqs: {
+      type: "permission",
+      description: "Under the supervision of a faculty member",
+    },
+  },
 
-  // {
-  //   id: "CS490CA",
-  //   label: "CS 490CA - Constraint Processing",
-  //   description:
-  //     "Search Techniques. Constraint Satisfaction. Constraint Logic Programming. Constraint Solvers. Applications.",
-  //   prereqs: {
-  //     type: "course",
-  //     courseId: "CS340",
-  //     minGrade: 70,
-  //   },
-  // },
+  {
+    id: "CS490CA",
+    label: "CS 490CA - Constraint Processing",
+    description:
+      "Search Techniques. Constraint Satisfaction. Constraint Logic Programming. Constraint Solvers. Applications.",
+    prereqs: {
+      type: "course",
+      courseId: "CS340",
+      minGrade: 70,
+    },
+  },
 
-  // {
-  //   id: "CS490AB",
-  //   label: "CS 490AB - User Interfaces for Databases",
-  //   description:
-  //     "A course in special topics in which the student makes an independent study in computer science under the supervision of a faculty member in the department.",
-  //   prereqs: {
-  //     type: "permission",
-  //     detail: "Detailed outline and approval from department head required.",
-  //   },
-  // },
-  // {
-  //   id: "CS490AD",
-  //   label: "CS 490AD - Parallel Computer Architecture",
-  //   description:
-  //     "A course in special topics in which the student makes an independent study in computer science under the supervision of a faculty member in the department.",
-  //   prereqs: {
-  //     type: "permission",
-  //     detail: "Detailed outline and approval from department head required.",
-  //   },
-  // },
-  // {
-  //   id: "CS490AJ",
-  //   label: "CS 490AJ - User Inter Constru VisualBasic",
-  //   description:
-  //     "A course in special topics in which the student makes an independent study in computer science under the supervision of a faculty member in the department.",
-  //   prereqs: {
-  //     type: "permission",
-  //     detail: "Detailed outline and approval from department head required.",
-  //   },
-  // },
-  // {
-  //   id: "CS490AL",
-  //   label: "CS 490AL - Special Topics: Computer Graph",
-  //   description:
-  //     "Special topics in computer graphics: 3D viewing transformation and perspective projection, ray-tracing and radiosity rendering techniques, multiresuolution surface models, special advanced modelling techniques.",
-  //   prereqs: null,
-  // },
-  // {
-  //   id: "CS490AP",
-  //   label: "CS 490AP - Emerging User Interface Design",
-  //   description:
-  //     "Discover new and emerging principles of UI design. Derive guidelines directly applicable to industrial applications from research in the fields of Psychology, HCI, and Software Engineering Methodologies.",
-  //   prereqs: {
-  //     type: "course",
-  //     courseId: "CS428",
-  //   },
-  // },
-  // {
-  //   id: "CS490AT",
-  //   label: "CS 490AT - Adv. Obj. Oriented Prog.in C++",
-  //   description:
-  //     "The student will investigate topics related to object oriented programming in C++ and will implement a class hierarchy for several data structures and algorithms.",
-  //   prereqs: null,
-  // },
-  // {
-  //   id: "CS490AV",
-  //   label: "CS 490AV - Topics in Data Comm & Network",
-  //   description:
-  //     "Topics in Data Communications and Networks: Protocol Concepts, Local Area Networking, Wide Area Networking, Network Programming.",
-  //   prereqs: {
-  //     type: "course",
-  //     courseId: "CS335",
-  //   },
-  // },
-  // {
-  //   id: "CS490BK",
-  //   label: "CS 490BK - Server-side web applications",
-  //   description:
-  //     "Students will study the concepts and competing technologies involved in web-based application development and will use JSP, servlets, HTTP, and JDBC.",
-  //   prereqs: {
-  //     type: "course",
-  //     courseId: "CS285",
-  //   },
-  // },
-  // {
-  //   id: "CS490BS",
-  //   label: "CS 490BS - Applied Image Processing",
-  //   description:
-  //     "Study of basic image processing algorithms. Applications of selected techniques to practical problems. A term project is required.",
-  //   prereqs: {
-  //     type: "permission",
-  //     detail: "Written permission of instructor is required.",
-  //   },
-  // },
-  // {
-  //   id: "CS490CA",
-  //   label: "CS 490CA - Constraint Processing",
-  //   description:
-  //     "Search Techniques. Constraint Satisfaction. Constraint Logic Programming. Constraint Solvers. Applications.",
-  //   prereqs: {
-  //     type: "course",
-  //     courseId: "CS340",
-  //     minGrade: 70,
-  //   },
-  // },
-  // {
-  //   id: "CS490CD",
-  //   label: "CS 490CD - Robot Motion Planning",
-  //   description:
-  //     "Configuration Space, Cell Decomposition Methods, Roadmap Methods, Manipulation Planning, Multiple Robots, Moving Objects.",
-  //   prereqs: {
-  //     type: "course",
-  //     courseId: "CS340",
-  //     minGrade: 75,
-  //   },
-  // },
-  // {
-  //   id: "CS490CN",
-  //   label: "CS 490CN - Open Source Software Development",
-  //   description:
-  //     "This course will introduce students to software development in an open source environment, including methodology and philosophy.",
-  //   prereqs: {
-  //     type: "permission",
-  //     detail: "Permission of the instructor required.",
-  //   },
-  // },
-  // {
-  //   id: "CS490CP",
-  //   label: "CS 490CP - Web Service Design",
-  //   description:
-  //     "This course will explore issues around the design, coding, and deployment of web-based services for public use.",
-  //   prereqs: {
-  //     type: "permission",
-  //     detail: "Written permission of instructor is required.",
-  //   },
-  // },
-  // {
-  //   id: "CS490CR",
-  //   label: "CS 490CR - Foundations and Applications in Data Mining",
-  //   description:
-  //     "Foundations and applications of data mining. Topics include data preparation, transformation, classification, and prediction.",
-  //   prereqs: {
-  //     type: "logic",
-  //     operator: "OR",
-  //     operands: [
-  //       {
-  //         type: "logic",
-  //         operator: "AND",
-  //         operands: [
-  //           { type: "course", courseId: "CS320" },
-  //           { type: "course", courseId: "CS340" },
-  //         ],
-  //       },
-  //       {
-  //         type: "permission",
-  //         detail: "Written permission of instructor is required.",
-  //       },
-  //     ],
-  //   },
-  // },
-  // {
-  //   id: "CS490CX",
-  //   label: "CS 490CX - Mobile Computing",
-  //   description:
-  //     "Mobile Computing focuses on the design and implementation of software in a networked mobile environment.",
-  //   prereqs: {
-  //     type: "logic",
-  //     operator: "AND",
-  //     operands: [
-  //       { type: "course", courseId: "CS335" },
-  //       {
-  //         type: "logic",
-  //         operator: "OR",
-  //         operands: [{ type: "course", courseId: "CS315" }],
-  //       },
-  //     ],
-  //   },
-  // },
-  // {
-  //   id: "CS490DI",
-  //   label: "CS 490DI - Knowledge Representation and Reasoning",
-  //   description:
-  //     "The course examines some of the techniques used to represent knowledge in artificial intelligence, and the associated methods of automated reasoning.",
-  //   prereqs: null,
-  // },
-  // {
-  //   id: "CS490DK",
-  //   label: "CS 490DK - Topics in Advanced Networks",
-  //   description:
-  //     "Software-Defined Networking (SDN), Network Virtualization, Network Functions Virtualization (NFV), and 5G and beyond Mobile Networks.",
-  //   prereqs: {
-  //     type: "course",
-  //     courseId: "CS335",
-  //   },
-  // },
-  // {
-  //   id: "CS490DO",
-  //   label: "CS 490DO - Verified Programs and Proofs",
-  //   description:
-  //     "Development of proven-correct programs and computer-checked proofs using functional programming, dependent types and type theory.",
-  //   prereqs: {
-  //     type: "course",
-  //     courseId: "CS350",
-  //   },
-  // },
-  // {
-  //   id: "CS491AL",
-  //   label: "CS 491AL - Operating Systems Programming",
-  //   description:
-  //     "Study of the UNIX operating system. Assignments involve advanced programming in C and x86 assembly to implement enhancements to a functional kernel.",
-  //   prereqs: {
-  //     type: "permission",
-  //     detail:
-  //       "Permission of the instructor and senior undergraduate background in OS and architecture.",
-  //   },
-  // },
+  {
+    id: "CS490AB",
+    label: "CS 490AB - User Interfaces for Databases",
+    description:
+      "A course in special topics in which the student makes an independent study in computer science under the supervision of a faculty member in the department.",
+    prereqs: {
+      type: "permission",
+      description:
+        "Detailed outline and approval from department head required.",
+    },
+  },
+  {
+    id: "CS490AD",
+    label: "CS 490AD - Parallel Computer Architecture",
+    description:
+      "A course in special topics in which the student makes an independent study in computer science under the supervision of a faculty member in the department.",
+    prereqs: {
+      type: "permission",
+      description:
+        "Detailed outline and approval from department head required.",
+    },
+  },
+  {
+    id: "CS490AJ",
+    label: "CS 490AJ - User Inter Constru VisualBasic",
+    description:
+      "A course in special topics in which the student makes an independent study in computer science under the supervision of a faculty member in the department.",
+    prereqs: {
+      type: "permission",
+      description:
+        "Detailed outline and approval from department head required.",
+    },
+  },
+  {
+    id: "CS490AL",
+    label: "CS 490AL - Special Topics: Computer Graph",
+    description:
+      "Special topics in computer graphics: 3D viewing transformation and perspective projection, ray-tracing and radiosity rendering techniques, multiresuolution surface models, special advanced modelling techniques.",
+    prereqs: null,
+  },
+  {
+    id: "CS490AP",
+    label: "CS 490AP - Emerging User Interface Design",
+    description:
+      "Discover new and emerging principles of UI design. Derive guidelines directly applicable to industrial applications from research in the fields of Psychology, HCI, and Software Engineering Methodologies.",
+    prereqs: {
+      type: "course",
+      courseId: "CS428",
+    },
+  },
+  {
+    id: "CS490AT",
+    label: "CS 490AT - Adv. Obj. Oriented Prog.in C++",
+    description:
+      "The student will investigate topics related to object oriented programming in C++ and will implement a class hierarchy for several data structures and algorithms.",
+    prereqs: null,
+  },
+  {
+    id: "CS490AV",
+    label: "CS 490AV - Topics in Data Comm & Network",
+    description:
+      "Topics in Data Communications and Networks: Protocol Concepts, Local Area Networking, Wide Area Networking, Network Programming.",
+    prereqs: {
+      type: "course",
+      courseId: "CS335",
+    },
+  },
+  {
+    id: "CS490BK",
+    label: "CS 490BK - Server-side web applications",
+    description:
+      "Students will study the concepts and competing technologies involved in web-based application development and will use JSP, servlets, HTTP, and JDBC.",
+    prereqs: {
+      type: "course",
+      courseId: "CS285",
+    },
+  },
+  {
+    id: "CS490BS",
+    label: "CS 490BS - Applied Image Processing",
+    description:
+      "Study of basic image processing algorithms. Applications of selected techniques to practical problems. A term project is required.",
+    prereqs: {
+      type: "permission",
+      description: "Written permission of instructor is required.",
+    },
+  },
+  {
+    id: "CS490CD",
+    label: "CS 490CD - Robot Motion Planning",
+    description:
+      "Configuration Space, Cell Decomposition Methods, Roadmap Methods, Manipulation Planning, Multiple Robots, Moving Objects.",
+    prereqs: {
+      type: "course",
+      courseId: "CS340",
+      minGrade: 75,
+    },
+  },
+  {
+    id: "CS490CN",
+    label: "CS 490CN - Open Source Software Development",
+    description:
+      "This course will introduce students to software development in an open source environment, including methodology and philosophy.",
+    prereqs: {
+      type: "permission",
+      description: "Permission of the instructor required.",
+    },
+  },
+  {
+    id: "CS490CP",
+    label: "CS 490CP - Web Service Design",
+    description:
+      "This course will explore issues around the design, coding, and deployment of web-based services for public use.",
+    prereqs: {
+      type: "permission",
+      description: "Written permission of instructor is required.",
+    },
+  },
+  {
+    id: "CS490CR",
+    label: "CS 490CR - Foundations and Applications in Data Mining",
+    description:
+      "Foundations and applications of data mining. Topics include data preparation, transformation, classification, and prediction.",
+    prereqs: {
+      type: "logic",
+      operator: "OR",
+      operands: [
+        {
+          type: "logic",
+          operator: "AND",
+          operands: [
+            { type: "course", courseId: "CS320" },
+            { type: "course", courseId: "CS340" },
+          ],
+        },
+        {
+          type: "permission",
+          description: "Written permission of instructor is required.",
+        },
+      ],
+    },
+  },
+  {
+    id: "CS490CX",
+    label: "CS 490CX - Mobile Computing",
+    description:
+      "Mobile Computing focuses on the design and implementation of software in a networked mobile environment.",
+    prereqs: {
+      type: "logic",
+      operator: "AND",
+      operands: [
+        { type: "course", courseId: "CS335" },
+        {
+          type: "logic",
+          operator: "OR",
+          operands: [{ type: "course", courseId: "CS315" }],
+        },
+      ],
+    },
+  },
+  {
+    id: "CS490DI",
+    label: "CS 490DI - Knowledge Representation and Reasoning",
+    description:
+      "The course examines some of the techniques used to represent knowledge in artificial intelligence, and the associated methods of automated reasoning.",
+    prereqs: null,
+  },
+  {
+    id: "CS490DK",
+    label: "CS 490DK - Topics in Advanced Networks",
+    description:
+      "Software-Defined Networking (SDN), Network Virtualization, Network Functions Virtualization (NFV), and 5G and beyond Mobile Networks.",
+    prereqs: {
+      type: "course",
+      courseId: "CS335",
+    },
+  },
+  {
+    id: "CS490DO",
+    label: "CS 490DO - Verified Programs and Proofs",
+    description:
+      "Development of proven-correct programs and computer-checked proofs using functional programming, dependent types and type theory.",
+    prereqs: {
+      type: "course",
+      courseId: "CS350",
+    },
+  },
+  {
+    id: "CS491AL",
+    label: "CS 491AL - Operating Systems Programming",
+    description:
+      "Study of the UNIX operating system. Assignments involve advanced programming in C and x86 assembly to implement enhancements to a functional kernel.",
+    prereqs: {
+      type: "permission",
+      description:
+        "Permission of the instructor and senior undergraduate background in OS and architecture.",
+    },
+  },
 ];
