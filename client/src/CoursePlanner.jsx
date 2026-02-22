@@ -3,6 +3,7 @@ import { GraphView } from "./GraphView";
 import { Sidebar } from "./Sidebar";
 import { CoursePickerSidebar } from "./CoursePickerSidebar";
 import { initialCourses } from "./coursesData";
+import { getAncestorIds } from "./utils/getAncestorIds";
 import { Button } from "@/components/ui/button";
 
 const requiredCourses = initialCourses.filter((c) => c.required);
@@ -61,7 +62,13 @@ export function CoursePlanner() {
       if (newSelectedCourses.has(courseId)) {
         newSelectedCourses.delete(courseId);
       } else {
+        const allAncestors = getAncestorIds(initialCourses, courseId);
         newSelectedCourses.add(courseId);
+        allAncestors.forEach((id) => {
+          if (!requiredCourses.includes(id)) {
+            newSelectedCourses.add(id);
+          }
+        });
       }
       localStorage.setItem(
         "selectedOptionalCourses",

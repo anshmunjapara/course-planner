@@ -4,7 +4,9 @@ export function getAncestorIds(allCourses, selectedCourseId) {
   const courseNode = allCourses.find((c) => c.id === selectedCourseId);
   if (!courseNode) return [];
 
-  const prereqIds = getPrereqIds(courseNode.data.prereqs);
+  const prereqIds = getPrereqIds(
+    courseNode.data?.prereqs || courseNode.prereqs,
+  );
   const ancestorIds = new Set(prereqIds);
 
   // Recursively find ancestors of each prerequisite
