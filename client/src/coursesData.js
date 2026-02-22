@@ -875,6 +875,7 @@ export const initialCourses = [
       type: "permission",
       description: "Written permission from the Instructor is required",
     },
+    required: false,
   },
   {
     id: "CS290AH",
@@ -907,6 +908,7 @@ export const initialCourses = [
         { type: "credit_hours", value: 30 },
       ],
     },
+    required: false,
   },
   {
     id: "CS290AK",
@@ -983,6 +985,7 @@ export const initialCourses = [
       type: "permission",
       description: "Under the supervision of a faculty member",
     },
+    required: false,
   },
 
   {

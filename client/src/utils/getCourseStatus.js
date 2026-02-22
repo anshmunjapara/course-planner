@@ -23,6 +23,11 @@ export function evaluatePrereq(node, userGrades) {
     return false;
   }
 
+  // Credit hours and permission are informational — cannot be verified in-app
+  if (node.type === "credit_hours" || node.type === "permission") {
+    return true;
+  }
+
   // RECURSIVE CASE: It is a logic group (AND / OR)
   if (node.type === "logic") {
     if (node.operator === "AND") {

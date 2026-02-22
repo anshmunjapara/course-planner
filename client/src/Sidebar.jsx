@@ -34,7 +34,9 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
   console.log(categorizePrereqsRes);
   const requiredPrereqs = categorizePrereqsRes.required;
   const choiceGroupPrereqs = categorizePrereqsRes.choiceGroups;
-  let choiceGroupPrereqsWithStatus = []; // [[{prereqId, status, msg}, ...], [...]]]
+  const creditHours = categorizePrereqsRes.creditHours;
+  const permissions = categorizePrereqsRes.permissions;
+  let choiceGroupPrereqsWithStatus = []; // [[{prereqId, status, msg}, ...], [...]]]]
 
   const requiredPrereqListWithStatus = requiredPrereqs.map((prereqId) => {
     const { status, msg } = getEdgeStatus(
@@ -64,6 +66,12 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
     });
     return choiceGroupPrereqsWithStatus.push(res);
   });
+
+  const hasAnyPrereqs =
+    requiredPrereqListWithStatus.length > 0 ||
+    choiceGroupPrereqsWithStatus.length > 0 ||
+    creditHours.length > 0 ||
+    permissions.length > 0;
 
   return (
     <div className="flex-1 h-screen shrink-0 overflow-y-auto border-l border-zinc-00 bg-zinc-950 text-zinc-100 shadow-xl">
@@ -102,6 +110,58 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
+            {!hasAnyPrereqs && (
+              <p className="text-sm text-zinc-500 italic">
+                No prerequisites required
+              </p>
+            )}
+
+            {creditHours.length > 0 &&
+              creditHours.map((ch, index) => (
+                <div
+                  key={`ch-${index}`}
+                  className="rounded-lg border border-amber-500/30 bg-amber-500/5 px-3 py-2"
+                >
+                  <p className="text-xs text-amber-400/70 pb-1">
+                    Credit Hour Requirement
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold text-amber-200">
+                      Requires {ch.value} credit hours
+                    </span>
+                    <span className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-400">
+                      info
+                    </span>
+                  </div>
+                </div>
+              ))}
+
+            {permissions.length > 0 &&
+              permissions.map((perm, index) => (
+                <div
+                  key={`perm-${index}`}
+                  className="rounded-lg border border-purple-500/30 bg-purple-500/5 px-3 py-2"
+                >
+                  <p className="text-xs text-purple-400/70 pb-1">
+                    Permission Required
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold text-purple-200">
+                      {perm.description}
+                    </span>
+                    <span className="rounded-full border border-purple-400/40 bg-purple-400/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-purple-400">
+                      required
+                    </span>
+                  </div>
+                </div>
+              ))}
+
+            {(creditHours.length > 0 || permissions.length > 0) &&
+              (requiredPrereqListWithStatus.length > 0 ||
+                choiceGroupPrereqsWithStatus.length > 0) && (
+                <hr className="border-zinc-700/50" />
+              )}
+
             {requiredPrereqListWithStatus.length !== 0 &&
               requiredPrereqListWithStatus.map(({ prereqId, status, msg }) => (
                 <div
@@ -114,10 +174,9 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
                       {prereqId}
                     </span>
                     <span
-                      className={`rounded-full border px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${
-                        statusPillClasses[status] ??
+                      className={`rounded-full border px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${statusPillClasses[status] ??
                         "text-zinc-200 border-zinc-700/70 bg-zinc-700/20"
-                      }`}
+                        }`}
                     >
                       {status}
                     </span>
@@ -144,10 +203,9 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
                             {prereqId}
                           </span>
                           <span
-                            className={`rounded-full border px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${
-                              statusPillClasses[status] ??
+                            className={`rounded-full border px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${statusPillClasses[status] ??
                               "text-zinc-200 border-zinc-700/70 bg-zinc-700/20"
-                            }`}
+                              }`}
                           >
                             {status}
                           </span>

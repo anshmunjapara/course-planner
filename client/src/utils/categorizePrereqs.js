@@ -2,6 +2,8 @@ export function categorizePrereqs(prereqNode) {
   const result = {
     required: [],
     choiceGroups: [], // Array of arrays, e.g., [['STAT160', 'STAT200']]
+    creditHours: [], // Array of { value: number }
+    permissions: [], // Array of { description: string }
   };
 
   if (!prereqNode) return result;
@@ -13,6 +15,19 @@ export function categorizePrereqs(prereqNode) {
         result.required.push(node.courseId);
         return [node.courseId];
       }
+    }
+
+    if (node.type === "credit_hours") {
+      result.creditHours.push({ value: node.value });
+      return [];
+    }
+
+    if (node.type === "permission") {
+      result.permissions.push({
+        description:
+          node.description || node.detail || "Permission required",
+      });
+      return [];
     }
 
     if (node.type === "logic") {
