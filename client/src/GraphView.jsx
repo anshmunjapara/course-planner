@@ -135,8 +135,13 @@ export function GraphView({
           onMove={handlePaneMove}
           colorMode="dark"
           fitView
+          fitViewOptions={{
+            padding: 0.5,
+            duration: 800,
+          }}
           minZoom={0.1} // Allow zooming out significantly
           maxZoom={1.5} // Prevent zooming in too far
+          proOptions={{ hideAttribution: true }}
         >
           <MiniMap nodeStrokeWidth={3} zoomable pannable style={miniMapStyle} />
           <Background variant="dots" gap={25} size={1} />
