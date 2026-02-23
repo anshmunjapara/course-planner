@@ -392,7 +392,7 @@ export function AboutPage() {
         <div className="mx-auto max-w-5xl px-6 py-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-zinc-500">
-              Built with ❤️ for UofR CS students
+              Built with ❤️ for UofR students
             </p>
           </div>
         </div>
