@@ -38,7 +38,7 @@ export function categorizePrereqs(prereqNode) {
 
     if (node.type === "logic") {
       if (node.operator === "AND") {
-        node.operands.forEach((operand) => traverse(operand, isInsideOr));
+        node.operands.forEach((operand) => traverse(operand, false));
       } else if (node.operator === "OR") {
         const options = node.operands.flatMap((operand) =>
           traverse(operand, true),

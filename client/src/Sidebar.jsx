@@ -71,7 +71,8 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
   });
 
   const hasAnyPrereqs =
-    requiredPrereqsWithStatus.length > 0 || choiceGroupPrereqsWithStatus.length > 0;
+    requiredPrereqsWithStatus.length > 0 ||
+    choiceGroupPrereqsWithStatus.length > 0;
 
   return (
     <div className="lg:flex-1 md:flex-2 h-screen shrink-0 overflow-y-auto border-l border-zinc-00 bg-zinc-950 text-zinc-100 shadow-xl">
@@ -197,9 +198,10 @@ function renderPrereqItem(item, key) {
           {item.prereqId}
         </span>
         <span
-          className={`rounded-full border px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${statusPillClasses[item.status] ??
+          className={`rounded-full border px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${
+            statusPillClasses[item.status] ??
             "text-zinc-200 border-zinc-700/70 bg-zinc-700/20"
-            }`}
+          }`}
         >
           {item.status}
         </span>
