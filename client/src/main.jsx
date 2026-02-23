@@ -5,6 +5,7 @@ import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router";
 import { CoursePlanner } from "./CoursePlanner";
 import { AboutPage } from "./AboutPage";
+import { NotFoundPage } from "./NotFoundPage";
 import { Analytics } from "@vercel/analytics/react";
 
 const router = createBrowserRouter([
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "/planner",
     element: <CoursePlanner />,
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
 ]);
 

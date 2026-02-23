@@ -10,6 +10,7 @@ import {
   GraduationCap,
   ArrowRight,
   Sparkles,
+  Mail,
 } from "lucide-react";
 import heroImage from "./assets/hero.jpeg";
 
@@ -394,6 +395,10 @@ export function AboutPage() {
             <p className="text-sm text-zinc-500">
               Built with ❤️ for UofR students
             </p>
+            <div className="flex gap-2 text-sm text-zinc-500">
+              <Mail />
+              <p>anshmunjapara@gmail.com</p>
+            </div>
           </div>
         </div>
       </footer>
