@@ -1,11 +1,18 @@
 import { getPrereqIds } from "./convertPrereqTreeIntoArray";
 
-export function getMissingCourses(coursesList, courseIdSet) {
+export function getMissingCourses(
+  coursesList,
+  requiredCourseIdSet,
+  optionalCourseIdSet,
+) {
   const newCoursesToAdd = new Set();
   coursesList.forEach((course) => {
     const prereqs = getPrereqIds(course.prereqs);
     prereqs.forEach((courseId) => {
-      if (!courseIdSet.has(courseId)) {
+      if (
+        !requiredCourseIdSet.has(courseId) &&
+        !optionalCourseIdSet.has(courseId)
+      ) {
         newCoursesToAdd.add(courseId);
       }
     });

@@ -9,16 +9,17 @@ import { Button } from "@/components/ui/button";
 
 const requiredCourses = initialCourses.filter((c) => c.required);
 const requiredCourseIds = new Set(requiredCourses.map((c) => c.id));
-const allRequiredCourses = [
-  ...requiredCourses,
-  ...getMissingCourses(requiredCourses, requiredCourseIds),
-];
-console.log(allRequiredCourses);
 const optionalCourses = initialCourses.filter((c) => !c.required);
 const optionalCourseIds = new Set(optionalCourses.map((c) => c.id));
+
+const allRequiredCourses = [
+  ...requiredCourses,
+  ...getMissingCourses(requiredCourses, requiredCourseIds, optionalCourseIds),
+];
+
 const alloptionalCourses = [
   ...optionalCourses,
-  ...getMissingCourses(optionalCourses, optionalCourseIds),
+  ...getMissingCourses(optionalCourses, requiredCourseIds, optionalCourseIds),
 ];
 
 const storedUserGrades = JSON.parse(localStorage.getItem("userGrades") || "{}");

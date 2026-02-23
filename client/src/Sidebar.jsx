@@ -22,7 +22,7 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
 
   if (!selectedNode) {
     return (
-      <div className="lg:flex-1 md:flex-2 h-screen shrink-0 overflow-y-auto border-l border-zinc-800 bg-zinc-950 text-zinc-100 shadow-xl">
+      <div className="lg:flex-[1.2] md:flex-2 h-screen shrink-0 overflow-y-auto border-l border-zinc-800 bg-zinc-950 text-zinc-100 shadow-xl">
         <div className="flex h-full items-center justify-center px-6 text-m font-medium text-zinc-400">
           <p>Click on a course to view details</p>
         </div>
@@ -75,7 +75,7 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
     choiceGroupPrereqsWithStatus.length > 0;
 
   return (
-    <div className="lg:flex-1 md:flex-2 h-screen shrink-0 overflow-y-auto border-l border-zinc-00 bg-zinc-950 text-zinc-100 shadow-xl">
+    <div className="lg:flex-[1.2] md:flex-2 h-screen shrink-0 overflow-y-auto border-l border-zinc-00 bg-zinc-950 text-zinc-100 shadow-xl">
       <div className="flex flex-col gap-7 px-6 py-8">
         <h2 className="text-2xl font-semibold tracking-tight text-white">
           {selectedNode.data.label}
