@@ -15,17 +15,15 @@ const statusPillClasses = {
   incomplete: "text-zinc-300 border-zinc-400/40 bg-zinc-400/10",
 };
 
-export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
+export function CourseInfoSidebar({ selectedNode, onChangeGrade, userGrades }) {
   const handleGradeSubmit = (newGrade) => {
     onChangeGrade(newGrade);
   };
 
   if (!selectedNode) {
     return (
-      <div className="lg:flex-[1.2] md:flex-2 h-screen shrink-0 overflow-y-auto border-l border-zinc-800 bg-zinc-950 text-zinc-100 shadow-xl">
-        <div className="flex h-full items-center justify-center px-6 text-m font-medium text-zinc-400">
-          <p>Click on a course to view details</p>
-        </div>
+      <div className="flex h-full items-center justify-center px-6 text-m font-medium text-zinc-400">
+        <p>Click on a course to view details</p>
       </div>
     );
   }
@@ -75,72 +73,70 @@ export function Sidebar({ selectedNode, onChangeGrade, userGrades }) {
     choiceGroupPrereqsWithStatus.length > 0;
 
   return (
-    <div className="lg:flex-[1.2] md:flex-2 h-screen shrink-0 overflow-y-auto border-l border-zinc-00 bg-zinc-950 text-zinc-100 shadow-xl">
-      <div className="flex flex-col gap-7 px-6 py-8">
-        <h2 className="text-2xl font-semibold tracking-tight text-white">
-          {selectedNode.data.label}
-        </h2>
+    <div className="flex flex-col gap-7 px-6 py-8">
+      <h2 className="text-2xl font-semibold tracking-tight text-white">
+        {selectedNode.data.label}
+      </h2>
 
-        {selectedNode.data.description && (
-          <Card className="border-zinc-800/80 bg-zinc-900/40 shadow-none">
-            <CardHeader className="pb-px">
-              <CardTitle className="text-lg font-semibold uppercase text-zinc-400">
-                Description
-              </CardTitle>
-              <CardDescription className="text-m leading-6 text-zinc-300">
-                {selectedNode.data.description}
-              </CardDescription>
-            </CardHeader>
-          </Card>
-        )}
-
-        {selectedNode.data.status !== "locked" && (
-          <div className="sidebar-section grade-section">
-            <GradeInput
-              selectedNode={selectedNode}
-              onChangeGrade={handleGradeSubmit}
-              userGrades={userGrades}
-            />
-          </div>
-        )}
-
+      {selectedNode.data.description && (
         <Card className="border-zinc-800/80 bg-zinc-900/40 shadow-none">
-          <CardHeader>
+          <CardHeader className="pb-px">
             <CardTitle className="text-lg font-semibold uppercase text-zinc-400">
-              Prerequisites
+              Description
             </CardTitle>
+            <CardDescription className="text-m leading-6 text-zinc-300">
+              {selectedNode.data.description}
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
-            {!hasAnyPrereqs && (
-              <p className="text-sm text-zinc-500 italic">
-                No prerequisites required
-              </p>
-            )}
-
-            {requiredPrereqsWithStatus.map((item, index) =>
-              renderPrereqItem(item, `req-${index}`),
-            )}
-
-            {choiceGroupPrereqsWithStatus.length > 0 && (
-              <>
-                {requiredPrereqsWithStatus.length > 0 && (
-                  <hr className="border-zinc-700/50" />
-                )}
-                {choiceGroupPrereqsWithStatus.map((group, index) => (
-                  <div key={index} className="space-y-2">
-                    <p className="text-xs text-zinc-400">
-                      Satisfy at least one of the following:
-                    </p>
-                    {group.map((item, itemIndex) =>
-                      renderPrereqItem(item, `choice-${index}-${itemIndex}`),
-                    )}
-                  </div>
-                ))}
-              </>
-            )}
-          </CardContent>
         </Card>
-      </div>
+      )}
+
+      {selectedNode.data.status !== "locked" && (
+        <div className="sidebar-section grade-section">
+          <GradeInput
+            selectedNode={selectedNode}
+            onChangeGrade={handleGradeSubmit}
+            userGrades={userGrades}
+          />
+        </div>
+      )}
+
+      <Card className="border-zinc-800/80 bg-zinc-900/40 shadow-none">
+        <CardHeader>
+          <CardTitle className="text-lg font-semibold uppercase text-zinc-400">
+            Prerequisites
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {!hasAnyPrereqs && (
+            <p className="text-sm text-zinc-500 italic">
+              No prerequisites required
+            </p>
+          )}
+
+          {requiredPrereqsWithStatus.map((item, index) =>
+            renderPrereqItem(item, `req-${index}`),
+          )}
+
+          {choiceGroupPrereqsWithStatus.length > 0 && (
+            <>
+              {requiredPrereqsWithStatus.length > 0 && (
+                <hr className="border-zinc-700/50" />
+              )}
+              {choiceGroupPrereqsWithStatus.map((group, index) => (
+                <div key={index} className="space-y-2">
+                  <p className="text-xs text-zinc-400">
+                    Satisfy at least one of the following:
+                  </p>
+                  {group.map((item, itemIndex) =>
+                    renderPrereqItem(item, `choice-${index}-${itemIndex}`),
+                  )}
+                </div>
+              ))}
+            </>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

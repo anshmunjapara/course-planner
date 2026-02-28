@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { GraphView } from "./GraphView";
-import { Sidebar } from "./Sidebar";
+import { CourseInfoSidebar } from "./CourseInfoSidebar";
+import { SidebarShell } from "./components/SidebarShell";
 import { CoursePickerSidebar } from "./CoursePickerSidebar";
 import { initialCourses } from "./coursesData";
 import { getMissingCourses } from "./utils/getMissingCourses";
@@ -121,21 +122,25 @@ export function CoursePlanner() {
       </div>
 
       {!showCoursePicker && (
-        <Sidebar
-          key={selectedNode?.id || "empty"}
-          selectedNode={selectedNode}
-          onChangeGrade={handleChangeGrade}
-          userGrades={userGrades}
-        />
+        <SidebarShell>
+          <CourseInfoSidebar
+            key={selectedNode?.id || "empty"}
+            selectedNode={selectedNode}
+            onChangeGrade={handleChangeGrade}
+            userGrades={userGrades}
+          />
+        </SidebarShell>
       )}
 
       {showCoursePicker && (
-        <CoursePickerSidebar
-          handleShowCoursePicker={handleShowCoursePicker}
-          optionalCourses={optionalCourses}
-          selectedOptionalCoursesIds={selectedOptionalCoursesIds}
-          onToggleCourse={handleToggleOptionalCourse}
-        />
+        <SidebarShell>
+          <CoursePickerSidebar
+            handleShowCoursePicker={handleShowCoursePicker}
+            optionalCourses={optionalCourses}
+            selectedOptionalCoursesIds={selectedOptionalCoursesIds}
+            onToggleCourse={handleToggleOptionalCourse}
+          />
+        </SidebarShell>
       )}
     </div>
   );
