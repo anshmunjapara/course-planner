@@ -1,11 +1,5 @@
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardDescription,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { SidebarSectionCard } from "./SidebarSectionCard";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -36,10 +30,7 @@ export function GradeInput({ selectedNode, onChangeGrade, userGrades }) {
   };
 
   return (
-    <Card className="border-zinc-800/80 bg-zinc-900/40 shadow-none px-6">
-      <h3 className="text-lg font-semibold uppercase text-zinc-400 ">
-        Add Grade
-      </h3>
+    <SidebarSectionCard title={"Add Grade"}>
       <div className="flex items-center gap-3">
         <Input
           type="text"
@@ -52,6 +43,6 @@ export function GradeInput({ selectedNode, onChangeGrade, userGrades }) {
           Set
         </Button>
       </div>
-    </Card>
+    </SidebarSectionCard>
   );
 }
