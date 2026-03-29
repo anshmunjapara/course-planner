@@ -9,7 +9,7 @@ export function CoursePickerSidebar({
   handleShowCoursePicker,
 }) {
   return (
-    <div className="flex-[1.2] flex flex-col w-100 h-screen shrink-0 border-l border-zinc-00 bg-zinc-950 text-zinc-100 shadow-xl">
+    <>
       <div className="px-6 py-8">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-semibold tracking-tight text-white">
@@ -47,6 +47,6 @@ export function CoursePickerSidebar({
           );
         })}
       </div>
-    </div>
+    </>
   );
 }
