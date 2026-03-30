@@ -3,7 +3,22 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldLabel, FieldTitle } from "@/components/ui/field";
 import { usePlannerUIStore } from "./stores/usePlannerUIStore";
 import { useSelectedOptionalCourseIdStore } from "./stores/useSelectedOptionalCourseIdStore";
-import { useCallback } from "react";
+import { useCallback, useMemo, memo } from "react";
+
+const CourseRow = memo(function CourseRow({ course, checked, onToggle }) {
+  const handleCheckedChange = useCallback(() => {
+    onToggle(course.id);
+  }, [onToggle, course.id]);
+
+  return (
+    <FieldLabel className="cursor-pointer transition ease-in-out py-1">
+      <Field orientation="horizontal">
+        <Checkbox checked={checked} onCheckedChange={handleCheckedChange} />
+        <FieldTitle>{course.label}</FieldTitle>
+      </Field>
+    </FieldLabel>
+  );
+});
 
 export function CoursePickerSidebar({ optionalCourses }) {
   const setShowCoursePicker = usePlannerUIStore((s) => s.setShowCoursePicker);
@@ -16,11 +31,9 @@ export function CoursePickerSidebar({ optionalCourses }) {
     (s) => s.selectedOptionalCourseIds,
   );
 
-  const handleOnToggleCourse = useCallback(
-    (courseId) => {
-      toggleOptionalCourse(courseId);
-    },
-    [toggleOptionalCourse],
+  const selectedSet = useMemo(
+    () => new Set(selectedOptionalCourseIds),
+    [selectedOptionalCourseIds],
   );
 
   const handleShowCoursePicker = useCallback(() => {
@@ -48,21 +61,13 @@ export function CoursePickerSidebar({ optionalCourses }) {
       </div>
       <div className="flex flex-col flex-1 overflow-y-auto gap-2 px-4 pb-6">
         {optionalCourses.map((course) => {
-          const isSelected = selectedOptionalCourseIds.includes(course.id);
           return (
-            <FieldLabel
+            <CourseRow
               key={course.id}
-              className="cursor-pointer transition ease-in-out py-1"
-            >
-              <Field orientation="horizontal">
-                <Checkbox
-                  checked={isSelected}
-                  onCheckedChange={() => handleOnToggleCourse(course.id)}
-                />
-
-                <FieldTitle>{course.label}</FieldTitle>
-              </Field>
-            </FieldLabel>
+              course={course}
+              checked={selectedSet.has(course.id)}
+              onToggle={toggleOptionalCourse}
+            />
           );
         })}
       </div>
