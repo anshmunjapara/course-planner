@@ -2,7 +2,7 @@ import { GradeInput } from "./components/GradeInput";
 import { SidebarSectionCard } from "./components/SidebarSectionCard";
 import { PrerequisitesSection } from "./components/PrerequisitesSection";
 
-export function CourseInfoSidebar({ selectedNode, onChangeGrade, userGrades }) {
+export function CourseInfoSidebar({ selectedNode, onChangeGrade }) {
   const handleGradeSubmit = (newGrade) => {
     onChangeGrade(newGrade);
   };
@@ -32,16 +32,12 @@ export function CourseInfoSidebar({ selectedNode, onChangeGrade, userGrades }) {
           <GradeInput
             selectedNode={selectedNode}
             onChangeGrade={handleGradeSubmit}
-            userGrades={userGrades}
           />
         </div>
       )}
 
       <SidebarSectionCard title={"Prerequisites"}>
-        <PrerequisitesSection
-          prereqs={selectedNode.data.prereqs}
-          userGrades={userGrades}
-        />
+        <PrerequisitesSection prereqs={selectedNode.data.prereqs} />
       </SidebarSectionCard>
     </div>
   );

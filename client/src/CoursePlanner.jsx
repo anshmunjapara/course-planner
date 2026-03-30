@@ -7,6 +7,7 @@ import { initialCourses } from "./coursesData";
 import { getMissingCourses } from "./utils/getMissingCourses";
 import { getAncestorIds } from "./utils/getAncestorIds";
 import { Button } from "@/components/ui/button";
+import { useUserGradesStore } from "./stores/useUserGradesStore";
 
 const requiredCourses = initialCourses.filter((c) => c.required);
 const requiredCourseIds = new Set(requiredCourses.map((c) => c.id));
@@ -23,7 +24,6 @@ const alloptionalCourses = [
   ...getMissingCourses(optionalCourses, requiredCourseIds, optionalCourseIds),
 ];
 
-const storedUserGrades = JSON.parse(localStorage.getItem("userGrades") || "{}");
 const storedOptionalCourses = JSON.parse(
   localStorage.getItem("selectedOptionalCourses") || "[]",
 );
@@ -35,7 +35,8 @@ export function CoursePlanner() {
   const [selectedOptionalCoursesIds, setSelectedOptionalCoursesIds] = useState(
     new Set(storedOptionalCourses),
   );
-  const [userGrades, setUserGrades] = useState(storedUserGrades);
+  const setUserGrades = useUserGradesStore((state) => state.setGrade);
+  const resetUserGrades = useUserGradesStore((state) => state.resetGrades);
 
   const isPanelOpen = !!selectedNode || showCoursePicker;
   const handlePanelChange = (open) => {
@@ -47,26 +48,20 @@ export function CoursePlanner() {
   };
 
   const handleReset = useCallback(() => {
-    setUserGrades({});
+    resetUserGrades();
     setSelectedOptionalCoursesIds(new Set());
     setSelectedNode(null);
     setSelectedNodeId(null);
     setShowCoursePicker(false);
-  }, []);
+  }, [resetUserGrades]);
 
   const handleChangeGrade = useCallback(
     (newGrade) => {
-      setUserGrades((prevGrades) => {
-        const newGrades = {
-          ...prevGrades,
-          [selectedNode.id]: parseFloat(newGrade),
-        };
-        localStorage.setItem("userGrades", JSON.stringify(newGrades));
-        return newGrades;
-      });
+      if (!selectedNode?.id) return;
+      setUserGrades(selectedNode.id, parseFloat(newGrade));
       setSelectedNodeId(null);
     },
-    [selectedNode],
+    [selectedNode, setUserGrades],
   );
 
   const handleShowCoursePicker = () => {
@@ -119,7 +114,6 @@ export function CoursePlanner() {
         </Button>
 
         <GraphView
-          userGrades={userGrades}
           onNodeClick={setSelectedNode}
           courses={activeCourses}
           handleCloseCoursePicker={handleCloseCoursePicker}
@@ -142,7 +136,6 @@ export function CoursePlanner() {
             key={selectedNode?.id || "empty"}
             selectedNode={selectedNode}
             onChangeGrade={handleChangeGrade}
-            userGrades={userGrades}
           />
         )}
       </ResponsiveShell>

@@ -8,6 +8,7 @@ import { getLayoutedNodes } from "./utils/cytoscapeLayoutCalculator";
 import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
 import { ResetGraph } from "./components/ResetGraph";
 import "@xyflow/react/dist/style.css";
+import { useUserGradesStore } from "./stores/useUserGradesStore";
 
 const containerStyle = { width: "100%", height: "100%" };
 const miniMapStyle = { height: 170, width: 270 };
@@ -31,7 +32,6 @@ const NodeSearch = memo(SearchComponent);
 
 export function GraphView({
   onNodeClick,
-  userGrades,
   courses,
   handleCloseCoursePicker,
   selectedNodeId,
@@ -40,6 +40,8 @@ export function GraphView({
 }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges] = useEdgesState([]);
+
+  const userGrades = useUserGradesStore((state) => state.userGrades);
 
   const activeCourseIds = useMemo(
     () => new Set(courses.map((c) => c.id)),

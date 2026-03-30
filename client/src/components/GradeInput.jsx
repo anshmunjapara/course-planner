@@ -2,8 +2,12 @@ import { Input } from "@/components/ui/input";
 import { SidebarSectionCard } from "./SidebarSectionCard";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useUserGradesStore } from "@/stores/useUserGradesStore";
 
-export function GradeInput({ selectedNode, onChangeGrade, userGrades }) {
+export function GradeInput({ selectedNode, onChangeGrade }) {
+
+  const userGrades = useUserGradesStore((state) => state.userGrades);
+  
   const [grade, setGrade] = useState(
     selectedNode ? userGrades[selectedNode.id] || "" : "",
   );
