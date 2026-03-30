@@ -34,6 +34,12 @@ export function CoursePlanner() {
     (s) => s.selectedOptionalCourseIds,
   );
 
+  console.log(
+    "selectedOptionalCourseIds",
+    typeof selectedOptionalCourseIds,
+    selectedOptionalCourseIds,
+  );
+
   const selectedOptionalCourseIdsSet = useMemo(
     () => new Set(selectedOptionalCourseIds),
     [selectedOptionalCourseIds],

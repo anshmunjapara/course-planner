@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldLabel, FieldTitle } from "@/components/ui/field";
 import { usePlannerUIStore } from "./stores/usePlannerUIStore";
 import { useSelectedOptionalCourseIdStore } from "./stores/useSelectedOptionalCourseIdStore";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 
 export function CoursePickerSidebar({ optionalCourses }) {
   const setShowCoursePicker = usePlannerUIStore((s) => s.setShowCoursePicker);
@@ -14,11 +14,6 @@ export function CoursePickerSidebar({ optionalCourses }) {
 
   const selectedOptionalCourseIds = useSelectedOptionalCourseIdStore(
     (s) => s.selectedOptionalCourseIds,
-  );
-
-  const selectedOptionalCourseIdsSet = useMemo(
-    () => new Set(selectedOptionalCourseIds),
-    [selectedOptionalCourseIds],
   );
 
   const handleOnToggleCourse = useCallback(
@@ -48,15 +43,12 @@ export function CoursePickerSidebar({ optionalCourses }) {
           </Button>
         </div>
         <p className="mt-1 text-sm font-medium text-zinc-400">
-          {
-            //   selectedOptionalCoursesIds.size need to fix this
-          }
-          0 selected
+          {selectedOptionalCourseIds.length} selected
         </p>
       </div>
       <div className="flex flex-col flex-1 overflow-y-auto gap-2 px-4 pb-6">
         {optionalCourses.map((course) => {
-          const isSelected = selectedOptionalCourseIdsSet.has(course.id);
+          const isSelected = selectedOptionalCourseIds.includes(course.id);
           return (
             <FieldLabel
               key={course.id}
