@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { GraphView } from "./GraphView";
 import { CourseInfoSidebar } from "./CourseInfoSidebar";
-import { SidebarShell } from "./components/SidebarShell";
+import { ResponsiveShell } from "./components/ResponsiveShell";
 import { CoursePickerSidebar } from "./CoursePickerSidebar";
 import { initialCourses } from "./coursesData";
 import { getMissingCourses } from "./utils/getMissingCourses";
@@ -35,8 +35,16 @@ export function CoursePlanner() {
   const [selectedOptionalCoursesIds, setSelectedOptionalCoursesIds] = useState(
     new Set(storedOptionalCourses),
   );
-
   const [userGrades, setUserGrades] = useState(storedUserGrades);
+
+  const isPanelOpen = !!selectedNode || showCoursePicker;
+  const handlePanelChange = (open) => {
+    if (!open) {
+      setSelectedNode(null);
+      setSelectedNodeId(null);
+      setShowCoursePicker(false);
+    }
+  };
 
   const handleReset = useCallback(() => {
     setUserGrades({});
@@ -121,27 +129,23 @@ export function CoursePlanner() {
         />
       </div>
 
-      {!showCoursePicker && (
-        <SidebarShell>
-          <CourseInfoSidebar
-            key={selectedNode?.id || "empty"}
-            selectedNode={selectedNode}
-            onChangeGrade={handleChangeGrade}
-            userGrades={userGrades}
-          />
-        </SidebarShell>
-      )}
-
-      {showCoursePicker && (
-        <SidebarShell>
+      <ResponsiveShell open={isPanelOpen} onOpenChange={handlePanelChange}>
+        {showCoursePicker ? (
           <CoursePickerSidebar
             handleShowCoursePicker={handleShowCoursePicker}
             optionalCourses={optionalCourses}
             selectedOptionalCoursesIds={selectedOptionalCoursesIds}
             onToggleCourse={handleToggleOptionalCourse}
           />
-        </SidebarShell>
-      )}
+        ) : (
+          <CourseInfoSidebar
+            key={selectedNode?.id || "empty"}
+            selectedNode={selectedNode}
+            onChangeGrade={handleChangeGrade}
+            userGrades={userGrades}
+          />
+        )}
+      </ResponsiveShell>
     </div>
   );
 }
