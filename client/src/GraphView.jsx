@@ -9,6 +9,7 @@ import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
 import { ResetGraph } from "./components/ResetGraph";
 import "@xyflow/react/dist/style.css";
 import { useUserGradesStore } from "./stores/useUserGradesStore";
+import { usePlannerUIStore } from "./stores/usePlannerUIStore";
 
 const containerStyle = { width: "100%", height: "100%" };
 const miniMapStyle = { height: 170, width: 270 };
@@ -30,18 +31,16 @@ const layoutOptions = {
 const MemoizedLegend = memo(Legend);
 const NodeSearch = memo(SearchComponent);
 
-export function GraphView({
-  onNodeClick,
-  courses,
-  handleCloseCoursePicker,
-  selectedNodeId,
-  setSelectedNodeId,
-  onReset,
-}) {
+export function GraphView({ courses }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges] = useEdgesState([]);
 
   const userGrades = useUserGradesStore((state) => state.userGrades);
+
+  const selectedNodeId = usePlannerUIStore((s) => s.selectedNodeId);
+  const setSelectedNode = usePlannerUIStore((s) => s.setSelectedNode);
+  const setSelectedNodeId = usePlannerUIStore((s) => s.setSelectedNodeId);
+  const setShowCoursePicker = usePlannerUIStore((s) => s.setShowCoursePicker);
 
   const activeCourseIds = useMemo(
     () => new Set(courses.map((c) => c.id)),
@@ -90,14 +89,14 @@ export function GraphView({
     setNodes(styledNodes);
     setEdges(styledEdges);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [layoutedNodes, rawEdges]); // ← only run on layout changes
+  }, [layoutedNodes, rawEdges]); // only run on layout changes
 
   useEffect(() => {
     setNodes((currentNodes) => {
       if (!currentNodes.length) return currentNodes;
 
       const { styledNodes, styledEdges } = applyStylesToGraph(
-        currentNodes, // ← use current positions, not layoutedNodes
+        currentNodes, // use current positions, not layoutedNodes
         rawEdges,
         userGrades,
         selectedNodeId,
@@ -110,11 +109,11 @@ export function GraphView({
 
   const handleNodeClick = useCallback(
     (event, node) => {
-      handleCloseCoursePicker();
-      onNodeClick(node);
-      setSelectedNodeId((prev) => (prev === node.id ? null : node.id));
+      setShowCoursePicker(false);
+      setSelectedNode(node);
+      setSelectedNodeId(node.id);
     },
-    [onNodeClick, handleCloseCoursePicker, setSelectedNodeId],
+    [setSelectedNode, setSelectedNodeId, setShowCoursePicker],
   );
 
   const handlePaneClick = useCallback(() => {
@@ -149,7 +148,7 @@ export function GraphView({
           <Background variant="dots" gap={25} size={1} />
           <MemoizedLegend />
           <NodeSearch />
-          <ResetGraph onReset={onReset} />
+          <ResetGraph />
         </ReactFlow>
       </div>
     </>

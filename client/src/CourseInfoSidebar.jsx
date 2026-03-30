@@ -1,11 +1,10 @@
 import { GradeInput } from "./components/GradeInput";
 import { SidebarSectionCard } from "./components/SidebarSectionCard";
 import { PrerequisitesSection } from "./components/PrerequisitesSection";
+import { usePlannerUIStore } from "./stores/usePlannerUIStore";
 
-export function CourseInfoSidebar({ selectedNode, onChangeGrade }) {
-  const handleGradeSubmit = (newGrade) => {
-    onChangeGrade(newGrade);
-  };
+export function CourseInfoSidebar() {
+  const selectedNode = usePlannerUIStore((s) => s.selectedNode);
 
   if (!selectedNode) {
     return (
@@ -29,10 +28,7 @@ export function CourseInfoSidebar({ selectedNode, onChangeGrade }) {
 
       {selectedNode.data.status !== "locked" && (
         <div className="sidebar-section grade-section">
-          <GradeInput
-            selectedNode={selectedNode}
-            onChangeGrade={handleGradeSubmit}
-          />
+          <GradeInput selectedNode={selectedNode} />
         </div>
       )}
 

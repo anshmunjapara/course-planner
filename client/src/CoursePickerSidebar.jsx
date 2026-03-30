@@ -1,13 +1,37 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel, FieldTitle } from "@/components/ui/field";
+import { usePlannerUIStore } from "./stores/usePlannerUIStore";
+import { useSelectedOptionalCourseIdStore } from "./stores/useSelectedOptionalCourseIdStore";
+import { useCallback, useMemo } from "react";
 
-export function CoursePickerSidebar({
-  optionalCourses,
-  selectedOptionalCoursesIds,
-  onToggleCourse,
-  handleShowCoursePicker,
-}) {
+export function CoursePickerSidebar({ optionalCourses }) {
+  const setShowCoursePicker = usePlannerUIStore((s) => s.setShowCoursePicker);
+
+  const toggleOptionalCourse = useSelectedOptionalCourseIdStore(
+    (s) => s.toggleOptionalCourse,
+  );
+
+  const selectedOptionalCourseIds = useSelectedOptionalCourseIdStore(
+    (s) => s.selectedOptionalCourseIds,
+  );
+
+  const selectedOptionalCourseIdsSet = useMemo(
+    () => new Set(selectedOptionalCourseIds),
+    [selectedOptionalCourseIds],
+  );
+
+  const handleOnToggleCourse = useCallback(
+    (courseId) => {
+      toggleOptionalCourse(courseId);
+    },
+    [toggleOptionalCourse],
+  );
+
+  const handleShowCoursePicker = useCallback(() => {
+    setShowCoursePicker();
+  }, [setShowCoursePicker]);
+
   return (
     <>
       <div className="px-6 py-8">
@@ -24,12 +48,15 @@ export function CoursePickerSidebar({
           </Button>
         </div>
         <p className="mt-1 text-sm font-medium text-zinc-400">
-          {selectedOptionalCoursesIds.size} selected
+          {
+            //   selectedOptionalCoursesIds.size need to fix this
+          }
+          0 selected
         </p>
       </div>
       <div className="flex flex-col flex-1 overflow-y-auto gap-2 px-4 pb-6">
         {optionalCourses.map((course) => {
-          const isSelected = selectedOptionalCoursesIds.has(course.id);
+          const isSelected = selectedOptionalCourseIdsSet.has(course.id);
           return (
             <FieldLabel
               key={course.id}
@@ -38,7 +65,7 @@ export function CoursePickerSidebar({
               <Field orientation="horizontal">
                 <Checkbox
                   checked={isSelected}
-                  onCheckedChange={() => onToggleCourse(course.id)}
+                  onCheckedChange={() => handleOnToggleCourse(course.id)}
                 />
 
                 <FieldTitle>{course.label}</FieldTitle>

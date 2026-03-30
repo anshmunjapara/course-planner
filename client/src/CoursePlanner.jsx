@@ -1,13 +1,13 @@
-import { useCallback, useMemo, useState } from "react";
 import { GraphView } from "./GraphView";
 import { CourseInfoSidebar } from "./CourseInfoSidebar";
 import { ResponsiveShell } from "./components/ResponsiveShell";
 import { CoursePickerSidebar } from "./CoursePickerSidebar";
 import { initialCourses } from "./coursesData";
 import { getMissingCourses } from "./utils/getMissingCourses";
-import { getAncestorIds } from "./utils/getAncestorIds";
 import { Button } from "@/components/ui/button";
-import { useUserGradesStore } from "./stores/useUserGradesStore";
+import { usePlannerUIStore } from "./stores/usePlannerUIStore";
+import { useSelectedOptionalCourseIdStore } from "./stores/useSelectedOptionalCourseIdStore";
+import { useMemo, useCallback } from "react";
 
 const requiredCourses = initialCourses.filter((c) => c.required);
 const requiredCourseIds = new Set(requiredCourses.map((c) => c.id));
@@ -24,83 +24,33 @@ const alloptionalCourses = [
   ...getMissingCourses(optionalCourses, requiredCourseIds, optionalCourseIds),
 ];
 
-const storedOptionalCourses = JSON.parse(
-  localStorage.getItem("selectedOptionalCourses") || "[]",
-);
-
 export function CoursePlanner() {
-  const [selectedNode, setSelectedNode] = useState(null);
-  const [selectedNodeId, setSelectedNodeId] = useState(null);
-  const [showCoursePicker, setShowCoursePicker] = useState(false);
-  const [selectedOptionalCoursesIds, setSelectedOptionalCoursesIds] = useState(
-    new Set(storedOptionalCourses),
-  );
-  const setUserGrades = useUserGradesStore((state) => state.setGrade);
-  const resetUserGrades = useUserGradesStore((state) => state.resetGrades);
+  const selectedNode = usePlannerUIStore((s) => s.selectedNode);
+  const showCoursePicker = usePlannerUIStore((s) => s.showCoursePicker);
 
-  const isPanelOpen = !!selectedNode || showCoursePicker;
-  const handlePanelChange = (open) => {
-    if (!open) {
-      setSelectedNode(null);
-      setSelectedNodeId(null);
-      setShowCoursePicker(false);
-    }
-  };
+  const setShowCoursePicker = usePlannerUIStore((s) => s.setShowCoursePicker);
 
-  const handleReset = useCallback(() => {
-    resetUserGrades();
-    setSelectedOptionalCoursesIds(new Set());
-    setSelectedNode(null);
-    setSelectedNodeId(null);
-    setShowCoursePicker(false);
-  }, [resetUserGrades]);
-
-  const handleChangeGrade = useCallback(
-    (newGrade) => {
-      if (!selectedNode?.id) return;
-      setUserGrades(selectedNode.id, parseFloat(newGrade));
-      setSelectedNodeId(null);
-    },
-    [selectedNode, setUserGrades],
+  const selectedOptionalCourseIds = useSelectedOptionalCourseIdStore(
+    (s) => s.selectedOptionalCourseIds,
   );
 
-  const handleShowCoursePicker = () => {
-    setShowCoursePicker((prev) => !prev);
-  };
+  const selectedOptionalCourseIdsSet = useMemo(
+    () => new Set(selectedOptionalCourseIds),
+    [selectedOptionalCourseIds],
+  );
 
-  const handleCloseCoursePicker = () => {
-    setShowCoursePicker(false);
-  };
-
-  const handleToggleOptionalCourse = useCallback((courseId) => {
-    setSelectedOptionalCoursesIds((prev) => {
-      const newSelectedCourses = new Set(prev);
-      if (newSelectedCourses.has(courseId)) {
-        newSelectedCourses.delete(courseId);
-      } else {
-        const allAncestors = getAncestorIds(initialCourses, courseId);
-        newSelectedCourses.add(courseId);
-        allAncestors.forEach((id) => {
-          if (!requiredCourseIds.has(id)) {
-            newSelectedCourses.add(id);
-          }
-        });
-      }
-      localStorage.setItem(
-        "selectedOptionalCourses",
-        JSON.stringify([...newSelectedCourses]),
-      );
-      console.log(newSelectedCourses);
-      return newSelectedCourses;
-    });
-  }, []);
+  const handleShowCoursePicker = useCallback(() => {
+    setShowCoursePicker();
+  }, [setShowCoursePicker]);
 
   const activeCourses = useMemo(() => {
     return [
       ...allRequiredCourses,
-      ...alloptionalCourses.filter((c) => selectedOptionalCoursesIds.has(c.id)),
+      ...alloptionalCourses.filter((c) =>
+        selectedOptionalCourseIdsSet.has(c.id),
+      ),
     ];
-  }, [selectedOptionalCoursesIds]);
+  }, [selectedOptionalCourseIdsSet]);
 
   return (
     <div style={{ display: "flex", width: "100%", height: "100vh" }}>
@@ -113,30 +63,14 @@ export function CoursePlanner() {
           {showCoursePicker ? "Close Course Picker" : "+ More CS Courses"}
         </Button>
 
-        <GraphView
-          onNodeClick={setSelectedNode}
-          courses={activeCourses}
-          handleCloseCoursePicker={handleCloseCoursePicker}
-          selectedNodeId={selectedNodeId}
-          setSelectedNodeId={setSelectedNodeId}
-          onReset={handleReset}
-        />
+        <GraphView courses={activeCourses} />
       </div>
 
-      <ResponsiveShell open={isPanelOpen} onOpenChange={handlePanelChange}>
+      <ResponsiveShell>
         {showCoursePicker ? (
-          <CoursePickerSidebar
-            handleShowCoursePicker={handleShowCoursePicker}
-            optionalCourses={optionalCourses}
-            selectedOptionalCoursesIds={selectedOptionalCoursesIds}
-            onToggleCourse={handleToggleOptionalCourse}
-          />
+          <CoursePickerSidebar optionalCourses={optionalCourses} />
         ) : (
-          <CourseInfoSidebar
-            key={selectedNode?.id || "empty"}
-            selectedNode={selectedNode}
-            onChangeGrade={handleChangeGrade}
-          />
+          <CourseInfoSidebar key={selectedNode?.id || "empty"} />
         )}
       </ResponsiveShell>
     </div>
