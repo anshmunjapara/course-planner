@@ -13,7 +13,6 @@ export const usePlannerUIStore = create((set) => ({
       selectedNodeId: state.selectedNodeId === id ? null : id,
     })),
   setShowCoursePicker: (newState) => {
-    console.log("Toggling course picker from", newState);
     set((state) => ({
       showCoursePicker:
         newState !== undefined ? newState : !state.showCoursePicker,

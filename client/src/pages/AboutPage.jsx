@@ -12,7 +12,7 @@ import {
   Sparkles,
   Mail,
 } from "lucide-react";
-import heroImage from "./assets/hero.jpeg";
+import heroImage from "../assets/hero.jpeg";
 
 const features = [
   {

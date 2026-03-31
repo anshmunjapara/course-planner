@@ -1,7 +1,7 @@
-import { GradeInput } from "./components/GradeInput";
-import { SidebarSectionCard } from "./components/SidebarSectionCard";
-import { PrerequisitesSection } from "./components/PrerequisitesSection";
-import { usePlannerUIStore } from "./stores/usePlannerUIStore";
+import { GradeInput } from "./GradeInput";
+import { SidebarSectionCard } from "./SidebarSectionCard";
+import { PrerequisitesSection } from "./PrerequisitesSection";
+import { usePlannerUIStore } from "../stores/usePlannerUIStore";
 
 export function CourseInfoSidebar() {
   const selectedNode = usePlannerUIStore((s) => s.selectedNode);

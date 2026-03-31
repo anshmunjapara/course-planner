@@ -1,12 +1,12 @@
-import { GraphView } from "./GraphView";
-import { CourseInfoSidebar } from "./CourseInfoSidebar";
-import { ResponsiveShell } from "./components/ResponsiveShell";
-import { CoursePickerSidebar } from "./CoursePickerSidebar";
-import { initialCourses } from "./coursesData";
-import { getMissingCourses } from "./utils/getMissingCourses";
+import { GraphView } from "../GraphView";
+import { CourseInfoSidebar } from "../components/CourseInfoSidebar";
+import { ResponsiveShell } from "../components/ResponsiveShell";
+import { CoursePickerSidebar } from "../components/CoursePickerSidebar";
+import { initialCourses } from "../coursesData";
+import { getMissingCourses } from "../utils/getMissingCourses";
 import { Button } from "@/components/ui/button";
-import { usePlannerUIStore } from "./stores/usePlannerUIStore";
-import { useSelectedOptionalCourseIdStore } from "./stores/useSelectedOptionalCourseIdStore";
+import { usePlannerUIStore } from "../stores/usePlannerUIStore";
+import { useSelectedOptionalCourseIdStore } from "../stores/useSelectedOptionalCourseIdStore";
 import { useMemo, useCallback } from "react";
 
 const requiredCourses = initialCourses.filter((c) => c.required);
@@ -24,7 +24,7 @@ const alloptionalCourses = [
   ...getMissingCourses(optionalCourses, requiredCourseIds, optionalCourseIds),
 ];
 
-export function CoursePlanner() {
+export function CoursePlannerPage() {
   const selectedNode = usePlannerUIStore((s) => s.selectedNode);
   const showCoursePicker = usePlannerUIStore((s) => s.showCoursePicker);
 
@@ -32,12 +32,6 @@ export function CoursePlanner() {
 
   const selectedOptionalCourseIds = useSelectedOptionalCourseIdStore(
     (s) => s.selectedOptionalCourseIds,
-  );
-
-  console.log(
-    "selectedOptionalCourseIds",
-    typeof selectedOptionalCourseIds,
-    selectedOptionalCourseIds,
   );
 
   const selectedOptionalCourseIdsSet = useMemo(

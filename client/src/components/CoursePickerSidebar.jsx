@@ -1,8 +1,8 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel, FieldTitle } from "@/components/ui/field";
-import { usePlannerUIStore } from "./stores/usePlannerUIStore";
-import { useSelectedOptionalCourseIdStore } from "./stores/useSelectedOptionalCourseIdStore";
+import { usePlannerUIStore } from "../stores/usePlannerUIStore";
+import { useSelectedOptionalCourseIdStore } from "../stores/useSelectedOptionalCourseIdStore";
 import { useCallback, useMemo, memo } from "react";
 
 const CourseRow = memo(function CourseRow({ course, checked, onToggle }) {
