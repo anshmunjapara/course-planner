@@ -2,8 +2,11 @@ import { useMemo } from "react";
 import { categorizePrereqs } from "@/utils/categorizePrereqs";
 import { getEdgeStatus } from "@/utils/getEdgeStatus";
 import { PrereqItem } from "./PrereqItem";
+import { useUserGradesStore } from "@/stores/useUserGradesStore";
 
-export function PrerequisitesSection({ prereqs, userGrades }) {
+export function PrerequisitesSection({ prereqs }) {
+  const userGrades = useUserGradesStore((state) => state.userGrades);
+
   const {
     requiredPrereqsWithStatus,
     choiceGroupPrereqsWithStatus,
@@ -64,9 +67,7 @@ export function PrerequisitesSection({ prereqs, userGrades }) {
   return (
     <>
       {requiredPrereqsWithStatus.map((item, index) => {
-        return (
-          <PrereqItem key={`req-${index}`} item={item} />
-        );
+        return <PrereqItem key={`req-${index}`} item={item} />;
       })}
 
       {choiceGroupPrereqsWithStatus.length > 0 && (

@@ -2,8 +2,14 @@ import { Input } from "@/components/ui/input";
 import { SidebarSectionCard } from "./SidebarSectionCard";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useUserGradesStore } from "@/stores/useUserGradesStore";
+import { usePlannerUIStore } from "@/stores/usePlannerUIStore";
 
-export function GradeInput({ selectedNode, onChangeGrade, userGrades }) {
+export function GradeInput({ selectedNode }) {
+  const userGrades = useUserGradesStore((s) => s.userGrades);
+  const setUserGrades = useUserGradesStore((s) => s.setGrade);
+  const setSelectedNodeId = usePlannerUIStore((s) => s.setSelectedNodeId);
+
   const [grade, setGrade] = useState(
     selectedNode ? userGrades[selectedNode.id] || "" : "",
   );
@@ -20,7 +26,8 @@ export function GradeInput({ selectedNode, onChangeGrade, userGrades }) {
   };
 
   const handleGradeSubmit = () => {
-    onChangeGrade(grade);
+    setUserGrades(selectedNode.id, grade === "" ? undefined : Number(grade));
+    setSelectedNodeId(null);
   };
 
   const handleKeyDown = (e) => {

@@ -1,11 +1,10 @@
-import { GradeInput } from "./components/GradeInput";
-import { SidebarSectionCard } from "./components/SidebarSectionCard";
-import { PrerequisitesSection } from "./components/PrerequisitesSection";
+import { GradeInput } from "./GradeInput";
+import { SidebarSectionCard } from "./SidebarSectionCard";
+import { PrerequisitesSection } from "./PrerequisitesSection";
+import { usePlannerUIStore } from "../stores/usePlannerUIStore";
 
-export function CourseInfoSidebar({ selectedNode, onChangeGrade, userGrades }) {
-  const handleGradeSubmit = (newGrade) => {
-    onChangeGrade(newGrade);
-  };
+export function CourseInfoSidebar() {
+  const selectedNode = usePlannerUIStore((s) => s.selectedNode);
 
   if (!selectedNode) {
     return (
@@ -29,19 +28,12 @@ export function CourseInfoSidebar({ selectedNode, onChangeGrade, userGrades }) {
 
       {selectedNode.data.status !== "locked" && (
         <div className="sidebar-section grade-section">
-          <GradeInput
-            selectedNode={selectedNode}
-            onChangeGrade={handleGradeSubmit}
-            userGrades={userGrades}
-          />
+          <GradeInput selectedNode={selectedNode} />
         </div>
       )}
 
       <SidebarSectionCard title={"Prerequisites"}>
-        <PrerequisitesSection
-          prereqs={selectedNode.data.prereqs}
-          userGrades={userGrades}
-        />
+        <PrerequisitesSection prereqs={selectedNode.data.prereqs} />
       </SidebarSectionCard>
     </div>
   );

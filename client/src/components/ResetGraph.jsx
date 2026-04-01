@@ -7,13 +7,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { usePlannerUIStore } from "@/stores/usePlannerUIStore";
 
-export function ResetGraph({ onReset }) {
-  const handleReset = () => {
-    localStorage.removeItem("userGrades");
-    localStorage.removeItem("selectedOptionalCourses");
-    onReset();
-  };
+export function ResetGraph() {
+  const resetUI = usePlannerUIStore((s) => s.resetUI);
+
+  const handleReset = () => resetUI();
 
   return (
     <Panel position="top-left">

@@ -3,9 +3,9 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router";
-import { CoursePlanner } from "./CoursePlanner";
-import { AboutPage } from "./AboutPage";
-import { NotFoundPage } from "./NotFoundPage";
+import { CoursePlannerPage } from "./pages/CoursePlannerPage";
+import { AboutPage } from "./pages/AboutPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 import { Analytics } from "@vercel/analytics/react";
 
 const router = createBrowserRouter([
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/planner",
-    element: <CoursePlanner />,
+    element: <CoursePlannerPage />,
   },
   {
     path: "*",
