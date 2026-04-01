@@ -9,11 +9,15 @@ export const useSelectedOptionalCourseIdStore = create(
       setSelectedOptionalCourseIds: (ids) =>
         set({ selectedOptionalCourseIds: Array.from(new Set(ids)) }),
 
-      toggleOptionalCourse: (courseId) =>
+      toggleOptionalCourse: (courseId, optionalAncestorIds = []) =>
         set((state) => {
           const setIds = new Set(state.selectedOptionalCourseIds);
-          if (setIds.has(courseId)) setIds.delete(courseId);
-          else setIds.add(courseId);
+          if (setIds.has(courseId)) {
+            setIds.delete(courseId);
+          } else {
+            setIds.add(courseId);
+            optionalAncestorIds.forEach((id) => setIds.add(id));
+          }
           return { selectedOptionalCourseIds: Array.from(setIds) };
         }),
 

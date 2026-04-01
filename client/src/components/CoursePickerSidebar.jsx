@@ -4,6 +4,8 @@ import { Field, FieldLabel, FieldTitle } from "@/components/ui/field";
 import { usePlannerUIStore } from "../stores/usePlannerUIStore";
 import { useSelectedOptionalCourseIdStore } from "../stores/useSelectedOptionalCourseIdStore";
 import { useCallback, useMemo, memo } from "react";
+import { initialCourses } from "../coursesData";
+import { getAncestorIds } from "../utils/getAncestorIds";
 
 const CourseRow = memo(function CourseRow({ course, checked, onToggle }) {
   const handleCheckedChange = useCallback(() => {
@@ -36,6 +38,32 @@ export function CoursePickerSidebar({ optionalCourses }) {
     [selectedOptionalCourseIds],
   );
 
+  const optionalCourseIdSet = useMemo(
+    () => new Set(optionalCourses.map((c) => c.id)),
+    [optionalCourses],
+  );
+
+  const courseAncestorMap = useMemo(() => {
+    const map = new Map();
+    optionalCourses.forEach((course) => {
+      map.set(
+        course.id,
+        getAncestorIds(initialCourses, course.id).filter((id) =>
+          optionalCourseIdSet.has(id),
+        ),
+      );
+    });
+    return map;
+  }, [optionalCourses, optionalCourseIdSet]);
+
+  const handleToggle = useCallback(
+    (courseId) => {
+      const optionalAncestorIds = courseAncestorMap.get(courseId) ?? [];
+      toggleOptionalCourse(courseId, optionalAncestorIds);
+    },
+    [toggleOptionalCourse, courseAncestorMap],
+  );
+
   const handleShowCoursePicker = useCallback(() => {
     setShowCoursePicker();
   }, [setShowCoursePicker]);
@@ -66,7 +94,7 @@ export function CoursePickerSidebar({ optionalCourses }) {
               key={course.id}
               course={course}
               checked={selectedSet.has(course.id)}
-              onToggle={toggleOptionalCourse}
+              onToggle={handleToggle}
             />
           );
         })}
