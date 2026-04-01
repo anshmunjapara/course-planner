@@ -57,8 +57,8 @@ export function CoursePlannerPage() {
       <div style={{ flex: 3.5, position: "relative" }}>
         <Button
           onClick={handleShowCoursePicker}
-          className="absolute right-4 top-4 z-10 ont-semibold shadow-md shadow-black/30 animate-pulse cursor-pointer"
-          variant={showCoursePicker ? "secondary" : ""}
+          className="absolute right-4 top-4 z-10 font-semibold shadow-md shadow-black/30 animate-pulse cursor-pointer"
+          variant={showCoursePicker ? "secondary" : undefined}
         >
           {showCoursePicker ? "Close Course Picker" : "+ More CS Courses"}
         </Button>
