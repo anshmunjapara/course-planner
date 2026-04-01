@@ -26,7 +26,7 @@ export function GradeInput({ selectedNode }) {
   };
 
   const handleGradeSubmit = () => {
-    setUserGrades(selectedNode.id, grade === "" ? null : Number(grade));
+    setUserGrades(selectedNode.id, grade === "" ? undefined : Number(grade));
     setSelectedNodeId(null);
   };
 
