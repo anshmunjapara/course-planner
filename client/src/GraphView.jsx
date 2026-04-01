@@ -13,7 +13,7 @@ import { usePlannerUIStore } from "./stores/usePlannerUIStore";
 import { TopPanel } from "./components/TopPanel";
 import { useIsMobile } from "./hooks/useIsMobile";
 
-const containerStyle = { width: "100%", height: "100%" };
+const containerStyle = { width: "100%", height: "100dvh", overflow: "hidden" };
 const miniMapStyle = { height: 170, width: 270 };
 const layoutOptions = {
   name: "klay",
