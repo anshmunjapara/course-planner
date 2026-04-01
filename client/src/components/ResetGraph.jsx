@@ -1,4 +1,3 @@
-import { Panel } from "@xyflow/react";
 import { Button } from "./ui/button";
 import { Menu } from "lucide-react";
 import {
@@ -15,22 +14,20 @@ export function ResetGraph() {
   const handleReset = () => resetUI();
 
   return (
-    <Panel position="top-left">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="secondary" className="cursor-pointer">
-            <Menu />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-40" align="start">
-          <DropdownMenuItem
-            onClick={handleReset}
-            className="cursor-pointer text-red-400"
-          >
-            Reset Graph
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </Panel>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="secondary" className="cursor-pointer">
+          <Menu />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-40" align="start">
+        <DropdownMenuItem
+          onClick={handleReset}
+          className="cursor-pointer text-red-400"
+        >
+          Reset Graph
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

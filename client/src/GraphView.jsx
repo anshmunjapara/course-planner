@@ -2,14 +2,15 @@ import { ReactFlow, Background, MiniMap } from "@xyflow/react";
 import { useNodesState, useEdgesState } from "@xyflow/react";
 import { useCallback, useEffect, useMemo, memo } from "react";
 import { Legend } from "./components/Legend";
+import { AddMoreCoursesButton } from "./components/AddMoreCoursesButton";
 import { SearchComponent } from "./components/SearchComponent";
 import { applyStylesToGraph } from "./utils/applyStylesToGraph";
 import { getLayoutedNodes } from "./utils/cytoscapeLayoutCalculator";
 import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
-import { ResetGraph } from "./components/ResetGraph";
 import "@xyflow/react/dist/style.css";
 import { useUserGradesStore } from "./stores/useUserGradesStore";
 import { usePlannerUIStore } from "./stores/usePlannerUIStore";
+import { TopPanel } from "./components/TopPanel";
 
 const containerStyle = { width: "100%", height: "100%" };
 const miniMapStyle = { height: 170, width: 270 };
@@ -29,7 +30,6 @@ const layoutOptions = {
 };
 
 const MemoizedLegend = memo(Legend);
-const NodeSearch = memo(SearchComponent);
 
 export function GraphView({ courses }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -147,8 +147,7 @@ export function GraphView({ courses }) {
           <MiniMap nodeStrokeWidth={3} zoomable pannable style={miniMapStyle} />
           <Background variant="dots" gap={25} size={1} />
           <MemoizedLegend />
-          <NodeSearch />
-          <ResetGraph />
+          <TopPanel />
         </ReactFlow>
       </div>
     </>
