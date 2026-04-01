@@ -11,6 +11,7 @@ import "@xyflow/react/dist/style.css";
 import { useUserGradesStore } from "./stores/useUserGradesStore";
 import { usePlannerUIStore } from "./stores/usePlannerUIStore";
 import { TopPanel } from "./components/TopPanel";
+import { useIsMobile } from "./hooks/useIsMobile";
 
 const containerStyle = { width: "100%", height: "100%" };
 const miniMapStyle = { height: 170, width: 270 };
@@ -41,6 +42,8 @@ export function GraphView({ courses }) {
   const setSelectedNode = usePlannerUIStore((s) => s.setSelectedNode);
   const setSelectedNodeId = usePlannerUIStore((s) => s.setSelectedNodeId);
   const setShowCoursePicker = usePlannerUIStore((s) => s.setShowCoursePicker);
+
+  const isMobile = useIsMobile();
 
   const activeCourseIds = useMemo(
     () => new Set(courses.map((c) => c.id)),
@@ -144,7 +147,15 @@ export function GraphView({ courses }) {
           maxZoom={1.5} // Prevent zooming in too far
           proOptions={{ hideAttribution: true }}
         >
-          <MiniMap nodeStrokeWidth={3} zoomable pannable style={miniMapStyle} />
+          {!isMobile && (
+            <MiniMap
+              nodeStrokeWidth={3}
+              zoomable
+              pannable
+              style={miniMapStyle}
+            />
+          )}
+
           <Background variant="dots" gap={25} size={1} />
           <MemoizedLegend />
           <TopPanel />
