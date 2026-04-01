@@ -1,5 +1,5 @@
 import { Button } from "./ui/button";
-import { Menu } from "lucide-react";
+import { Menu, RotateCcw } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,11 +20,12 @@ export function ResetGraph() {
           <Menu />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-40" align="start">
+      <DropdownMenuContent align="start">
         <DropdownMenuItem
           onClick={handleReset}
           className="cursor-pointer text-red-400"
         >
+          <RotateCcw className="text-red-400" />
           Reset Graph
         </DropdownMenuItem>
       </DropdownMenuContent>
