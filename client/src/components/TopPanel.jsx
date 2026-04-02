@@ -1,6 +1,6 @@
 import { Panel } from "@xyflow/react";
 import { ResetGraph } from "./ResetGraph";
-import { NodeSearch } from "./node-search";
+import { NodeSearch } from "./NodeSearch";
 import { AddMoreCoursesButton } from "./AddMoreCoursesButton";
 
 export function TopPanel() {

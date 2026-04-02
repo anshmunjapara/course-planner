@@ -1,4 +1,4 @@
-import { NodeSearch } from "./node-search";
+import { NodeSearch } from "./NodeSearch";
 
 export function SearchComponent() {
   return <NodeSearch />;

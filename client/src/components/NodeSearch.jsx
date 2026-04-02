@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useReactFlow } from "@xyflow/react";
 
@@ -98,6 +98,7 @@ export function NodeSearchInternal({
 
 export function NodeSearch({ className, onSearch, onSelectNode, ...props }) {
   const [open, setOpen] = useState(false);
+  const containerRef = useRef(null);
 
   const handOnKeyDown = (event) => {
     if (event.key === "Escape") {
@@ -105,21 +106,38 @@ export function NodeSearch({ className, onSearch, onSelectNode, ...props }) {
     }
   };
 
+  useEffect(() => {
+    if (!open) return;
+    const handlePointerDownOutside = (event) => {
+      if (!containerRef.current) return;
+      if (!containerRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDownOutside);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDownOutside);
+    };
+  }, [open]);
+
   return (
-    <Command
-      shouldFilter={false}
-      className="rounded-lg border shadow-md md:min-w-[450px]"
-    >
-      <NodeSearchInternal
-        className={className}
-        onSearch={onSearch}
-        onSelectNode={onSelectNode}
-        open={open}
-        onKeyDown={handOnKeyDown}
-        onOpenChange={setOpen}
-        {...props}
-      />
-    </Command>
+    <div ref={containerRef}>
+      <Command
+        shouldFilter={false}
+        className="rounded-lg border shadow-md md:min-w-[450px]"
+      >
+        <NodeSearchInternal
+          className={className}
+          onSearch={onSearch}
+          onSelectNode={onSelectNode}
+          open={open}
+          onKeyDown={handOnKeyDown}
+          onOpenChange={setOpen}
+          {...props}
+        />
+      </Command>
+    </div>
   );
 }
 

@@ -2,8 +2,6 @@ import { ReactFlow, Background, MiniMap } from "@xyflow/react";
 import { useNodesState, useEdgesState } from "@xyflow/react";
 import { useCallback, useEffect, useMemo, memo } from "react";
 import { Legend } from "./components/Legend";
-import { AddMoreCoursesButton } from "./components/AddMoreCoursesButton";
-import { SearchComponent } from "./components/SearchComponent";
 import { applyStylesToGraph } from "./utils/applyStylesToGraph";
 import { getLayoutedNodes } from "./utils/cytoscapeLayoutCalculator";
 import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
