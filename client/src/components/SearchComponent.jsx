@@ -1,10 +1,5 @@
-import { Panel } from "@xyflow/react";
-import { NodeSearch } from "./node-search";
+import { NodeSearch } from "./NodeSearch";
 
 export function SearchComponent() {
-  return (
-    <Panel position="top-center">
-      <NodeSearch />
-    </Panel>
-  );
+  return <NodeSearch />;
 }
