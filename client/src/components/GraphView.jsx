@@ -29,6 +29,7 @@ const layoutOptions = {
 };
 
 const MemoizedLegend = memo(Legend);
+const MemoizedTopPanel = memo(TopPanel);
 
 export function GraphView({ courses }) {
   const { layoutedNodes, rawEdges } = useMemo(() => {
@@ -112,9 +113,9 @@ export function GraphView({ courses }) {
     setSelectedNodeId(null);
   }, [setSelectedNodeId]);
 
-  const handlePaneMove = useCallback(() => {
-    setSelectedNodeId(null);
-  }, [setSelectedNodeId]);
+  const handlePaneMoveStart = useCallback(() => {
+    if (selectedNodeId !== null) setSelectedNodeId(null);
+  }, [selectedNodeId, setSelectedNodeId]);
 
   return (
     <>
@@ -125,7 +126,7 @@ export function GraphView({ courses }) {
           onNodesChange={onNodesChange}
           onNodeClick={handleNodeClick}
           onPaneClick={handlePaneClick}
-          onMove={handlePaneMove}
+          onMoveStart={handlePaneMoveStart}
           colorMode="dark"
           fitView
           fitViewOptions={{
@@ -147,7 +148,7 @@ export function GraphView({ courses }) {
 
           <Background variant="dots" gap={25} size={1} />
           <MemoizedLegend />
-          <TopPanel />
+          <MemoizedTopPanel />
         </ReactFlow>
       </div>
     </>
