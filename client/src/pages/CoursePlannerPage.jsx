@@ -1,4 +1,4 @@
-import { GraphView } from "../GraphView";
+import { GraphView } from "../components/GraphView";
 import { CourseInfoSidebar } from "../components/CourseInfoSidebar";
 import { ResponsiveShell } from "../components/ResponsiveShell";
 import { CoursePickerSidebar } from "../components/CoursePickerSidebar";

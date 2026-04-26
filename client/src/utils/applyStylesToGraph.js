@@ -1,7 +1,7 @@
-import { getNodeStatusMap } from "./getNodeStatusMap";
 import { getAncestorIds } from "./getAncestorIds";
 import { applyStylesToNodes } from "./applyStylesToNodes";
 import { applyStylesToEdges } from "./applyStylesToEdges";
+import { getNodeStatusMap } from "./getNodeStatusMap";
 
 /**
  * Applies all visual styles to the graph (nodes + edges).

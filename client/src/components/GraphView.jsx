@@ -1,15 +1,15 @@
 import { ReactFlow, Background, MiniMap } from "@xyflow/react";
 import { useNodesState, useEdgesState } from "@xyflow/react";
 import { useCallback, useEffect, useMemo, memo } from "react";
-import { Legend } from "./components/Legend";
-import { applyStylesToGraph } from "./utils/applyStylesToGraph";
-import { getLayoutedNodes } from "./utils/cytoscapeLayoutCalculator";
-import { getPrereqIds } from "./utils/convertPrereqTreeIntoArray";
+import { Legend } from "./Legend";
+import { applyStylesToGraph } from "../utils/applyStylesToGraph";
+import { getLayoutedNodes } from "../utils/cytoscapeLayoutCalculator";
+import { getPrereqIds } from "../utils/convertPrereqTreeIntoArray";
 import "@xyflow/react/dist/style.css";
-import { useUserGradesStore } from "./stores/useUserGradesStore";
-import { usePlannerUIStore } from "./stores/usePlannerUIStore";
-import { TopPanel } from "./components/TopPanel";
-import { useIsMobile } from "./hooks/useIsMobile";
+import { useUserGradesStore } from "../stores/useUserGradesStore";
+import { usePlannerUIStore } from "../stores/usePlannerUIStore";
+import { TopPanel } from "./TopPanel";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 const containerStyle = { width: "100%", height: "100dvh", overflow: "hidden" };
 const miniMapStyle = { height: 170, width: 270 };
@@ -31,23 +31,6 @@ const layoutOptions = {
 const MemoizedLegend = memo(Legend);
 
 export function GraphView({ courses }) {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges] = useEdgesState([]);
-
-  const userGrades = useUserGradesStore((state) => state.userGrades);
-
-  const selectedNodeId = usePlannerUIStore((s) => s.selectedNodeId);
-  const setSelectedNode = usePlannerUIStore((s) => s.setSelectedNode);
-  const setSelectedNodeId = usePlannerUIStore((s) => s.setSelectedNodeId);
-  const setShowCoursePicker = usePlannerUIStore((s) => s.setShowCoursePicker);
-
-  const isMobile = useIsMobile();
-
-  const activeCourseIds = useMemo(
-    () => new Set(courses.map((c) => c.id)),
-    [courses],
-  );
-
   const { layoutedNodes, rawEdges } = useMemo(() => {
     const rawNodes = courses.map((course) => ({
       id: course.id,
@@ -59,6 +42,8 @@ export function GraphView({ courses }) {
       },
       position: { x: 0, y: 0 },
     }));
+
+    const activeCourseIds = new Set(courses.map((c) => c.id));
 
     const rawEdges = courses.flatMap((course) => {
       const prereqIds = getPrereqIds(course.prereqs);
@@ -76,28 +61,34 @@ export function GraphView({ courses }) {
     const layoutedNodes = getLayoutedNodes(rawNodes, rawEdges, layoutOptions);
 
     return { layoutedNodes, rawEdges };
-  }, [courses, activeCourseIds]);
+  }, [courses]);
 
-  useEffect(() => {
-    if (!layoutedNodes.length) return;
+  const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
+  const [edges, setEdges] = useEdgesState(rawEdges);
 
-    const { styledNodes, styledEdges } = applyStylesToGraph(
-      layoutedNodes,
-      rawEdges,
-      userGrades,
-    );
+  const userGrades = useUserGradesStore((state) => state.userGrades);
+  const selectedNodeId = usePlannerUIStore((s) => s.selectedNodeId);
+  const setSelectedNode = usePlannerUIStore((s) => s.setSelectedNode);
+  const setSelectedNodeId = usePlannerUIStore((s) => s.setSelectedNodeId);
+  const setShowCoursePicker = usePlannerUIStore((s) => s.setShowCoursePicker);
 
-    setNodes(styledNodes);
-    setEdges(styledEdges);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [layoutedNodes, rawEdges]); // only run on layout changes
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     setNodes((currentNodes) => {
-      if (!currentNodes.length) return currentNodes;
+      const currentIds = new Set(currentNodes.map((n) => n.id));
+      const layoutedIds = new Set(layoutedNodes.map((n) => n.id));
+
+      const nodeSetChanged =
+        currentIds.size !== layoutedIds.size ||
+        [...layoutedIds].some((id) => !currentIds.has(id));
+
+      // If courses changed (new/removed nodes), rebuild from layouted nodes.
+      // Otherwise keep current positions and only restyle.
+      const baseNodes = nodeSetChanged ? layoutedNodes : currentNodes;
 
       const { styledNodes, styledEdges } = applyStylesToGraph(
-        currentNodes, // use current positions, not layoutedNodes
+        baseNodes,
         rawEdges,
         userGrades,
         selectedNodeId,
@@ -106,7 +97,7 @@ export function GraphView({ courses }) {
       setEdges(styledEdges);
       return styledNodes;
     });
-  }, [userGrades, selectedNodeId, rawEdges, setNodes, setEdges]);
+  }, [layoutedNodes, rawEdges, userGrades, selectedNodeId, setNodes, setEdges]);
 
   const handleNodeClick = useCallback(
     (event, node) => {
