@@ -14,15 +14,19 @@ export const getLayoutedNodes = (
   const cy = cytoscape({
     headless: true,
     styleEnabled: true,
-    elements: [
-      ...nodes.map((node) => ({
-        data: { id: node.id },
-        // Apply dimensions via style so the layout algorithm respects them
+    style: [
+      {
+        selector: "node",
         style: {
           width: nodeWidth,
           height: nodeHeight,
           shape: "rectangle",
         },
+      },
+    ],
+    elements: [
+      ...nodes.map((node) => ({
+        data: { id: node.id },
       })),
 
       // Convert your edges to Cytoscape format
@@ -56,7 +60,7 @@ export const getLayoutedNodes = (
 
     return {
       ...node,
-      // 4. Shift Position
+      // Shift Position
       // Cytoscape anchors at Center (0,0 is center of node)
       // React Flow anchors at Top-Left (0,0 is top-left corner)
       position: {
